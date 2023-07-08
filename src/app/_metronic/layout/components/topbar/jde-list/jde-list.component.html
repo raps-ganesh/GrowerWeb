@@ -1,0 +1,7 @@
+<select id="jdeNumber" *ngIf="jdeAccountList.length  > 0"
+    class="form-select form-select-solid select2-selection select2-selection--single form-select" >
+    <option *ngFor="let objlst of jdeAccountList" value={{objlst}}>
+        {{objlst}}
+      </option>
+
+</select>
