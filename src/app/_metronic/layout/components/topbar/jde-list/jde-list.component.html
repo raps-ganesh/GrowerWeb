@@ -1,4 +1,4 @@
-<select  *ngIf="jdeAccountList != null &&  jdeAccountList.length  > 0"
+<!-- <select  *ngIf="jdeAccountList != null &&  jdeAccountList.length  > 0"
   #mySelect
 (change)='LoadData(mySelect.value)'
     class="form-select form-select-solid select2-selection select2-selection--single form-select" >
@@ -6,12 +6,12 @@
         {{objlst}}
       </option>
 
-</select>
+</select> -->
 
 
 
-
-<!-- <div *ngIf="jdeAccountList != null &&  jdeAccountList.length  > 0" class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+<!-- 
+<div *ngIf="jdeAccountList != null &&  jdeAccountList.length  > 0" class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
   <a _ngcontent-miq-c192="" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
     class="btn btn-light-primary me-3"><span><svg _ngcontent-miq-c192="" width="24" height="24"
         viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -36,3 +36,30 @@
    
   </div>
 </div> -->
+
+
+
+
+<div class="m-0">
+  <!--begin::Menu toggle-->
+  <a href="#" class="btn btn-success btn-sm btn-flex btn-secondary fw-bold" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+      <i class="ki-duotone ki-filter fs-6 text-muted me-1"><span class="path1"></span><span class="path2"></span></i>               
+      Account Number {{ jdeAccountNumber }}
+  </a>
+  <!--end::Menu toggle-->
+  
+  
+
+<!--begin::Menu 1-->
+<div class="menu menu-sub menu-sub-dropdown w-200px " data-kt-menu="true" id="kt_menu_64b03cc6b1043" style="">
+  <div class="menu-item px-3" *ngFor="let info of jdeAccountList; let i = index">
+    <a (click)="LoadData(info)" class="menu-link px-3">{{ info  }}</a>
+  </div>
+
+
+
+
+
+</div>
+<!--end::Menu 1-->        
+</div>

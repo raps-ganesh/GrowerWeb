@@ -4,6 +4,7 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { LayoutService } from './core/layout.service';
 import { LayoutInitService } from './core/layout-init.service';
@@ -12,6 +13,7 @@ import { LayoutInitService } from './core/layout-init.service';
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class LayoutComponent implements OnInit, AfterViewInit {
   // Public variables

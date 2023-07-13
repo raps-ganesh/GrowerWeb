@@ -1,11 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { EventEmitterService } from 'src/app/pages/event-emitter.service';
 import { PaymentCalculationReportComponent } from 'src/app/pages/reports/payment-calculation-report/payment-calculation-report.component';
 import { GrowerPortalService } from 'src/app/services/Grower/grower-portal.service';
 @Component({
   selector: 'app-jde-list',
   templateUrl: './jde-list.component.html',
-  styleUrls: ['./jde-list.component.scss']
+  styleUrls: ['./jde-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class JdeListComponent {
 
@@ -22,14 +23,16 @@ export class JdeListComponent {
 
   ngOnInit(): void {
    this.GetUserAccountbyJDE();
+   //alert(this.jdeAccountNumber);
   }
   jdeAccountList : any;
   LoadData(accNo:any)
   {
+
     this.jdeAccountNumber=accNo;
-    setTimeout(() => {
-      this.eventEmitterService.onFirstComponentButtonClick(accNo);
-    }, 200);
+    // setTimeout(() => { }, 200);
+    this.eventEmitterService.onFirstComponentButtonClick(accNo);
+   
   }
   GetUserAccountbyJDE() {
     debugger;
@@ -42,11 +45,13 @@ export class JdeListComponent {
         {
           this.jdeAccountNumber=data[0];
           this.LoadData(this.jdeAccountNumber);
+          //alert(this.jdeAccountNumber);
         }
       },
       error: (err: any) => {
         console.log(err);
       },
     });
+    
   }
 }

@@ -10,8 +10,8 @@ export class AppSettingsService {
   GetYears()
   {
     var yearsArray: number[]=[];
-    let cropyear :number = environment.cropyear != undefined ? environment.cropyear : 2022;
-    for (let index = cropyear; index > cropyear-5; index--) {
+    let cropyear1 :number = environment.cropyear != undefined ? environment.cropyear : 2022;
+    for (let index = cropyear1; index > cropyear1-5; index--) {
         yearsArray.push(index);
     }
 
