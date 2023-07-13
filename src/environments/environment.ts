@@ -157,7 +157,6 @@ export const environment = {
     },
   },
 
-  // NPS Configurations
   authenticationApiUrl:
     'https://localhost:7050/api/authenticate/authenticate?username={0}&password={1}',
   growerPortalApiBaseUrl: 'https://localhost:7050/api/authenticate/',
