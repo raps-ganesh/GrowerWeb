@@ -1,0 +1,12 @@
+.text-right {
+    text-align: right;
+}
+
+.table> :not(caption)>*>* {
+    padding: 0.5rem 0.5rem !important;
+}
+
+
+.flex-row {
+    padding-top: 15px;
+}

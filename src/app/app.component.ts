@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
     this.checkTimeOut();
     this.userInactive.subscribe((message: any) => {
       alert(message);
+      alert(this.router.url);
       this.auth.logout();
       window.location.reload();
     }
@@ -52,7 +53,7 @@ export class AppComponent implements OnInit {
   }
   checkTimeOut() {
     this.timeoutId = setTimeout(
-      () => { this.router.url != "/auth/login" ? this.userInactive.next("User has been inactive for 5 Seconds") : null }, 5000);
+      () => { this.router.url != "/auth/login" ? this.userInactive.next("User has been inactive for 20 minutes") : null }, 1200000);
   }
   @HostListener('window:keydown')
   @HostListener('window:mousedown')

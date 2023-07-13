@@ -53,7 +53,10 @@ export class AuthHTTPService {
       })
     );
   }
-
+  
+  getLoggedInUserName() {
+    return localStorage.getItem('loggedinUser');
+  }
   createUser(user: UserModel): Observable<any> {
     user.roles = [2]; // Manager
     user.authToken = 'auth-token-' + Math.random();

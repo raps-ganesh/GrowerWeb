@@ -5,14 +5,209 @@
   ></a>
 </div>
 
-<!-- Layout Builder -->
+<!-- Documents -->
+<div
+  class="menu-item menu-lg-down-accordion me-lg-1 menu-dropdown"
+  data-kt-menu-trigger="click"
+  data-kt-menu-placement="bottom-start"
+>
+  <span class="menu-link py-3" [ngClass]="calculateMenuItemCssClass('/crafted')">
+    <span class="menu-title">Documents</span>
+    <span class="menu-arrow d-lg-none"></span>
+  </span>
+  <div
+    class="
+      menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0
+      py-lg-4
+      w-lg-225px
+    "
+    data-kt-menu-dismiss="true"
+    data-popper-placement="bottom-start"
+  >
+    
+    <div class="menu-item me-lg-1">
+      <a class="menu-link py-3" routerLink="/apps/chat/drawer-chat">
+        <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
+        <span class="menu-title">Manage</span>
+      </a>
+    </div>
+
+    <div class="menu-item me-lg-1">
+      <a class="menu-link py-3" routerLink="/apps/chat/drawer-chat">
+        <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
+        <span class="menu-title">Growers</span>
+      </a>
+    </div>
+    
+    <div class="menu-item me-lg-1">
+      <a class="menu-link py-3" routerLink="/apps/chat/drawer-chat">
+        <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
+        <span class="menu-title">Dehydrators</span>
+      </a>
+    </div>
+
+
+
+
+  </div>
+</div>
+
+<!-- Admin -->
+<div
+  class="menu-item menu-lg-down-accordion me-lg-1 menu-dropdown"
+  data-kt-menu-trigger="click"
+  data-kt-menu-placement="bottom-start"
+>
+  <span class="menu-link py-3" [ngClass]="calculateMenuItemCssClass('/crafted')">
+    <span class="menu-title">Admin</span>
+    <span class="menu-arrow d-lg-none"></span>
+  </span>
+  <div
+    class="
+      menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0
+      py-lg-4
+      w-lg-225px
+    "
+    data-kt-menu-dismiss="true"
+    data-popper-placement="bottom-start"
+  >
+    
+    <div class="menu-item me-lg-1">
+      <a class="menu-link py-3" routerLink="/users">
+        <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
+        <span class="menu-title">Users</span>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Reports -->
+<div
+  class="menu-item menu-lg-down-accordion me-lg-1 menu-dropdown"
+  data-kt-menu-trigger="click"
+  data-kt-menu-placement="bottom-start"
+>
+  <span class="menu-link py-3" [ngClass]="calculateMenuItemCssClass('/crafted')">
+    <span class="menu-title">Reports</span>
+    <span class="menu-arrow d-lg-none"></span>
+  </span>
+  <div
+    class="
+      menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0
+      py-lg-4
+      w-lg-225px
+    "
+    data-kt-menu-dismiss="true"
+    data-popper-placement="bottom-start"
+  >
+    
+    <div class="menu-item me-lg-1">
+      <a class="menu-link py-3" routerLink="/apps/chat/drawer-chat">
+        <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
+        <span class="menu-title">Crop Delivery Payment</span>
+      </a>
+    </div>
+
+    <div class="menu-item me-lg-1">
+      <a class="menu-link py-3" routerLink="/apps/chat/drawer-chat">
+        <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
+        <span class="menu-title">Growers</span>
+      </a>
+    </div>
+    
+    <div class="menu-item me-lg-1">
+      <a class="menu-link py-3" routerLink="/apps/chat/drawer-chat">
+        <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
+        <span class="menu-title">Receiving Ticket</span>
+      </a>
+    </div>
+
+    <div class="menu-item me-lg-1">
+      <a class="menu-link py-3" routerLink="/apps/chat/drawer-chat">
+        <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
+        <span class="menu-title">Grading Data Report</span>
+      </a>
+    </div>
+
+    <div class="menu-item me-lg-1">
+      <a class="menu-link py-3" routerLink="/apps/chat/drawer-chat">
+        <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
+        <span class="menu-title">Dehydrator Deliveries by Grower Account</span>
+      </a>
+    </div>
+
+
+
+
+
+  
+    <div
+      class="menu-item menu-lg-down-accordion me-lg-1"
+      data-kt-menu-trigger="{default:'click', lg: 'hover'}"
+      data-kt-menu-placement="right-start"
+    >
+      <span
+        class="menu-link py-3"
+        [ngClass]="calculateMenuItemCssClass('/apps/chat')"
+      ><span class="menu-icon"
+      ><span
+        class="svg-icon svg-icon-2"
+        [inlineSVG]="'./assets/media/icons/duotune/general/gen022.svg'"
+      ></span></span
+      ><span class="menu-title" data-link="/apps/chat">Grower Account</span
+      ><span class="menu-arrow"></span
+      ></span>
+      <div
+        class="
+          menu-sub
+          menu-sub-lg-down-accordion
+          menu-sub-lg-dropdown
+          menu-rounded-0
+          py-lg-4
+          w-lg-225px
+        "
+        data-kt-menu-dismiss="true"
+      >
+        <div class="menu-item me-lg-1">
+          <a
+            class="menu-link py-3"
+            routerLinkActive="active"
+            routerLink="/apps/chat/private-chat"
+          ><span class="menu-bullet"
+          ><span class="bullet bullet-dot"></span></span
+          ><span class="menu-title">Dehydrator Deliveries by Manifest</span></a
+          >
+        </div>
+        
+      </div>
+    </div>
+ 
+
+
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- 
+
 <div class="menu-item me-lg-1">
   <a class="menu-link py-3" routerLinkActive="active" routerLink="/builder"
   ><span class="menu-title">Layout Builder</span></a
   >
 </div>
 
-<!-- Crafted -->
+
 <div
   class="menu-item menu-lg-down-accordion me-lg-1 menu-dropdown"
   data-kt-menu-trigger="click"
@@ -359,7 +554,7 @@
     </div>
   </div>
 </div>
-<!-- Apps -->
+
 <div
   class="menu-item menu-lg-down-accordion me-lg-1"
   data-kt-menu-trigger="click"
@@ -439,7 +634,7 @@
   </div>
 </div>
 
-<!-- MegaMenu -->
+
 <div
   class="menu-item menu-lg-down-accordion me-lg-1"
   data-kt-menu-trigger="click"
@@ -577,4 +772,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

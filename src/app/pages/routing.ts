@@ -1,6 +1,61 @@
 import { Routes } from '@angular/router';
+import { UsersComponent } from './admin/users/users.component';
+import { PaymentCalculationReportComponent } from './reports/payment-calculation-report/payment-calculation-report.component';
 
 const Routing: Routes = [
+  {
+    path: 'users',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+    }, component: UsersComponent
+  },
+  {
+    path: 'delivery',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+    }, component: PaymentCalculationReportComponent
+  },
+  {
+    path: 'febprogress',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+    }, component: PaymentCalculationReportComponent
+  },
+  {
+    path: 'spotemf',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+    }, component: PaymentCalculationReportComponent
+  },
+  {
+    path: 'mayprogress',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+    }, component: PaymentCalculationReportComponent
+  },
+  {
+    path: 'finalpayment',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+    },
+    component: PaymentCalculationReportComponent,
+  },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'reportsdashboard',
+    loadChildren: () =>
+      import('./reports/reports.module').then((m) => m.ReportsModule),
+  },
   {
     path: 'dashboard',
     loadChildren: () =>
