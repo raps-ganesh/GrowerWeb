@@ -85,7 +85,7 @@
 	&.table-row-dashed {
 		tr {
 			border-bottom-width: 1px;
-			border-bottom-style: dashed;
+			border-bottom-style: solid;
 			border-bottom-color: var(--#{$prefix}border-color);
 		}
 

@@ -5,3 +5,13 @@
 @import './assets/sass/plugins.scss';
 // @import "./assets/css/style.rtl.css";
 @import "./assets/sass/style.angular.scss";
+
+input {
+border: 1px solid !important;
+border-color: rgb(210 210 210) !important;
+}
+
+select {
+border: 0.5px solid !important;
+border-color: rgb(210 210 210) !important;
+}

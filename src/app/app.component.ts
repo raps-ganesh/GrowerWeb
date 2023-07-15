@@ -18,7 +18,7 @@ import { Subject } from 'rxjs';
   selector: 'body[root]',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class AppComponent implements OnInit {
   timeoutId: any;
@@ -41,7 +41,6 @@ export class AppComponent implements OnInit {
     this.checkTimeOut();
     this.userInactive.subscribe((message: any) => {
       alert(message);
-      alert(this.router.url);
       this.auth.logout();
       window.location.reload();
     }

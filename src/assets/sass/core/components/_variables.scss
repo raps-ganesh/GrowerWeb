@@ -21,6 +21,7 @@ $gray-600: #7E8299 !default;
 $gray-700: #5E6278 !default;
 $gray-800: #3F4254 !default;
 $gray-900: #181C32 !default;
+$gray-200-dark: #eff2f5 !default;
 
 // Bootstrap muted color
 $text-muted: $gray-500 !default;
@@ -267,7 +268,7 @@ $container-max-widths: (
 //
 // Define common padding and border radius sizes and more.
 $border-width:                  1px !default;
-$border-color:                  $gray-200 !default;
+$border-color:                  $gray-200-dark !default;
 $border-dashed-color:           $gray-300 !default;
 
 $border-widths: (

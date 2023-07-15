@@ -160,12 +160,16 @@ export const environment = {
   authenticationApiUrl:
     'https://localhost:7050/api/authenticate/authenticate?username={0}&password={1}',
   growerPortalApiBaseUrl: 'https://localhost:7050/api/authenticate/',
+  adminApiBaseUrl: 'https://localhost:7061/api/admin/',
+
+  
+
   receivingApiBaseUrl: 'https://localhost:7101/api/receiving/',
   gradingApiBaseUrl: 'https://localhost:7068/api/grading/',
   growerAccountingApiBaseUrl: 'https://localhost:7020/api/groweraccounting/',
   reportsBaseUrl: 'https://localhost:7282/reporting/',
   masterDataBaseUrl: 'https://localhost:7179/api/master/',
-  adminApiBaseUrl: 'https://localhost:7081/api/admin/',
+  
   deferralPaymentBaseUrl: 'https://localhost:7280/api/DeferralPayment/',
   cropyear: new Date().getMonth() > 8 ? new Date().getFullYear() : new Date().getFullYear() - 1,
   SendInventoryToJde: true,

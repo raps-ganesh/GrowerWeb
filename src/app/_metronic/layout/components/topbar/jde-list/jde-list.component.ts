@@ -5,8 +5,7 @@ import { GrowerPortalService } from 'src/app/services/Grower/grower-portal.servi
 @Component({
   selector: 'app-jde-list',
   templateUrl: './jde-list.component.html',
-  styleUrls: ['./jde-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default
+  styleUrls: ['./jde-list.component.scss']
 })
 export class JdeListComponent {
 
