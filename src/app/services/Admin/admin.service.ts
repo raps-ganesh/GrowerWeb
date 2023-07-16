@@ -38,4 +38,65 @@ export class AdminService {
   }
 
 
+  
+  public GetAccountTypes(): Observable<any> {
+    return this.http
+      .get<any>(this.baseAdminURL + 'getaccounttypes')
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
+
+  public GetGroup(): Observable<any> {
+    return this.http
+      .get<any>(this.baseAdminURL + 'getgroups')
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
+
+  public GetUserById(userId :any): Observable<any> {
+    return this.http
+      .get<any>(this.baseAdminURL + 'GetUserById/'+userId)
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
+
+  public SaveUser(user:any): Observable<any> {
+    //debugger;
+    return this.http
+      .post<any>(
+        'https://localhost:7061/api/Admin/SaveUser/' + user.Id,
+        user
+      )
+      .pipe(
+        map((response: any) => {
+          //debugger;
+          return response;
+        })
+      );
+  }
+
+  public SaveGroup(userid:any,groupids:any): Observable<any> {
+    debugger;
+    return this.http
+      .post<any>(
+        'https://localhost:7061/api/Admin/SaveUserGroup/' + userid ,groupids
+      )
+      .pipe(
+        map((response: any) => {
+          //debugger;
+          return response;
+        })
+      );
+  }
+
+
 }

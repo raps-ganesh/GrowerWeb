@@ -68,7 +68,7 @@ export class ExcelService {
     worksheet.mergeCells('F1:F3');
     worksheet.addImage(myLogoImage, 'F1:F3');
     worksheet.getColumn('F').width = 20;
-    debugger;
+    //debugger;
     /* Add Header Row */
     worksheet.addRow([]);
     //worksheet.mergeCells('A1:' + this.numToAlpha(header.length - 1) + '1');
@@ -131,7 +131,7 @@ export class ExcelService {
     }
     var ri = 7;
     SearchArray.forEach((element: any) => {
-      debugger;
+      //debugger;
       const eachRow: any = [];
       columnsArray1.forEach((column) => {
         eachRow.push(element[column]);
@@ -147,7 +147,7 @@ export class ExcelService {
       let headerRow2 = worksheet.addRow(aboveMainHeader);
       // Cell Style : Fill and Border
       headerRow2.eachCell((cell, index) => {
-        debugger;
+        //debugger;
         cell.fill = {
           type: 'pattern',
           pattern: 'solid',
@@ -171,7 +171,7 @@ export class ExcelService {
       let headerRow1 = worksheet.addRow(mainHeader);
       // Cell Style : Fill and Border
       headerRow1.eachCell((cell, index) => {
-        debugger;
+        //debugger;
         cell.fill = {
           type: 'pattern',
           pattern: 'solid',
@@ -339,7 +339,7 @@ export class ExcelService {
     worksheet.mergeCells('F1:F3');
     worksheet.addImage(myLogoImage, 'F1:F3');
     worksheet.getColumn('F').width = 20;
-    debugger;
+    //debugger;
     /* Add Header Row */
     worksheet.addRow([]);
     //worksheet.mergeCells('B1:' + this.numToAlpha(header.length - 1) + '1');
@@ -388,7 +388,7 @@ export class ExcelService {
       let headerRow1 = worksheet.addRow(mainHeader);
       // Cell Style : Fill and Border
       headerRow1.eachCell((cell: any, index: any) => {
-        debugger;
+        //debugger;
         cell.fill = {
           type: 'pattern',
           pattern: 'solid',
@@ -528,7 +528,7 @@ export class ExcelService {
     //worksheet.mergeCells('F1:F3');
     worksheet.addImage(myLogoImage, 'F1:F3');
     worksheet.getColumn('F').width = 20;
-    debugger;
+    //debugger;
     /* Add Header Row */
     worksheet.addRow([]);
     //worksheet.mergeCells('A1:' + this.numToAlpha(header.length - 1) + '1');
@@ -581,7 +581,7 @@ export class ExcelService {
     }
     var ri = 7;
     SearchArray.forEach((element: any) => {
-      debugger;
+      //debugger;
       const eachRow: any = [];
       columnsArray1.forEach((column) => {
         eachRow.push(element[column]);
@@ -597,7 +597,7 @@ export class ExcelService {
       let headerRow1 = worksheet.addRow(mainHeader);
       // Cell Style : Fill and Border
       headerRow1.eachCell((cell, index) => {
-        debugger;
+        //debugger;
         cell.fill = {
           type: 'pattern',
           pattern: 'solid',
@@ -649,7 +649,7 @@ export class ExcelService {
         columnsArray = Object.keys(json[key]);
       }
     }
-    debugger;
+    //debugger;
     // Add Data and Conditional Formatting
     json2.forEach((element: any) => {
       const eachRow: any = [];
@@ -879,7 +879,7 @@ export class ExcelService {
     worksheet.mergeCells('F1:F3');
     worksheet.addImage(myLogoImage, 'F1:F3');
     worksheet.getColumn('F').width = 20;
-    debugger;
+    //debugger;
     /* Add Header Row */
     worksheet.addRow([]);
     //worksheet.mergeCells('A1:' + this.numToAlpha(header.length - 1) + '1');
@@ -932,7 +932,7 @@ export class ExcelService {
     }
     var ri = 7;
     SearchArray.forEach((element: any) => {
-      debugger;
+      //debugger;
       const eachRow: any = [];
       columnsArray1.forEach((column) => {
         eachRow.push(element[column]);
@@ -948,7 +948,7 @@ export class ExcelService {
       let headerRow1 = worksheet.addRow(mainHeader);
       // Cell Style : Fill and Border
       headerRow1.eachCell((cell, index) => {
-        debugger;
+        //debugger;
         cell.fill = {
           type: 'pattern',
           pattern: 'solid',
@@ -1041,7 +1041,7 @@ export class ExcelService {
       cell.font = { bold: true };
       cell.alignment = { horizontal: 'center' };
     });
-    debugger;
+    //debugger;
     // Add Data and Conditional Formatting
 
     let columnsArray3: any[];
@@ -1051,7 +1051,7 @@ export class ExcelService {
       }
     }
     data3.forEach((element: any) => {
-      debugger;
+      //debugger;
       var isTotal = false;
       const eachRow: any = [];
       columnsArray3.forEach((column) => {
@@ -1217,7 +1217,7 @@ export class ExcelService {
     }
     var ri = 7;
     SearchArray.forEach((element: any) => {
-      debugger;
+      //debugger;
       const eachRow: any = [];
       columnsArray1.forEach((column) => {
         eachRow.push(element[column]);
@@ -1237,7 +1237,7 @@ export class ExcelService {
       let headerRow1 = worksheet.addRow(mainHeader);
       // Cell Style : Fill and Border
       headerRow1.eachCell((cell, index) => {
-        debugger;
+        //debugger;
         cell.fill = {
           type: 'pattern',
           pattern: 'solid',
@@ -1378,7 +1378,7 @@ export class ExcelService {
       cell.font = { size: 12, bold: true };
       cell.alignment = { horizontal: 'center' }
     });
-    debugger;
+    //debugger;
     // Add Data and Conditional Formatting
 
     let columnsArray3: any[];
@@ -1388,7 +1388,7 @@ export class ExcelService {
       }
     }
     data3.forEach((element: any) => {
-      debugger;
+      //debugger;
       var isTotal = false;
       const eachRow: any = [];
       columnsArray3.forEach((column) => {
@@ -1404,7 +1404,7 @@ export class ExcelService {
     worksheet.addRow([]);
 
 
-    debugger;
+    //debugger;
     const json4RowHeader: any = [];
     json4Header.forEach((rec) => {
       json4RowHeader.push(rec.replace('@cropYear', '2022').replace('@preCropYear', '2021').replace('_yr', '').replace('sDay', 'Receiving Date').replace('Year1', '2022').replace('Year2', '2021'));
@@ -1412,7 +1412,7 @@ export class ExcelService {
 
     let headerRow4 = worksheet.addRow(json4RowHeader);
     headerRow4.eachCell((cell) => {
-      debugger;
+      //debugger;
       cell.fill = {
         type: 'pattern',
         pattern: 'solid',
@@ -1505,7 +1505,7 @@ export class ExcelService {
 
 
   ) {
-    debugger;
+    //debugger;
     const header = headersArray;
     const mainHeader = mainHeadersArray;
     const mainHeader2 = mainHeadersArray2;
@@ -1577,7 +1577,7 @@ export class ExcelService {
     }
     var ri = 7;
     SearchArray.forEach((element: any) => {
-      debugger;
+      //debugger;
       const eachRow: any = [];
       columnsArray1.forEach((column) => {
         eachRow.push(element[column]);
@@ -1597,7 +1597,7 @@ export class ExcelService {
       let headerRow1 = worksheet.addRow(mainHeader);
       // Cell Style : Fill and Border
       headerRow1.eachCell((cell, index) => {
-        debugger;
+        //debugger;
         cell.fill = {
           type: 'pattern',
           pattern: 'solid',
@@ -1743,13 +1743,13 @@ export class ExcelService {
       cell.font = { size: 12, bold: true };
       cell.alignment = { horizontal: 'center' }
     });
-    debugger;
+    //debugger;
 
     if (mainHeadersArray2.length > 0) {
       let headerRow2 = worksheet.addRow(mainHeader2);
       // Cell Style : Fill and Border
       headerRow2.eachCell((cell, index) => {
-        debugger;
+        //debugger;
         cell.fill = {
           type: 'pattern',
           pattern: 'solid',
@@ -1783,7 +1783,7 @@ export class ExcelService {
       }
     }
     data3.forEach((element: any) => {
-      debugger;
+      //debugger;
       var isTotal = false;
       const eachRow: any = [];
       columnsArray3.forEach((column) => {
@@ -1799,7 +1799,7 @@ export class ExcelService {
     //worksheet.addRow([]);
 
 
-    debugger;
+    //debugger;
     const json4RowHeader: any = [];
     json4Header.forEach((rec) => {
       json4RowHeader.push(rec.replace('@cropYear', '2022').replace('@preCropYear', '2021').replace('_yr', '').replace('sDay', 'Receiving Date').replace('Year1', '2022').replace('Year2', '2021'));
@@ -1807,7 +1807,7 @@ export class ExcelService {
 
     let headerRow4 = worksheet.addRow(json4RowHeader);
     headerRow4.eachCell((cell) => {
-      debugger;
+      //debugger;
       cell.fill = {
         type: 'pattern',
         pattern: 'solid',

@@ -51,7 +51,7 @@ export class PaymentCalculationReportComponent implements OnInit {
       this.router.url.split('/')[2] != null
         ? this.router.url.split('/')[2]
         : 'Delivery';
-    debugger;
+    //debugger;
     switch (calcBatchType.toLowerCase()) {
       case 'Delivery'.toLowerCase():
         this.calculationBatchType = CalculationBatchTypes.Delivery;
@@ -350,7 +350,7 @@ export class PaymentCalculationReportComponent implements OnInit {
   }
 
   GeneratePDFForPaymentReport() {
-    debugger;
+    //debugger;
     try
     {
     if (this.accountData.length == 0) {
@@ -410,7 +410,7 @@ export class PaymentCalculationReportComponent implements OnInit {
 
       this.accountData.forEach((currentValue: any, index1: any) => {
         ///////
-        debugger;
+        //debugger;
         if (index1 > 0)
           doc.addPage('l');
         var rptGrowerInfo: any = currentValue.growerInfo[0];

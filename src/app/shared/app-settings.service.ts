@@ -25,7 +25,7 @@ export class AppSettingsService {
     totalrecords: number,
     pagesize: number
   ): any {
-    debugger;
+    //debugger;
     pagecount=Math.ceil(totalrecords/pagesize);
     var pagingArray: number[];
     var end =

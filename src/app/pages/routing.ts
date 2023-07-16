@@ -19,6 +19,13 @@ const Routing: Routes = [
     }, component: AddEditComponent
   },
   {
+    path: 'users/addedit/:id1',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+    }, component: AddEditComponent
+  },
+  {
     path: 'delivery',
     //canActivate: [RoleGuard],
     data: {

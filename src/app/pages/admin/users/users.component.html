@@ -104,18 +104,11 @@
               class="btn btn-icon btn-active-light-success w-30px h-30px me-3"
               tooltip="Edit"
               title="Edit"
-              (click)="
-                editUser(
-                  info.id,
-                  info.tractorId,
-                  info.tractorOwnerId,
-                  info.tractorLicense
-                )
-              "
+              
             >
               <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
               <span class="svg-icon svg-icon-3">
-                <a>
+                <a [routerLink]="['addedit', info.id]">
                   <div
                     class="symbol-label fs-4 badge-light-success text-success"
                   >

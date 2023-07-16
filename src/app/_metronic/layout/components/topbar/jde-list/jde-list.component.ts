@@ -34,11 +34,11 @@ export class JdeListComponent {
    
   }
   GetUserAccountbyJDE() {
-    debugger;
+    //debugger;
     var localNumber  = localStorage.getItem("JDENumber");
     this.growerPortalService.GetUserAccountbyJDE(localNumber).subscribe({
       next: (data: any) => {
-        debugger;
+        //debugger;
         this.jdeAccountList = data;
         if(data.length>0)
         {

@@ -6,6 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddEditComponent } from './users/add-edit/add-edit.component';
 
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { RouterModule } from '@angular/router';
+
+
 
 
 @NgModule({
@@ -18,7 +21,9 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
     InlineSVGModule,
     AngularMultiSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
+    
 
   ]
 })

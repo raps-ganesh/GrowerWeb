@@ -19,6 +19,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { LoadingInterceptor } from './loading.interceptor';
 import { DatePipe } from '@angular/common';
 
+
 // #fake-end#
 
 function appInitializer(authService: AuthService) {
@@ -50,7 +51,8 @@ function appInitializer(authService: AuthService) {
     AppRoutingModule,
     InlineSVGModule.forRoot(),
     NgbModule,
-    AngularMultiSelectModule
+    AngularMultiSelectModule,
+    
   ],
   providers: [
     {

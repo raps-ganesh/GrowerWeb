@@ -30,7 +30,7 @@ export class AuthHTTPService {
         .replace('{1}', encodeURIComponent(password))
     ).pipe(
       map((result: any) => {
-        debugger;
+        //debugger;
           if (result.username == undefined) {
             return notFoundError;
           }

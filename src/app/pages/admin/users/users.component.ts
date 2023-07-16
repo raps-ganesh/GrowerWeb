@@ -91,7 +91,7 @@ export class UsersComponent {
       })
       .subscribe({
         next: (data: any) => {
-          debugger;
+          //debugger;
           this.userInfo = data;
           this.pagecount =
             this.userInfo.length > 0
