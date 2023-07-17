@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AdminService {
+ 
 
   constructor(private http: HttpClient, private authService: AuthHTTPService) {}
   baseAdminURL: string = environment.adminApiBaseUrl;
@@ -73,8 +74,35 @@ export class AdminService {
     //debugger;
     return this.http
       .post<any>(
-        'https://localhost:7061/api/Admin/SaveUser/' + user.Id,
+        'https://localhost:7061/api/Admin/SaveUser/' + user.id,
         user
+      )
+      .pipe(
+        map((response: any) => {
+          //debugger;
+          return response;
+        })
+      );
+  }
+
+  ResetPassword(UserId: any, password: any): Observable<any> {
+    return this.http
+    .post<any>(
+      'https://localhost:7061/api/Admin/UpdatePassword/' + UserId+'?password='+password, password
+    )
+    .pipe(
+      map((response: any) => {
+        //debugger;
+        return response;
+      })
+    );
+  }
+
+  public DeleteUser(userid:any): Observable<any> {
+    //debugger;
+    return this.http
+      .post<any>(
+        'https://localhost:7061/api/Admin/DeleteUser/'+userid,userid
       )
       .pipe(
         map((response: any) => {

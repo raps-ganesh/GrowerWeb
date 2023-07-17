@@ -7,24 +7,26 @@ import { AddEditComponent } from './users/add-edit/add-edit.component';
 
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { RouterModule } from '@angular/router';
+import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
+import { ModalsModule } from "../../_metronic/partials/layout/modals/modals.module";
 
 
 
 
 @NgModule({
-  declarations: [
-    UsersComponent,
-    AddEditComponent
-  ],
-  imports: [
-    CommonModule,
-    InlineSVGModule,
-    AngularMultiSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule
-    
-
-  ]
+    declarations: [
+        UsersComponent,
+        AddEditComponent,
+        ResetPasswordComponent
+    ],
+    imports: [
+        CommonModule,
+        InlineSVGModule,
+        AngularMultiSelectModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        ModalsModule
+    ]
 })
 export class AdminModule { }

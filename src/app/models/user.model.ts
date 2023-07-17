@@ -1,19 +1,20 @@
 export interface UserModel {
 
 
-    Id :number;
-    FirstName : string;
-    LastName? : string;
-    Email : string;
+    id :number;
+    firstName : string;
+    lastName? : string;
+    email : string;
     
-    Password : string;
-    ConfirmPassword?:string;
-    IsTempPassword? : boolean;
-    IsFirstTimeVendorLogin? : boolean;
-    OldVendor_Id :string;
-    AccountTypeId? :number;
-    AccountType : string;
-    AccountNumber :string;
-    IsActive : boolean;
-    SendWelcomeEmail?:boolean
+    password : string;
+    confirmPassword?:string;
+    isTempPassword? : boolean;
+    isFirstTimeVendorLogin? : boolean;
+    oldVendor_Id :string;
+    accountTypeId? :number;
+    accountType : string;
+    accountNumber :string;
+    isActive : boolean;
+    sendWelcomeEmail?:boolean
+    userGroups?:string;
 }

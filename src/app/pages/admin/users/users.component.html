@@ -138,6 +138,26 @@
               </span>
               <!--end::Svg Icon-->
             </button>
+            <button
+              class="btn btn-icon btn-active-light-danger w-30px h-30px me-3"
+              tooltip="Reset Password"
+              title="Reset Password"
+              (click)="passwordResend(info.id,info.firstName)"
+              [hidden]="!canDelete()"
+            >
+              <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+              <span class="svg-icon svg-icon-3">
+                <a>
+                  <div
+                    class="symbol-label fs-4 badge-light-danger "
+                  >
+                    <i class="fa fa-cog "></i>
+                  </div>
+                </a>
+              </span>
+              <!--end::Svg Icon-->
+          </button>
+
           </td>
         </tr>
         <tr [hidden]="totalrecords > 0" class="text-center">
@@ -263,4 +283,11 @@
   </div>
   <!-- begin::Body -->
 </div>
-  
+<app-modal class="min-w-300px" #modal [modalConfig]="modalConfig">
+  <app-reset-password
+    (newItemEvent)="closePopup()"
+    [UserId]="userid"
+    [UserName]="userName"
+   
+  ></app-reset-password>
+</app-modal>

@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { AdminService } from 'src/app/services/Admin/admin.service';
 import { ExcelService } from 'src/app/services/Excel/excel.service';
 import { AppSettingsService } from 'src/app/shared/app-settings.service';
+import { ModalComponent, ModalConfig } from 'src/app/_metronic/partials';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @Component({
   selector: 'app-users',
@@ -11,6 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent {
+
 
   pagenumber: number = 1;
   pagesize: number = 10;
@@ -25,6 +28,44 @@ export class UsersComponent {
 
 
   userInfo: any;
+
+
+  userid :any;
+  userName:any;
+  modalConfig: ModalConfig = {
+    modalTitle: 'Reset Password',
+    size: 'xl',
+    hideCloseButton() {
+      return true;
+    },
+  };
+  @ViewChild('modal') public modalComponent: ModalComponent;
+  @ViewChild(ResetPasswordComponent)
+  private resetPasswordComponent: ResetPasswordComponent;
+  closePopup() {
+    this.ngOnInit();
+    this.modalComponent.dismiss();
+  }
+
+  passwordResend(userId: any,userName: any) {
+  
+    this.cleanPopup();
+    this.userid = userId;
+    this.userName=userName
+    this.modalConfig.modalTitle = 'Reset User Password';
+    this.modalConfig.size = 'lg';
+    this.modalConfig.dismissButtonLabel = '';
+    
+    setTimeout(() => {
+      this.resetPasswordComponent.ngOnInit();
+      this.modalComponent.open();
+    }, 200);
+  }
+  cleanPopup() {
+    this.userid = null;
+    this.userName = null;
+  }
+
 
   constructor(
      
@@ -143,41 +184,48 @@ export class UsersComponent {
   }
 
   deleteUser(id: any) {
+    debugger;
     Swal.fire({
-      text: 'Are you sure, you want to delete Tractor Information.?',
+      text: 'Are you sure, do you want to deactivate this user?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.value) {
-        // this.tractorinformationService.deleteTractorInformation(id).subscribe({
-        //   error: (e: any) => {
-        //     Swal.fire({
-        //       text: e.error,
-        //       icon: 'error',
-        //       buttonsStyling: false,
-        //       confirmButtonText: 'Ok, got it!',
-        //       customClass: {
-        //         confirmButton: 'btn btn-primary',
-        //       },
-        //     });
-        //   },
-        //   complete: () => {
-        //     Swal.fire({
-        //       text: 'Tractor information deleted successfully.',
-        //       icon: 'success',
-        //       buttonsStyling: false,
-        //       confirmButtonText: 'Ok, got it!',
-        //       customClass: {
-        //         confirmButton: 'btn btn-primary',
-        //       },
-        //     });
-        //     this.ngOnInit();
-        //   },
-        // });
+        this.adminService.DeleteUser(id).subscribe({
+          next: (data: any) => {
+            //debugger;
+            var insertId= data;
+           
+          },
+          error: (err: any) => {
+            console.log(err);
+            Swal.fire({
+              text: err.error.text,
+              icon: 'error',
+              buttonsStyling: false,
+              confirmButtonText: 'Ok, got it!',
+              customClass: {
+                confirmButton: 'btn btn-primary',
+              },
+            });
+    
+          },
+          complete:()=>{
+            Swal.fire({
+              text: 'User deleted successfully.',
+              icon: 'success',
+              buttonsStyling: false,
+              confirmButtonText: 'Ok, got it!',
+              customClass: {
+                confirmButton: 'btn btn-primary',
+              },
+            });
+          }
+        });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelled', 'Tractor information not deleted.', 'error');
+        Swal.fire('Cancelled', 'User not deactivated', 'error');
       }
     });
   }

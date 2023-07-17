@@ -6,6 +6,7 @@ import { UserModel } from 'src/app/models/user.model';
 import { AdminService } from 'src/app/services/Admin/admin.service';
 import Swal from 'sweetalert2';
 import { filter } from 'rxjs/operators';
+import { Item } from 'angular2-multiselect-dropdown';
 
 @Component({
   selector: 'app-add-edit',
@@ -38,14 +39,14 @@ export class AddEditComponent implements OnInit {
   selectedItems:any = [];
   dropdownSettings:any = {};
   usermodel : UserModel={
-    Id: 0,
-    FirstName: '',
-    Email: '',
-    Password: '',
-    OldVendor_Id: '',
-    AccountType: '',
-    AccountNumber: '',
-    IsActive: false
+    id: 0,
+    firstName: '',
+    email: '',
+    password: '',
+    oldVendor_Id: '',
+    accountType: '',
+    accountNumber: '',
+    isActive: false
   };
  @ViewChild('userForm') userForm: NgForm;
 
@@ -64,9 +65,8 @@ export class AddEditComponent implements OnInit {
   }
   ngOnInit(): void {
         
-    this.selectedItems = [
-          
-        ];
+    this.selectedItems = [];
+    //this.selectedItems = [{"id":1,"itemName":"Administrators"}];
     this.dropdownSettings = { 
               singleSelection: false, 
               text:"Select Group",
@@ -79,27 +79,17 @@ export class AddEditComponent implements OnInit {
 
             this.GetAccountTypes(); 
             this.GetGroup();      
-            
-            debugger;
-            
-           
-
-            // this.route.queryParams.subscribe(params => {
-            //     let id = params['id'];
-            //     console.log(id); // Print the parameter to the console. 
-            //     this.usermodel.Id=id;
-            // });
-
+                       
             if(this.id > 0)
             {
-              alert("Edit User");
-              this.usermodel.Id=this.id
-              this.GetUserById(this.usermodel.Id);
+              //alert("Edit User");
+              this.usermodel.id=this.id
+              this.GetUserById(this.usermodel.id);
             }
             else
             {
-              this.usermodel.Id=0;
-              alert("New User");
+              this.usermodel.id=0;
+              //alert("New User");
             }
 
  
@@ -133,8 +123,24 @@ export class AddEditComponent implements OnInit {
   GetUserById(userId :any) {
     this.adminService.GetUserById(userId).subscribe({
       next: (data: any) => {
-        //debugger;
+        debugger;
         this.usermodel = data;
+
+        var itm=this.dropdownList;
+        var dataToSend: any = [];
+          var batches = this.usermodel.userGroups != null ? this.usermodel.userGroups.split(',') : [];
+          batches.forEach(function (element: any) {
+            var it= itm.filter((x:any)=> x.id==element);
+            //alert(it.itemName);
+            dataToSend.push({ "id": Number(element), "itemName": it[0].itemName});
+          });
+
+          this.selectedItems=dataToSend;
+          //this.selectedItems = [{"id":1,"itemName":"Administrators"}];
+
+        
+
+
       },
       error: (err: any) => {
         console.log(err);
@@ -152,20 +158,7 @@ export class AddEditComponent implements OnInit {
       console.log(this.selectedItems);
 
       this.EnableDisableAccount();
-      // //debugger;
-      // const result = this.selectedItems.filter((x:any) => x.id === 4);
-      // alert(result);
-
-
-      // if(this.selectedItems.filter((x : any) => x.id == 4))
-      // this.userForm.controls.AccountNumber.enable();
-      // else
-      // this.userForm.controls.AccountNumber.disable();
-
-      // if(this.selectedItems.filter((x:any) => x.id === 3))
-      // this.userForm.controls.OldVendor_Id.enable();
-      // else
-      // this.userForm.controls.OldVendor_Id.disable();
+     
   }
   onSelectAll(items: any){
       console.log(items);
@@ -188,12 +181,12 @@ export class AddEditComponent implements OnInit {
     else
     {
       this.userForm.controls.AccountNumber.disable();
-      this.usermodel.AccountNumber="";
+      this.usermodel.accountNumber="";
     }
     if(result2.length>0)
     this.userForm.controls.OldVendor_Id.enable();
     else{
-      this.usermodel.OldVendor_Id="";
+      this.usermodel.oldVendor_Id="";
       this.userForm.controls.OldVendor_Id.disable();
     }
     
@@ -210,8 +203,8 @@ export class AddEditComponent implements OnInit {
       Swal.fire('Invalide', 'Please fill in all the required fields.', 'error');
     } else {
       Swal.fire({
-        title: 'Confirm Ticket',
-        text: 'Are you sure, you want to save user.',
+        title: 'Confirm User',
+        text: 'Are you sure, you want to save user?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes',
@@ -236,37 +229,25 @@ export class AddEditComponent implements OnInit {
   }
 
   SaveUser() {
+    //debugger;
+    var gropupIds ="";
+    this.selectedItems.forEach((element:any) => {
+      if(gropupIds=="")
+          gropupIds=element.id
+      else
+        gropupIds= gropupIds +"," +element.id 
 
-    //this.usermodel.Id=0
-     
-    this.usermodel.FirstName = this.userForm.controls.FirstName.value,
-    this.usermodel.LastName = this.userForm.controls.LastName.value,
-    this.usermodel.Email = this.userForm.controls.Email.value,
+    });
+    this.usermodel.userGroups=gropupIds;
 
-    this.usermodel.Password = this.userForm.controls.Password.value,
-    this.usermodel.IsTempPassword = true,
-    this.usermodel.IsFirstTimeVendorLogin = true,
-    this.usermodel.OldVendor_Id = this.userForm.controls.OldVendor_Id.value,
-    this.usermodel.AccountTypeId = 1,
-    //this.usermodel.AccountType = this.userForm.controls.Email.value,
-    this.usermodel.AccountNumber =this.userForm.controls.AccountNumber.value ,
-    this.usermodel.IsActive = true,
-    
+
+
 
     this.adminService.SaveUser(this.usermodel).subscribe({
       next: (data: any) => {
         //debugger;
         var insertId= data;
-        var gropupIds ="";
-        this.selectedItems.forEach((element:any) => {
-          if(gropupIds=="")
-              gropupIds=element.id
-          else
-            gropupIds= gropupIds +"," +element.id 
-
-        });
-
-
+       
       },
       error: (err: any) => {
         console.log(err);
@@ -279,8 +260,6 @@ export class AddEditComponent implements OnInit {
             confirmButton: 'btn btn-primary',
           },
         });
-
-
 
       },
       complete:()=>{
@@ -309,17 +288,17 @@ export class AddEditComponent implements OnInit {
       Swal.fire('Invalide', 'Please fill in all the required fields.', 'error');
     } else {
       Swal.fire({
-        title: 'Confirm Ticket',
-        text: 'Are you sure, you want to create ticket.',
+        title: 'Confirm User',
+        text: 'Are you sure, you want to save user?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes',
         cancelButtonText: 'No',
       }).then((result) => {
         if (result.value) {
-          //this.CreateTicket('In Yard');
+         
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          Swal.fire('Cancelled', 'Ticket not created.', 'error');
+          Swal.fire('Cancelled', 'User not saved.', 'error');
         }
       });
     }

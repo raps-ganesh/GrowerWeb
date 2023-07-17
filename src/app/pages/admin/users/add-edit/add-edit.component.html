@@ -54,7 +54,7 @@
                                     >First Name</label
                                     >
                                     
-                                    <input required [(ngModel)]="usermodel.FirstName"
+                                    <input required [(ngModel)]="usermodel.firstName"
                                         type="text"
                                         class="form-control form-control-lg form-control-solid"
                                         placeholder="First Name"
@@ -68,7 +68,7 @@
                                     >Last Name</label
                                     >
                                     
-                                    <input [(ngModel)]="usermodel.LastName"
+                                    <input [(ngModel)]="usermodel.lastName"
                                         type="text"
                                         class="form-control form-control-lg form-control-solid"
                                         placeholder="Last Name"
@@ -88,7 +88,7 @@
                         ><span class="required">Email</span></label
                         >
                         <div class="col-lg-8 fv-row">
-                        <input required [(ngModel)]="usermodel.Email"
+                        <input required [(ngModel)]="usermodel.email"
                             type="Email"
                             class="form-control form-control-lg form-control-solid"
                             placeholder="Email"
@@ -126,7 +126,7 @@
                         ><span class="required">Password</span></label
                         >
                         <div class="col-lg-8 fv-row">
-                        <input  [(ngModel)]="usermodel.Password"
+                        <input  [(ngModel)]="usermodel.password"
                             type="Password"
                             class="form-control form-control-lg form-control-solid"
                             placeholder="Password"
@@ -141,7 +141,7 @@
                         ><span class="required">Confirm Password</span></label
                         >
                         <div class="col-lg-8 fv-row">
-                        <input [(ngModel)]="usermodel.ConfirmPassword"
+                        <input [(ngModel)]="usermodel.confirmPassword"
                             type="Password"
                             class="form-control form-control-lg form-control-solid"
                             placeholder="Confirm Password"
@@ -155,15 +155,21 @@
                           >Welcome Email</label
                         >
                         <div class="col-lg-8 fv-row">
-                          <div class="d-flex align-items-center mt-3">
+                          <!-- <div class="d-flex align-items-center mt-3">
                             <label class="form-check form-check-inline form-check-solid me-5"
-                              ><input [(ngModel)]="usermodel.SendWelcomeEmail"
+                              ><input [(ngModel)]="usermodel.sendWelcomeEmail"
                                 class="form-check-input"
                                 name="SendWelcomeEmail"
                                 type="checkbox"
                               /><span class="fw-bold ps-2 fs-6">Send new user welcome email</span></label
                             >
-                          </div>
+                          </div> -->
+                          <div class="col-lg-8 d-flex align-items-center">
+                            <div class="form-check form-check-solid form-switch fv-row">
+                                <input   name="SendWelcomeEmail" type="checkbox" [(ngModel)]="usermodel.sendWelcomeEmail"  class="form-check-input w-45px h-30px">
+                                <label class="form-check-label">Send new user welcome email</label>
+                            </div>
+                        </div>
                         </div>
                       </div>
                     
@@ -196,7 +202,7 @@
                         ><span class="required">Account Type</span></label
                         >
                         <div class="col-lg-8 fv-row">
-                        <select [(ngModel)]="usermodel.AccountTypeId"
+                        <select [(ngModel)]="usermodel.accountTypeId"
                             class="form-select form-select-solid form-select-lg fw-bold"
                             name="AccountTypeId"
                         >
@@ -214,7 +220,7 @@
                         ><span class="required">Dehydrator Account Number</span></label
                         >
                         <div class="col-lg-8 fv-row">
-                        <input disabled [(ngModel)]="usermodel.AccountNumber"
+                        <input disabled [(ngModel)]="usermodel.accountNumber"
                             type="text"
                             class="form-control form-control-lg form-control-solid"
                             placeholder="Dehydrator Account Number"
@@ -229,7 +235,7 @@
                         ><span class="required">JDE Long Address Book No</span></label
                         >
                         <div class="col-lg-8 fv-row">
-                        <input disabled [(ngModel)]="usermodel.OldVendor_Id"
+                        <input disabled [(ngModel)]="usermodel.oldVendor_Id"
                             type="text"
                             class="form-control form-control-lg form-control-solid"
                             placeholder="JDE Long Address Book No"

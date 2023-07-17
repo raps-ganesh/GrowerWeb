@@ -2,6 +2,7 @@ export interface ModalConfig {
   modalTitle: string;
   dismissButtonLabel?: string;
   closeButtonLabel?: string;
+  size?:string;
   shouldClose?(): Promise<boolean> | boolean;
   shouldDismiss?(): Promise<boolean> | boolean;
   onClose?(): Promise<boolean> | boolean;
