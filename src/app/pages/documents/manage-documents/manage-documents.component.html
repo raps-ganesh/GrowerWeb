@@ -1,0 +1,261 @@
+<!-- begin::Header -->
+<div  class="card mb-5 mb-xl-8">
+
+
+    <div class="card-header border-0 pt-5">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="card-label fw-bolder fs-3 mb-1">Documents        </span>
+          <span class="text-muted mt-1 fw-bold fs-7">Over {{ this.totalrecords }} Documents</span>
+        </h3>
+        <div
+          class="card-toolbar"
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          data-bs-trigger="hover"
+          title="Click to add a user"
+        >
+          <a href="users/addedit" class="btn btn-sm btn-light-primary">
+            <span
+            [inlineSVG]="'./assets/media/icons/duotune/arrows/arr075.svg'"
+              class="svg-icon svg-icon-3"
+            ></span>
+            Add Document
+          </a>
+        </div>
+      </div>
+      <!-- end::Header -->
+      <!-- begin::Body -->
+      <div class="card-body py-3">
+        <!-- begin::Table container -->
+        <div class="table-responsive">
+          <!-- begin::Table -->
+          <table
+          class="table align-middle table-row-dashed fs-8 gy-5 dataTable no-footer"
+        >
+          <!-- begin::Table head -->
+          <thead>
+            <tr class="text-start text-muted fw-bold fs-7 gs-00">
+              <th
+                class="text-center rounded-start min-w-150px"
+                style="cursor: pointer"
+                (click)="sort('firstName')"
+              >
+              File Name
+              </th>
+              <th
+                class="text-center min-w-150px"
+                (click)="sort('lastName')"
+                style="cursor: pointer"
+              >
+                Type
+              </th>
+              <th
+                class="text-center "
+                style="cursor: pointer"
+                (click)="sort('email')"
+              >
+                Title
+              </th>
+    
+              <th
+                class="text-center "
+                style="cursor: pointer"
+                (click)="sort('accountType')"
+              >
+              Description
+              </th>
+    
+              
+    
+              <th class="text-center min-w-200px rounded-end">Actions</th>
+            </tr>
+          </thead>
+          <!-- end::Table head -->
+          <!-- begin::Table body -->
+          <tbody>
+            <tr *ngFor="let info of documentInfo">
+              <td class="text-center pe-0">
+                <a href="./assets/{{info.pdfUrl.replace('~/','')}}" target="_blank"><img src="./assets/{{info.thumbnailUrl.replace('~/','')}}" height="60" width="50"></a>
+              </td>
+              <td class="text-center pe-5">
+                {{ info.accountType }}
+              </td>
+              <td class="text-center pe-5">{{ info.title }}</td>
+              <td class="text-center pe-5"> 
+                <div [innerHtml]="info.description"></div>
+              </td>
+    
+              <td class="text-center pe-5">
+                <button
+                  class="btn btn-icon btn-active-light-success w-30px h-30px me-3"
+                  tooltip="Edit"
+                  title="Edit"
+                  
+                >
+                  <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                  <span class="svg-icon svg-icon-3">
+                    <a [routerLink]="['addedit', info.id]">
+                      <div
+                        class="symbol-label fs-4 badge-light-success text-success"
+                      >
+                        <i class="fa fa-pencil text-success"></i>
+                      </div>
+                    </a>
+                  </span>
+                  <!--end::Svg Icon-->
+                </button>
+    
+                <button
+                  class="btn btn-icon btn-active-light-danger w-30px h-30px me-3"
+                  tooltip="Delete Info"
+                  title="Delete Info"
+                  (click)="deleteDocument(info.id)"
+                  [hidden]="!canDelete()"
+                >
+                  <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
+                  <span class="svg-icon svg-icon-3">
+                    <a>
+                      <div
+                        class="symbol-label fs-4 badge-light-danger text-danger"
+                      >
+                        <i class="fa fa-trash text-danger"></i>
+                      </div>
+                    </a>
+                  </span>
+                  <!--end::Svg Icon-->
+                </button>
+             
+    
+              </td>
+            </tr>
+            <tr [hidden]="totalrecords > 0" class="text-center">
+              <td colspan="13">No data available in table</td>
+            </tr>
+          </tbody>
+          <tfoot [hidden]="totalrecords == 0">
+            <tr>
+              <td colspan="28">
+                <table style="width: 99%">
+                  <tr>
+                    <td>
+                      <table>
+                        <tr>
+                          <td>
+                            <select
+                              style="width: 80px; float: right"
+                              name="pagesize"
+                              ngModel
+                              [(ngModel)]="pagesize"
+                              (change)="pageSizeChange($event)"
+                              class="min-w-50px form-select form-select-solid select2-selection select2-selection--single form-select mb-2"
+                            >
+                              <option>10</option>
+                              <option>20</option>
+                              <option>50</option>
+                              <option>100</option>
+                            </select>
+                          </td>
+                          <td>
+                            <span
+                              class="nav-link text-active-primary pb-4 active"
+                            >
+                              {{
+                                appSettingService.pagingMessage(
+                                  this.totalrecords,
+                                  this.pagenumber,
+                                  this.datacount,
+                                  this.pagesize
+                                )
+                              }}
+                            </span>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+    
+                    <td>
+                      <div class="row" [hidden]="totalrecords <= 10">
+                        <div
+                          class="col-sm-12 col-md-2 d-flex align-items-center justify-content-center justify-content-md-start"
+                        ></div>
+                        <div
+                          class="col-sm-12 col-md-9 d-flex align-items-center justify-content-center justify-content-md-end"
+                        >
+                          <div
+                            class="dataTables_paginate paging_simple_numbers"
+                            id="kt_table_users_paginate"
+                          >
+                            <ul class="pagination">
+                              <li
+                                class="paginate_button page-item previous"
+                                [ngClass]="pagenumber == 1 ? 'disabled' : ''"
+                                id="kt_table_users_previous"
+                                (click)="paging(pagenumber - 1)"
+                                [hidden]="pagenumber == 1"
+                              >
+                                <a
+                                  aria-controls="kt_table_users"
+                                  data-dt-idx="0"
+                                  tabindex="0"
+                                  class="page-link"
+                                  ><i class="previous"></i
+                                ></a>
+                              </li>
+    
+                              <li
+                                class="paginate_button page-item"
+                                [class.active]="page == pagenumber"
+                                *ngFor="
+                                  let page of pagingArray;
+                                  let i = index
+                                "
+                              >
+                                <a
+                                  class="page-link"
+                                  (click)="paging(page)"
+                                  style="cursor: pointer"
+                                  [class.active]="page == pagenumber"
+                                  >{{ page }}</a
+                                >
+                              </li>
+    
+                              <li
+                                class="paginate_button page-item next"
+                                id="kt_table_users_next"
+                              >
+                                <a
+                                  aria-controls="kt_table_users"
+                                  data-dt-idx="4"
+                                  tabindex="0"
+                                  class="page-link"
+                                  [hidden]="pagecount <= pagenumber"
+                                  (click)="paging(pagenumber + 1)"
+                                  ><i class="next"></i
+                                ></a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </tfoot>
+          <!-- end::Table body -->
+        </table>
+          <!-- end::Table -->
+        </div>
+        <!-- end::Table container -->
+      </div>
+      <!-- begin::Body -->
+    </div>
+    <!-- <app-modal class="min-w-300px" #modal [modalConfig]="modalConfig">
+      <app-reset-password
+        (newItemEvent)="closePopup()"
+        [UserId]="userid"
+        [UserName]="userName"
+       
+      ></app-reset-password>
+    </app-modal> -->

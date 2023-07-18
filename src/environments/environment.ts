@@ -161,7 +161,7 @@ export const environment = {
     'https://localhost:7050/api/authenticate/authenticate?username={0}&password={1}',
   growerPortalApiBaseUrl: 'https://localhost:7050/api/authenticate/',
   adminApiBaseUrl: 'https://localhost:7061/api/admin/',
-
+  documentApiBaseUrl: 'https://localhost:7073/api/Document/',
   
 
   receivingApiBaseUrl: 'https://localhost:7101/api/receiving/',

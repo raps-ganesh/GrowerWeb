@@ -74,7 +74,7 @@ export class AdminService {
     //debugger;
     return this.http
       .post<any>(
-        'https://localhost:7061/api/Admin/SaveUser/' + user.id,
+        this.baseAdminURL +'SaveUser/' + user.id,
         user
       )
       .pipe(
@@ -88,7 +88,7 @@ export class AdminService {
   ResetPassword(UserId: any, password: any): Observable<any> {
     return this.http
     .post<any>(
-      'https://localhost:7061/api/Admin/UpdatePassword/' + UserId+'?password='+password, password
+      this.baseAdminURL +'UpdatePassword/' + UserId+'?password='+password, password
     )
     .pipe(
       map((response: any) => {
@@ -102,7 +102,7 @@ export class AdminService {
     //debugger;
     return this.http
       .post<any>(
-        'https://localhost:7061/api/Admin/DeleteUser/'+userid,userid
+        this.baseAdminURL +'DeleteUser/'+userid,userid
       )
       .pipe(
         map((response: any) => {
@@ -116,7 +116,7 @@ export class AdminService {
     debugger;
     return this.http
       .post<any>(
-        'https://localhost:7061/api/Admin/SaveUserGroup/' + userid ,groupids
+        this.baseAdminURL +'SaveUserGroup/' + userid ,groupids
       )
       .pipe(
         map((response: any) => {
