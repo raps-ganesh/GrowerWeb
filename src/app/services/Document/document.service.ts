@@ -8,12 +8,33 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class DocumentService {
+  
  
 
   constructor(private http: HttpClient, private authService: AuthHTTPService) {}
   baseDocumentURL: string = environment.documentApiBaseUrl;
 
 
+  GetDocumentById(id :any) : Observable<any>
+  {
+    return this.http
+    .get<any>(this.baseDocumentURL + 'GetDocumentById/'+id)
+    .pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
+  GetDocumentTypes() : Observable<any>{
+    return this.http
+    .get<any>(this.baseDocumentURL + 'getdocumenttypes')
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
   public GetDocuments(data: any): Observable<any> {
     return this.http
       .get<any>(

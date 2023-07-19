@@ -5,12 +5,14 @@ import { InlineSVGModule } from 'ng-inline-svg-2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ModalsModule } from 'src/app/_metronic/partials';
+import { UploadDocumentComponent } from './manage-documents/upload-document/upload-document.component';
 
 
 
 @NgModule({
   declarations: [
-    ManageDocumentsComponent
+    ManageDocumentsComponent,
+    UploadDocumentComponent
   ],
   imports: [
     CommonModule,

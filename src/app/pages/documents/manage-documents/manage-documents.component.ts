@@ -44,6 +44,15 @@ export class ManageDocumentsComponent implements OnInit {
     );
   }
 
+  onKey(event: any) {
+    this.GetDocuments(
+      this.sortcolumn,
+      this.sortdirection,
+      event.target.value,
+      1,
+      this.pagesize
+    );
+  }
 
   sort(sortby: string) {
     this.GetDocuments(
@@ -127,7 +136,7 @@ export class ManageDocumentsComponent implements OnInit {
   deleteDocument(id: any) {
     debugger;
     Swal.fire({
-      text: 'Are you sure, do you want to deactivate this user?',
+      text: 'Are you sure, do you want to delete this document?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -155,7 +164,7 @@ export class ManageDocumentsComponent implements OnInit {
           },
           complete:()=>{
             Swal.fire({
-              text: 'User deleted successfully.',
+              text: 'Document deleted successfully.',
               icon: 'success',
               buttonsStyling: false,
               confirmButtonText: 'Ok, got it!',
@@ -166,7 +175,7 @@ export class ManageDocumentsComponent implements OnInit {
           }
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelled', 'User not deactivated', 'error');
+        Swal.fire('Cancelled', 'Document not deleted', 'error');
       }
     });
   }

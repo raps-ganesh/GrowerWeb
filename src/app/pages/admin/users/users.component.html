@@ -7,6 +7,8 @@
       <span class="card-label fw-bolder fs-3 mb-1">Users</span>
       <span class="text-muted mt-1 fw-bold fs-7">Over {{ this.totalrecords }} Users</span>
     </h3>
+
+    
     <div
       class="card-toolbar"
       data-bs-toggle="tooltip"
@@ -14,6 +16,18 @@
       data-bs-trigger="hover"
       title="Click to add a user"
     >
+
+    <div class="d-flex align-items-right position-relative my-1 me-3">
+      <i class="fa fa-magnifying-glass fs-3 position-absolute ms-4" style="margin-top: 14px;">
+        <span class="path1"></span><span class="path2"></span></i>                
+          <input type="text" data-kt-ecommerce-order-filter="search" 
+          class="form-control form-control-solid w-250px ps-12" 
+          placeholder="Search"
+          (keyup)="onKey($event)"
+          (search)="onKey($event)"
+          >
+    </div>
+
       <a href="users/addedit" class="btn btn-sm btn-light-primary">
         <span
         [inlineSVG]="'./assets/media/icons/duotune/arrows/arr075.svg'"
@@ -76,7 +90,7 @@
           <th
             class="text-center "
             style="cursor: pointer"
-            (click)="sort('email')"
+            (click)="sort('OldVendor_Id')"
           >
           JDE Long Address Book No
           </th>
@@ -142,7 +156,7 @@
               class="btn btn-icon btn-active-light-danger w-30px h-30px me-3"
               tooltip="Reset Password"
               title="Reset Password"
-              (click)="passwordResend(info.id,info.firstName)"
+              (click)="passwordResend(info.id,info.firstName+' '+info.lastName )"
               [hidden]="!canDelete()"
             >
               <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->

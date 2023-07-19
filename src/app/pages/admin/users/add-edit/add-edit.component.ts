@@ -138,7 +138,7 @@ export class AddEditComponent implements OnInit {
           this.selectedItems=dataToSend;
           //this.selectedItems = [{"id":1,"itemName":"Administrators"}];
 
-        
+          this.EnableDisableAccount();
 
 
       },

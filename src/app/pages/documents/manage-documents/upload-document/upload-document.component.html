@@ -1,0 +1,152 @@
+<!-- begin::Header -->
+<div  class="card mb-5 mb-xl-8">
+
+    <div class="card-header border-0 pt-5">
+       <h3 class="card-title align-items-start flex-column">
+         <span class="card-label fw-bolder fs-3 mb-1">Upload Document</span>
+         <!-- <span class="text-muted mt-1 fw-bold fs-7">Over   Users</span> -->
+       </h3>
+       
+     </div>
+     <div class="card-body py-3">
+       <form #userForm="ngForm"  class="form">
+           
+           <div class="card mb-5 mb-xl-10">
+               
+               <div id="kt_account_profile_details" class="collapse show">
+               
+                   <div class="card-body border-top p-9">
+                   
+                  
+                   
+                    <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6"
+                        ><span class="required">Select Document</span></label
+                        >
+                        <div class="col-lg-8 fv-row">
+                        <input required [(ngModel)]="SelectDocument" (change)="onFileSelected($event)"
+                            type="file"
+                            class="form-control form-control-lg form-control-solid"
+                            placeholder="SelectDocument"
+                            name="SelectDocument"
+                            value=""
+                        />
+                        </div>
+                    </div>
+                    <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6"
+                        ><span class="required">Select Thumbnail</span></label
+                        >
+                        <div class="col-lg-8 fv-row">
+                        <input required [(ngModel)]="SelectThumbnail"
+                            type="file"
+                            class="form-control form-control-lg form-control-solid"
+                            placeholder="SelectThumbnail"
+                            name="SelectThumbnail"
+                            value=""
+                        />
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    
+                    <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6"
+                        ><span class="required">Title</span></label
+                        >
+                        <div class="col-lg-8 fv-row">
+                        <input  [(ngModel)]="Title"
+                            type="text"
+                            class="form-control form-control-lg form-control-solid"
+                            placeholder="Title"
+                            name="Title"
+                            value=""
+                        />
+                        </div>
+                    </div>
+
+                    <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"
+                            ><span class="required">Document Type</span></label
+                            >
+                            <div class="col-lg-8 fv-row">
+                            <select [(ngModel)]="DocumentTypeId"
+                                class="form-select form-select-solid form-select-lg fw-bold"
+                                name="AccountTypeId"
+                            >
+                            <option *ngFor="let objlst of documentTypes" value={{objlst.id}}>
+                                {{objlst.documentTypeValue}}
+                            </option>
+                            </select>
+                        
+                            </div>
+                        </div>
+
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"
+                            ><span class="required">Updated On</span></label
+                            >
+                            <div class="col-lg-8 fv-row">
+                            <input [(ngModel)]="UpdatedOn"
+                                type="text"
+                                class="form-control form-control-lg form-control-solid"
+                                placeholder="Updated On"
+                                name="UpdatedOn"
+                                value=""
+                            />
+                            </div>
+                        </div>
+
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label fw-bold fs-6"
+                            ><span class="required">Description</span></label
+                            >
+                            <div class="col-lg-8 fv-row">
+                            <input [(ngModel)]="Description"
+                                type="text"
+                                class="form-control form-control-lg form-control-solid"
+                                placeholder="Description"
+                                name="Description"
+                                value=""
+                            />
+                            </div>
+                        </div>
+                   
+                   </div>
+                   
+                   <div class="card-footer d-flex justify-content-end py-6 px-9">
+                    <button [disabled]="userForm.invalid" 
+                        type="submit"
+                        class="btn btn-primary"
+                        [disabled]="isLoading"
+                        (click)="saveDocument()"
+                    >
+                        <ng-container *ngIf="!isLoading">Save Changes</ng-container>
+                        <ng-container *ngIf="isLoading">
+                        <span clas="indicator-progress" [style.display]="'block'">
+                            Please wait...{{ " " }}
+                            <span
+                            class="spinner-border spinner-border-sm align-middle ms-2"
+                            ></span>
+                        </span>
+                        </ng-container>
+                    </button>
+                    </div>
+               </div>
+           </div>
+           
+       </form>
+
+
+   
+
+
+
+
+
+
+       <!-- end::Table container -->
+     </div>
+     <!-- begin::Body -->
+   </div>

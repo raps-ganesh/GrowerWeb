@@ -12,9 +12,20 @@
           data-bs-toggle="tooltip"
           data-bs-placement="top"
           data-bs-trigger="hover"
-          title="Click to add a user"
+           
         >
-          <a href="users/addedit" class="btn btn-sm btn-light-primary">
+
+        <div class="d-flex align-items-right position-relative my-1 me-3">
+          <i class="fa fa-magnifying-glass fs-3 position-absolute ms-4" style="margin-top: 14px;">
+            <span class="path1"></span><span class="path2"></span></i>                
+              <input type="text" data-kt-ecommerce-order-filter="search" 
+              class="form-control form-control-solid w-250px ps-12" 
+              placeholder="Search"
+              (keyup)="onKey($event)"
+              (search)="onKey($event)"
+              >
+        </div>
+          <a href="documents/Upload" class="btn btn-sm btn-light-primary">
             <span
             [inlineSVG]="'./assets/media/icons/duotune/arrows/arr075.svg'"
               class="svg-icon svg-icon-3"
@@ -94,7 +105,7 @@
                 >
                   <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                   <span class="svg-icon svg-icon-3">
-                    <a [routerLink]="['addedit', info.id]">
+                    <a [routerLink]="['Upload', info.id]">
                       <div
                         class="symbol-label fs-4 badge-light-success text-success"
                       >

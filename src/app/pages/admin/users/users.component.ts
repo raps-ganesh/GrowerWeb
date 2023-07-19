@@ -47,12 +47,22 @@ export class UsersComponent {
     this.modalComponent.dismiss();
   }
 
+  onKey(event: any) {
+    this.getUsers(
+      this.sortcolumn,
+      this.sortdirection,
+      event.target.value,
+      1,
+      this.pagesize
+    );
+  }
+
   passwordResend(userId: any,userName: any) {
   
     this.cleanPopup();
     this.userid = userId;
     this.userName=userName
-    this.modalConfig.modalTitle = 'Reset User Password';
+    this.modalConfig.modalTitle = 'Reset User Password - '+userName;
     this.modalConfig.size = 'lg';
     this.modalConfig.dismissButtonLabel = '';
     
