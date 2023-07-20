@@ -18,6 +18,7 @@ export class LoadingInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    debugger;
     this.totalRequests++;
     if (request.url.indexOf('TypeAhead') == -1)
       this.loadingService.setLoading(true);
