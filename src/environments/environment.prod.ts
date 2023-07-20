@@ -156,20 +156,12 @@ export const environment = {
       'thumbnail': './assets/media/demos/demo20.png'
     },
   },
-  authenticationApiUrl:
-    'https://localhost:7050/api/authenticate/authenticate?username={0}&password={1}',
-  growerPortalApiBaseUrl: 'https://localhost:7050/api/authenticate/',
-  receivingApiBaseUrl: 'https://localhost:7101/api/receiving/',
-  gradingApiBaseUrl: 'https://localhost:7068/api/grading/',
-  growerAccountingApiBaseUrl: 'https://localhost:7020/api/groweraccounting/',
-  reportsBaseUrl: 'https://localhost:7282/reporting/',
-  masterDataBaseUrl: 'https://localhost:7179/api/master/',
-  adminApiBaseUrl: 'https://localhost:7081/api/admin/',
-  deferralPaymentBaseUrl: 'https://localhost:7280/api/DeferralPayment/',
+  authenticationApiUrl: 'http://10.12.96.192:4200/api/authenticate/authenticate?username={0}&password={1}',
+  growerPortalApiBaseUrl: 'http://10.12.96.192:4200/api/authenticate/',
+  adminApiBaseUrl: 'http://10.12.96.192:4100/api/admin/',
+  documentApiBaseUrl: 'http://10.12.96.192:4300/api/Document/',
+  reportsBaseUrl: 'http://10.12.96.194:3300/reporting/',
   cropyear: new Date().getMonth() > 8 ? new Date().getFullYear() : new Date().getFullYear() - 1,
-  SendInventoryToJde: true,
-  DeferredInterestRate: 0.0325,
-  labelPrintBaseUrl: 'http://localhost:5093'
 };
 
 /*
