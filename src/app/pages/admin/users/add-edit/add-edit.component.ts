@@ -184,20 +184,28 @@ export class AddEditComponent implements OnInit {
       this.usermodel.accountNumber="";
     }
     if(result2.length>0)
-    this.userForm.controls.OldVendor_Id.enable();
+    this.userForm.controls.oldVendor_Id.enable();
     else{
       this.usermodel.oldVendor_Id="";
-      this.userForm.controls.OldVendor_Id.disable();
+      this.userForm.controls.oldVendor_Id.disable();
     }
     
   }
 
-  
+  UserValidation()
+  {
+    if(this.usermodel.password !=this.usermodel.confirmPassword )
+    {
+      this.userForm.controls['usermodel.password'].setErrors({'incorrect': true});
+      return false
+    }
+  }
   saveSettings() {
     //debugger;
      
     var ctrl= this.userForm.controls;
-
+    if(!this.UserValidation())
+      return;
     ////debugger;
     if (this.userForm.invalid) {
       Swal.fire('Invalide', 'Please fill in all the required fields.', 'error');

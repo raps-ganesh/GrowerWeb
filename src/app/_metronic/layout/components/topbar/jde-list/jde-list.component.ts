@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { EventEmitterService } from 'src/app/pages/event-emitter.service';
 import { PaymentCalculationReportComponent } from 'src/app/pages/reports/payment-calculation-report/payment-calculation-report.component';
 import { GrowerPortalService } from 'src/app/services/Grower/grower-portal.service';
+import { RoleGuard } from 'src/app/services/role.guard';
 @Component({
   selector: 'app-jde-list',
   templateUrl: './jde-list.component.html',
@@ -52,5 +53,16 @@ export class JdeListComponent {
       },
     });
     
+  }
+
+  canShow() {
+    return (
+      new RoleGuard().canShow([
+        // 'Administrators',
+        // 'Internal Users',
+         'Growers',
+         'Dehydrators'
+      ])
+    );
   }
 }
