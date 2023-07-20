@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { RoleGuard } from '../services/role.guard';
 import { AddEditComponent } from './admin/users/add-edit/add-edit.component';
 import { UsersComponent } from './admin/users/users.component';
 import { ManageDocumentsComponent } from './documents/manage-documents/manage-documents.component';
@@ -8,69 +9,69 @@ import { PaymentCalculationReportComponent } from './reports/payment-calculation
 const Routing: Routes = [
   {
     path: 'documents/Upload/:id1',
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+      expectedRole: ['Administrators', 'Internal Users']
     }, component: UploadDocumentComponent
   },
   {
     path: 'documents/Upload',
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+      expectedRole: ['Administrators', 'Internal Users']
     }, component: UploadDocumentComponent
   },
   {
     path: 'documents',
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+      expectedRole: ['Administrators', 'Internal Users']
     }, component: ManageDocumentsComponent
   },
   {
     path: 'users',
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+      expectedRole: ['Administrators', 'Internal Users']
     }, component: UsersComponent
   },
   {
-    path: 'users/addedit',
-    //canActivate: [RoleGuard],
+    path: 'users/add',
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+      expectedRole: ['Administrators', 'Internal Users']
     }, component: AddEditComponent
   },
   {
-    path: 'users/addedit/:id1',
-    //canActivate: [RoleGuard],
+    path: 'users/edit/:id1',
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+      expectedRole: ['Administrators', 'Internal Users']
     }, component: AddEditComponent
   },
   {
-    path: 'delivery',
-    //canActivate: [RoleGuard],
+    path: 'reports/deliverypayment',
+    canActivate: [RoleGuard],
     data: {
       expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
     }, component: PaymentCalculationReportComponent
   },
   {
     path: 'febprogress',
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: {
       expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
     }, component: PaymentCalculationReportComponent
   },
   {
     path: 'spotemf',
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: {
       expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
     }, component: PaymentCalculationReportComponent
   },
   {
-    path: 'mayprogress',
+    path: 'reports/delivery',
     //canActivate: [RoleGuard],
     data: {
       expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
@@ -78,7 +79,7 @@ const Routing: Routes = [
   },
   {
     path: 'finalpayment',
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: {
       expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
     },

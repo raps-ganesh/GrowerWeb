@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { RoleGuard } from 'src/app/services/role.guard';
 
 @Component({
   selector: 'app-header-menu',
@@ -14,6 +15,31 @@ export class HeaderMenuComponent implements OnInit {
   calculateMenuItemCssClass(url: string): string {
     return checkIsActive(this.router.url, url) ? 'active' : '';
   }
+
+  ShowAdminOnly() {
+    return (
+      new RoleGuard().canShow([
+        'Administrators',
+        'Internal Users',
+        // 'Growers',
+        // 'Dehydrators'
+      ])
+    );
+  }
+
+  ShowAll() {
+    return (
+      new RoleGuard().canShow([
+        'Administrators',
+        'Internal Users',
+         'Growers',
+         'Dehydrators'
+      ])
+    );
+  }
+
+
+
 }
 
 const getCurrentUrl = (pathname: string): string => {

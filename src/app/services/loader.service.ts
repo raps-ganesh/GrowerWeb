@@ -13,6 +13,7 @@ export class LoaderService {
   }
 
   getLoading(): boolean {
+    console.log('getloading..')
     return this.loading;
   }
 }

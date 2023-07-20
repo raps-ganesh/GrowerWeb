@@ -9,6 +9,7 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { RouterModule } from '@angular/router';
 import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
 import { ModalsModule } from "../../_metronic/partials/layout/modals/modals.module";
+import { WidgetsModule } from "../../_metronic/partials/content/widgets/widgets.module";
 
 
 
@@ -26,7 +27,8 @@ import { ModalsModule } from "../../_metronic/partials/layout/modals/modals.modu
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        ModalsModule
+        ModalsModule,
+        WidgetsModule
     ]
 })
 export class AdminModule { }
