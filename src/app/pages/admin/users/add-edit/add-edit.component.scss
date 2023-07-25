@@ -18,3 +18,7 @@ select.ng-invalid, input[type=text].ng-invalid {
     background-size: calc(0.75em + 0.775rem) calc(0.75em + 0.775rem);
 
 }
+
+.selected-list .c-btn {
+    padding: 1px !important;
+}

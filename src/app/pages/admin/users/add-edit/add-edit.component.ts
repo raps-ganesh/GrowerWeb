@@ -73,7 +73,7 @@ export class AddEditComponent implements OnInit {
               selectAllText:'Select All',
               unSelectAllText:'UnSelect All',
               enableSearchFilter: true,
-              classes:"form-control form-control-solid"
+              classes:"form-control form-control-solid fs-1"
             };  
 
 
@@ -125,6 +125,7 @@ export class AddEditComponent implements OnInit {
       next: (data: any) => {
         debugger;
         this.usermodel = data;
+        this.usermodel.confirmPassword='';
 
         var itm=this.dropdownList;
         var dataToSend: any = [];
@@ -199,9 +200,10 @@ export class AddEditComponent implements OnInit {
       this.userForm.controls['usermodel.password'].setErrors({'incorrect': true});
       return false
     }
+    return true;
   }
   saveSettings() {
-    //debugger;
+    debugger;
      
     var ctrl= this.userForm.controls;
     if(!this.UserValidation())
@@ -237,7 +239,7 @@ export class AddEditComponent implements OnInit {
   }
 
   SaveUser() {
-    //debugger;
+    debugger;
     var gropupIds ="";
     this.selectedItems.forEach((element:any) => {
       if(gropupIds=="")

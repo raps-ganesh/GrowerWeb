@@ -1,5 +1,6 @@
 export class AuthModel {
   authToken: string;
+  authAPIToken: string;
   refreshToken: string;
   expiresIn: Date;
 

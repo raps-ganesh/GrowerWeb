@@ -20,6 +20,9 @@ export class LoadingInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     debugger;
     this.totalRequests++;
+    // if(localStorage.getItem('apitkn')!=null)
+    // request.headers.set('Authorization', 'Bearer '+ localStorage.getItem('apitkn'));
+
     if (request.url.indexOf('TypeAhead') == -1)
       this.loadingService.setLoading(true);
     return next.handle(request).pipe(
