@@ -8,6 +8,8 @@ import { AuthModel } from '../../../models/auth.model';
 import { UsersTable } from '../../../../../_fake/users.table';
 import { environment } from '../../../../../../environments/environment';
 
+
+
 const API_USERS_URL = `${environment.apiUrl}/users`;
 
 @Injectable({
@@ -30,12 +32,12 @@ export class AuthHTTPService {
         .replace('{1}', encodeURIComponent(password))
     ).pipe(
       map((result: any) => {
-        //debugger;
+        debugger;
           if (result.username == undefined) {
             return notFoundError;
           }
           const auth = new AuthModel();
-          //auth.authToken = 'auth-token-'+result.authToken;
+          auth.authAPIToken = result.authToken;
           auth.authToken = 'auth-token-8f3ae836da744329a6f93bf20594b5cc';
           auth.refreshToken = 'auth-token-f8c137a2c98743f48b643e71161d90aa';
           auth.expiresIn = new Date(Date.now() + 2 * 60 * 60 * 1000);
@@ -48,6 +50,7 @@ export class AuthHTTPService {
             JSON.stringify(result.groups)
           );
           localStorage.setItem('loggedinData', JSON.stringify(result));
+          localStorage.setItem('apitkn',result.authToken);
 
           return auth;
       })
@@ -79,15 +82,25 @@ export class AuthHTTPService {
   }
 
   getUserByToken(token: string): Observable<UserModel | undefined> {
-    const user = UsersTable.users.find((u: UserModel) => {
-      return u.authToken === token;
-    });
 
-    if (!user) {
+    debugger;
+
+    if(localStorage.getItem('loggedinUser')==null)
+    {
       return of(undefined);
     }
 
-    return of(user);
+    const newUser = UsersTable.users.find((u: UserModel) => {
+      return u.authToken === token;
+    });
+
+    if (!newUser) {
+      return of(undefined);
+    }
+
+    newUser.firstname=  localStorage.getItem('loggedinUser')! ;
+    
+    return of(newUser);
   }
 
   getAllUsers(): Observable<UserModel[]> {
