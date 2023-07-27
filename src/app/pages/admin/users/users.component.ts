@@ -142,7 +142,7 @@ export class UsersComponent {
       })
       .subscribe({
         next: (data: any) => {
-          //debugger;
+          //
           this.userInfo = data;
           this.pagecount =
             this.userInfo.length > 0
@@ -194,7 +194,7 @@ export class UsersComponent {
   }
 
   deleteUser(id: any) {
-    debugger;
+    
     Swal.fire({
       text: 'Are you sure, do you want to deactivate this user?',
       icon: 'warning',
@@ -205,7 +205,7 @@ export class UsersComponent {
       if (result.value) {
         this.adminService.DeleteUser(id).subscribe({
           next: (data: any) => {
-            //debugger;
+            //
             var insertId= data;
            
           },

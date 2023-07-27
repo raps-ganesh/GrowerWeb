@@ -63,7 +63,7 @@ export class UploadDocumentComponent implements OnInit {
   {
     this.documentService.GetDocumentById(id).subscribe({
       next: (data: any) => {
-        debugger;
+        
         //this.usermodel = data;
         this.Title=data.title;
         this.DocumentTypeId=data.type;
@@ -79,7 +79,7 @@ export class UploadDocumentComponent implements OnInit {
   GetAccountTypes() {
     this.documentService.GetDocumentTypes().subscribe({
       next: (data: any) => {
-        //debugger;
+        //
         this.documentTypes = data;
       },
       error: (err: any) => {

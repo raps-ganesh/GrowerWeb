@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, NgForm } from '@angular/forms';
+import { FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { UserModel } from 'src/app/models/user.model';
@@ -114,14 +114,14 @@ export class AddEditComponent implements OnInit {
           //         Validators.pattern(/^(?=\D*\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}$/)
           //  ]]
           // });
- 
+          this.CheckPassword();
 
   }
 
   GetAccountTypes() {
     this.adminService.GetAccountTypes().subscribe({
       next: (data: any) => {
-        //debugger;
+        //
         this.UserAccountTypes = data;
       },
       error: (err: any) => {
@@ -133,7 +133,7 @@ export class AddEditComponent implements OnInit {
   GetGroup() {
     this.adminService.GetGroup().subscribe({
       next: (data: any) => {
-        //debugger;
+        //
         this.dropdownList = data;
       },
       error: (err: any) => {
@@ -145,7 +145,7 @@ export class AddEditComponent implements OnInit {
   GetUserById(userId :any) {
     this.adminService.GetUserById(userId).subscribe({
       next: (data: any) => {
-        debugger;
+        
         this.usermodel = data;
         this.usermodel.confirmPassword='';
 
@@ -162,7 +162,7 @@ export class AddEditComponent implements OnInit {
           //this.selectedItems = [{"id":1,"itemName":"Administrators"}];
 
           this.EnableDisableAccount();
-          debugger;
+          
           data.userDetails.forEach((element:any) => {
             let index = this.listJDENumber.indexOf(element.oldVendor_Id);
             if(index==-1)
@@ -202,7 +202,7 @@ export class AddEditComponent implements OnInit {
   }
   EnableDisableAccount()
   {
-    //debugger;
+    //
     const result1 = this.selectedItems.filter((x:any) => x.id === 4);
     const result2 = this.selectedItems.filter((x:any) => x.id === 3);
      
@@ -232,12 +232,12 @@ export class AddEditComponent implements OnInit {
     return true;
   }
   saveSettings() {
-    debugger;
+    
     
     var ctrl= this.userForm.controls;
     if(!this.UserValidation())
       return;
-    ////debugger;
+    ////
     if (this.userForm.invalid) {
       Swal.fire('Invalide', 'Please fill in all the required fields.', 'error');
     } else {
@@ -268,7 +268,7 @@ export class AddEditComponent implements OnInit {
   }
 
   SaveUser() {
-    debugger;
+    
     var gropupIds ="";
     
     this.selectedItems.forEach((element:any) => {
@@ -285,7 +285,7 @@ export class AddEditComponent implements OnInit {
 
     this.adminService.SaveUser(this.usermodel).subscribe({
       next: (data: any) => {
-        //debugger;
+        //
         var insertId= data;
        
       },
@@ -323,7 +323,7 @@ export class AddEditComponent implements OnInit {
 
 
   onSubmit(data: any) {
-    ////debugger;
+    ////
     if (this.userForm.invalid) {
       Swal.fire('Invalide', 'Please fill in all the required fields.', 'error');
     } else {
@@ -345,7 +345,7 @@ export class AddEditComponent implements OnInit {
   }
 
   keyPressNumbers(event: any) {
-    ////debugger;
+    ////
     var charCode = event.which ? event.which : event.keyCode;
     // Only Numbers 0-9
     if (charCode < 48 || charCode > 57) {
@@ -371,6 +371,13 @@ export class AddEditComponent implements OnInit {
     let index = this.listJDENumber.indexOf(item);
     
     this.listJDENumber.splice(index,1);
+  }
+
+  CheckPassword()
+  {
+    //.setErrors({'incorrect': true});
+    this.userForm.controls['usermodel.password'].setValidators([Validators.required]);
+    //this.userForm.controls['Password'].setErrors({'incorrect': true});
   }
 
 

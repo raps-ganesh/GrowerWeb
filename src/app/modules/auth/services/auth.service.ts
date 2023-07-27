@@ -132,7 +132,7 @@ export class AuthService implements OnDestroy {
       }
 
       const authData = JSON.parse(lsValue);
-      debugger;
+      
       return authData;
     } catch (error) {
       console.error(error);

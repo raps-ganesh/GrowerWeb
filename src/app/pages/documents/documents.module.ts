@@ -6,13 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ModalsModule } from 'src/app/_metronic/partials';
 import { UploadDocumentComponent } from './manage-documents/upload-document/upload-document.component';
+import { DocumentListComponent } from './document-list/document-list.component';
 
 
 
 @NgModule({
   declarations: [
     ManageDocumentsComponent,
-    UploadDocumentComponent
+    UploadDocumentComponent,
+    DocumentListComponent
   ],
   imports: [
     CommonModule,

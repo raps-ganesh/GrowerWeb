@@ -32,7 +32,7 @@ export class AuthHTTPService {
         .replace('{1}', encodeURIComponent(password))
     ).pipe(
       map((result: any) => {
-        debugger;
+        
           if (result.username == undefined) {
             return notFoundError;
           }
@@ -83,7 +83,7 @@ export class AuthHTTPService {
 
   getUserByToken(token: string): Observable<UserModel | undefined> {
 
-    debugger;
+    
 
     if(localStorage.getItem('loggedinUser')==null)
     {

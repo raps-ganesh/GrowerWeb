@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { DocumentService } from 'src/app/services/Document/document.service';
 import { ExcelService } from 'src/app/services/Excel/excel.service';
 import { AppSettingsService } from 'src/app/shared/app-settings.service';
-import Swal from 'sweetalert2';
-import {Safe} from 'src/app/models/Safe '
 
 @Component({
-  selector: 'app-manage-documents',
-  templateUrl: './manage-documents.component.html',
-  styleUrls: ['./manage-documents.component.scss']
+  selector: 'app-document-list',
+  templateUrl: './document-list.component.html',
+  styleUrls: ['./document-list.component.scss']
 })
-export class ManageDocumentsComponent implements OnInit {
- 
+export class DocumentListComponent {
 
+
+  
   
   pagenumber: number = 1;
   pagesize: number = 10;
@@ -24,15 +24,40 @@ export class ManageDocumentsComponent implements OnInit {
   datacount: number = 0;
   pagingArray: any = [];
 
-
+  DocType:string='';
+  DocTypeId:number=0;
+  DocTitle:string='';
   documentInfo: any;
 
   constructor(
      
     private documentService: DocumentService,
     public appSettingService: AppSettingsService,
-    private excelService: ExcelService
-  ) { }
+    private excelService: ExcelService,
+    private router: Router,
+  ) { 
+
+    this.DocType =
+    this.router.url.split('/')[2] != null
+      ? this.router.url.split('/')[2]
+      : '';
+
+      if(this.DocType=='growers'){
+        this.DocTitle='Food Safety';
+        this.DocTypeId=2;
+      }
+      else if(this.DocType=='dehydrators'){
+        this.DocTitle='News Letters';
+        this.DocTypeId=3;
+      }
+      else
+      {
+        this.DocTitle='';
+        this.DocTypeId=0;
+      }
+      
+
+  }
 
   ngOnInit(): void {
     this.GetDocuments(
@@ -93,12 +118,13 @@ export class ManageDocumentsComponent implements OnInit {
     pagesize: number
   ) {
     this.documentService
-      .GetDocuments({
+      .GetDocumentsByType({
         sortcolumn: sortcolumn,
         sortdirection: sortdirection,
         pagenumber: pagenumber,
         searchstring: searchstring,
         pagesize: pagesize,
+        DocTypeId:this.DocTypeId
       })
       .subscribe({
         next: (data: any) => {
@@ -126,6 +152,8 @@ export class ManageDocumentsComponent implements OnInit {
             this.totalrecords,
             this.pagesize
           );
+
+          this.filterYear();
         },
         error: (err: any) => {
           console.log(err);
@@ -133,60 +161,22 @@ export class ManageDocumentsComponent implements OnInit {
       });
   }
 
-  deleteDocument(id: any) {
-    
-    Swal.fire({
-      text: 'Are you sure, do you want to delete this document?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-    }).then((result) => {
-      if (result.value) {
-        this.documentService.DeleteDocument(id).subscribe({
-          next: (data: any) => {
-            //
-            var insertId= data;
-           
-          },
-          error: (err: any) => {
-            console.log(err);
-            Swal.fire({
-              text: err.error.text,
-              icon: 'error',
-              buttonsStyling: false,
-              confirmButtonText: 'Ok, got it!',
-              customClass: {
-                confirmButton: 'btn btn-primary',
-              },
-            });
-    
-          },
-          complete:()=>{
-            Swal.fire({
-              text: 'Document deleted successfully.',
-              icon: 'success',
-              buttonsStyling: false,
-              confirmButtonText: 'Ok, got it!',
-              customClass: {
-                confirmButton: 'btn btn-primary',
-              },
-            });
-          }
-        });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire('Cancelled', 'Document not deleted', 'error');
-      }
-    });
+  filterYear(): any[] {
+
+    debugger;
+    var a = this.documentInfo.map((x:any) => x.modifiedYear);
+    a = Array.from(new Set(this.documentInfo.map((x:any) => x.modifiedYear).sort((a:any,b:any) => b - a)));
+    return a;
   }
 
-  canDelete() {
-    // return (
-    //   new RoleGuard().canShow(['SEC_NPS_RCV_TRACTOR_DEL'])
-    // );
-    return true;
+  filterFunction(filter: any): any[] {
+    return this.documentInfo.filter(
+      (x: { modifiedYear: any }) => x.modifiedYear === filter
+    );
   }
 
-  
+
+
+
 
 }

@@ -2,11 +2,26 @@ import { Routes } from '@angular/router';
 import { RoleGuard } from '../services/role.guard';
 import { AddEditComponent } from './admin/users/add-edit/add-edit.component';
 import { UsersComponent } from './admin/users/users.component';
+import { DocumentListComponent } from './documents/document-list/document-list.component';
 import { ManageDocumentsComponent } from './documents/manage-documents/manage-documents.component';
 import { UploadDocumentComponent } from './documents/manage-documents/upload-document/upload-document.component';
 import { PaymentCalculationReportComponent } from './reports/payment-calculation-report/payment-calculation-report.component';
 
 const Routing: Routes = [
+  {
+    path: 'documents/growers',
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['Administrators', 'Internal Users']
+    }, component: DocumentListComponent
+  },
+  {
+    path: 'documents/dehydrators',
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['Administrators', 'Internal Users']
+    }, component: DocumentListComponent
+  },
   {
     path: 'documents/Upload/:id1',
     canActivate: [RoleGuard],

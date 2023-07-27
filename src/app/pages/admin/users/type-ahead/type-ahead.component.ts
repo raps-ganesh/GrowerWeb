@@ -23,7 +23,7 @@ export class TypeAheadComponent implements OnInit {
   ngOnInit(): void {
     if (this.inputValue != undefined)
       if (this.inputValue != '') {
-        debugger;
+        
         if ((
           document.getElementById(this.inputid) as HTMLInputElement
         ) != undefined) {
@@ -50,7 +50,7 @@ export class TypeAheadComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.inputValue != undefined)
       if (this.inputValue != '') {
-        debugger;
+        
         if ((
           document.getElementById(this.inputid) as HTMLInputElement
         ) != undefined) {
@@ -87,7 +87,7 @@ export class TypeAheadComponent implements OnInit {
   }
 
   setValue(data: any) {
-    debugger;
+    
     this.searchText = data.value;
     this.selectedValue = data.key;
     this.dataList = null;

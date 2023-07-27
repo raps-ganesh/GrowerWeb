@@ -35,6 +35,31 @@ export class DocumentService {
         })
       );
   }
+  public GetDocumentsByType(data: any): Observable<any> {
+    return this.http
+      .get<any>(
+        this.baseDocumentURL +
+          'GetDocumentsByType/' +
+          '?sortcolumn=' +
+          data.sortcolumn +
+          '&sortDirection=' +
+          data.sortdirection +
+          '&searchByValue=' +
+          data.searchstring +
+          '&pagenumber=' +
+          data.pagenumber +
+          '&pagesize=' +
+          data.pagesize+
+          '&documentType='+
+          data.DocTypeId
+      )
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
+
   public GetDocuments(data: any): Observable<any> {
     return this.http
       .get<any>(
@@ -65,7 +90,7 @@ export class DocumentService {
     )
     .pipe(
       map((response: any) => {
-        //debugger;
+        //
         return response;
       })
     );

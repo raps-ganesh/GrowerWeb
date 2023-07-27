@@ -72,7 +72,7 @@ export class ResetPasswordComponent implements OnInit{
   SetPassword(){
     this.adminService.ResetPassword(this.UserId,this.password).subscribe({
       next: (data: any) => {
-        //debugger;
+        //
         var insertId= data;
        
       },

@@ -71,7 +71,7 @@ export class AdminService {
   }
 
   public SaveUser(user:any): Observable<any> {
-    //debugger;
+    //
     return this.http
       .post<any>(
         this.baseAdminURL +'SaveUser/' + user.id,
@@ -79,7 +79,7 @@ export class AdminService {
       )
       .pipe(
         map((response: any) => {
-          //debugger;
+          //
           return response;
         })
       );
@@ -92,35 +92,35 @@ export class AdminService {
     )
     .pipe(
       map((response: any) => {
-        //debugger;
+        //
         return response;
       })
     );
   }
 
   public DeleteUser(userid:any): Observable<any> {
-    //debugger;
+    //
     return this.http
       .post<any>(
         this.baseAdminURL +'DeleteUser/'+userid,userid
       )
       .pipe(
         map((response: any) => {
-          //debugger;
+          //
           return response;
         })
       );
   }
 
   public SaveGroup(userid:any,groupids:any): Observable<any> {
-    debugger;
+    
     return this.http
       .post<any>(
         this.baseAdminURL +'SaveUserGroup/' + userid ,groupids
       )
       .pipe(
         map((response: any) => {
-          //debugger;
+          //
           return response;
         })
       );
