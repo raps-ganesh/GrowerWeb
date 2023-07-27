@@ -240,39 +240,95 @@
                     </div>
 
                     <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label fw-bold fs-6"
-                        ><span class="required">JDE Long Address Book No</span></label
-                        >
-                        <div class="col-lg-8 fv-row">
-                        <input disabled [(ngModel)]="usermodel.oldVendor_Id"
-                            type="text"
-                            class="form-control form-control-lg form-control-solid"
-                            placeholder="JDE Long Address Book No"
-                            name="oldVendor_Id"
-                            value=""
-                        />
+                        <label class="col-lg-4 col-form-label fw-bold fs-6">
+                            <span class="required">Add JDE Long Address Book No</span>
+                        </label>
+                        <div class="col-lg-6 fv-row">
+                            <input [(ngModel)]="usermodel.oldVendor_Id" style="display: none;"
+                                type="text"
+                                class="form-control form-control-lg form-control-solid"
+                                placeholder="JDE Long Address Book No"
+                                name="oldVendor_Id"
+                                value=""
+                            />
+                            <app-type-ahead [urlToSearch]="receipienttypeaheadUrl" [inputClass]="'form-control form-control-solid'"
+          [placeholder]="'Supplier Name'" [inputid]="'Receipient'" [inputValue]="receipient"
+          (onSelect)="populateSupplierInfo($event)"></app-type-ahead>
                         </div>
+                        <div class="col-lg-2">
+                            <button 
+                             class="btn btn-primary"
+                             (click)="AddJDENumber()"
+                            >Add</button>
+                        </div>
+                    </div>
+                    <div class="row mb-6">
+                        <div class="col-lg-4 fv-row">
+
+                        </div>
+                        <div class="col-lg-8 fv-row">
+                            <table class="table align-middle gs-0 gy-4">
+                                <thead>
+                                    <tr class="fw-bolder text-muted bg-light">
+                                        <td class="ps-4 min-w-200px rounded-start">
+                                            JED Long Address Book No
+                                        </td>
+                                        <td class="min-w-125px text-center rounded-end">
+                                            Action
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of listJDENumber">
+                                        <td>
+                                            {{item}}
+                                        </td>
+                                        <td class="text-center"> 
+                                            <a
+                                                tooltip="Delete Info"
+                                                title="Delete Info"
+                                                (click)="removeJDENumber(item)"
+                                                
+                                                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                                                >
+                                                <span
+                                                    [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                                                    class="svg-icon svg-icon-3"
+                                                ></span>
+                                                </a>
+
+                                            <!-- <button 
+                                            class="btn btn-primary"
+                                            (click)="removeJDENumber(item)"
+                                           >Remove</button> -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        
                     </div>
 
                     
                     </div>
                     <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <button [disabled]="userForm.invalid" 
-                        type="submit"
-                        class="btn btn-primary"
-                        [disabled]="isLoading"
-                        (click)="saveSettings()"
-                    >
-                        <ng-container *ngIf="!isLoading">Save Changes</ng-container>
-                        <ng-container *ngIf="isLoading">
-                        <span clas="indicator-progress" [style.display]="'block'">
-                            Please wait...{{ " " }}
-                            <span
-                            class="spinner-border spinner-border-sm align-middle ms-2"
-                            ></span>
-                        </span>
-                        </ng-container>
-                    </button>
+                        <button [disabled]="userForm.invalid" 
+                            type="submit"
+                            class="btn btn-primary"
+                            [disabled]="isLoading"
+                            (click)="saveSettings()"
+                        >
+                            <ng-container *ngIf="!isLoading">Save Changes</ng-container>
+                            <ng-container *ngIf="isLoading">
+                            <span clas="indicator-progress" [style.display]="'block'">
+                                Please wait...{{ " " }}
+                                <span
+                                class="spinner-border spinner-border-sm align-middle ms-2"
+                                ></span>
+                            </span>
+                            </ng-container>
+                        </button>
                     </div>
                 
                 </div>

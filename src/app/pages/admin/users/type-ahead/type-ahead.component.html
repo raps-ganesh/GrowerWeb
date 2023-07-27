@@ -1,0 +1,13 @@
+<div class="row mb-5 fs-8">
+    <!--begin::Col-->
+    <div class="col-md-12 fv-row fv-plugins-icon-container">
+      <input type="text" class="{{ inputClass }}" name="searchText" required [(ngModel)]="searchText"
+        (keyup)="search($event)" autocomplete="off" id="{{ inputid }}" placeholder="{{ placeholder }}"
+        (change)="callSelection()" value="{{ inputValue }}" />
+      <ul style="width: 230px; z-index: 1" class="card" id="dataList">
+        <div *ngFor="let data  of dataList " class="pb-6" style="cursor: pointer; width: 230px">
+          <a class="fs-5" (click)="setValue(data)">{{ data.value }}</a>
+        </div>
+      </ul>
+    </div>
+  </div>

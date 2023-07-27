@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
 import { ModalsModule } from "../../_metronic/partials/layout/modals/modals.module";
 import { WidgetsModule } from "../../_metronic/partials/content/widgets/widgets.module";
+import { TypeAheadComponent } from './users/type-ahead/type-ahead.component';
 
 
 
@@ -18,7 +19,8 @@ import { WidgetsModule } from "../../_metronic/partials/content/widgets/widgets.
     declarations: [
         UsersComponent,
         AddEditComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        TypeAheadComponent
     ],
     imports: [
         CommonModule,

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -7,6 +7,7 @@ import { AdminService } from 'src/app/services/Admin/admin.service';
 import Swal from 'sweetalert2';
 import { filter } from 'rxjs/operators';
 import { Item } from 'angular2-multiselect-dropdown';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-edit',
@@ -16,7 +17,7 @@ import { Item } from 'angular2-multiselect-dropdown';
 export class AddEditComponent implements OnInit {
   
 
-
+  //private fb: FormBuilder,
  
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLoading: boolean;
@@ -56,6 +57,18 @@ export class AddEditComponent implements OnInit {
   UserAccountTypes:any;
   UserGroups:any;
   paramsObject:any;
+
+
+
+  receipienttypeaheadUrl: string = environment.growerAccountingApiBaseUrl + 'ReceipientTypeAhead';
+  @Input() receipient: string;
+  @Input() supplierId: any;
+  populateSupplierInfo(event: any) {
+    this.supplierId = event;
+    console.log(this.supplierId);
+    
+  }
+
   constructor(private cdr: ChangeDetectorRef,private adminService: AdminService,private route: ActivatedRoute) {
     const loadingSubscr = this.isLoading$
       .asObservable()
@@ -89,9 +102,18 @@ export class AddEditComponent implements OnInit {
             else
             {
               this.usermodel.id=0;
+              this.usermodel.isActive=true;
               //alert("New User");
             }
 
+          //   this.userForm = this.fb.group({
+          //     name: ['', [Validators.required]],
+          //     email: ['', [Validators.required, Validators.email],
+          //     password: ['', [
+          //         Validators.required, 
+          //         Validators.pattern(/^(?=\D*\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}$/)
+          //  ]]
+          // });
  
 
   }
@@ -140,6 +162,13 @@ export class AddEditComponent implements OnInit {
           //this.selectedItems = [{"id":1,"itemName":"Administrators"}];
 
           this.EnableDisableAccount();
+          debugger;
+          data.userDetails.forEach((element:any) => {
+            let index = this.listJDENumber.indexOf(element.oldVendor_Id);
+            if(index==-1)
+              this.listJDENumber.push(element.oldVendor_Id);
+            
+          });
 
 
       },
@@ -204,7 +233,7 @@ export class AddEditComponent implements OnInit {
   }
   saveSettings() {
     debugger;
-     
+    
     var ctrl= this.userForm.controls;
     if(!this.UserValidation())
       return;
@@ -241,6 +270,7 @@ export class AddEditComponent implements OnInit {
   SaveUser() {
     debugger;
     var gropupIds ="";
+    
     this.selectedItems.forEach((element:any) => {
       if(gropupIds=="")
           gropupIds=element.id
@@ -249,8 +279,8 @@ export class AddEditComponent implements OnInit {
 
     });
     this.usermodel.userGroups=gropupIds;
-
-
+    //alert(this.listJDENumber.toString());
+    this.usermodel.oldVendor_Id=this.listJDENumber.toString();
 
 
     this.adminService.SaveUser(this.usermodel).subscribe({
@@ -326,6 +356,22 @@ export class AddEditComponent implements OnInit {
     }
   }
 
+  listJDENumber :any=[];
+
+  AddJDENumber()
+  {
+    let index = this.listJDENumber.indexOf(this.supplierId);
+    if(index==-1)
+      this.listJDENumber.push(this.supplierId);
+    else
+      alert("Already added jde number")
+  }
+  removeJDENumber(item:any)
+  {
+    let index = this.listJDENumber.indexOf(item);
+    
+    this.listJDENumber.splice(index,1);
+  }
 
 
 

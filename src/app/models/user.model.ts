@@ -10,6 +10,7 @@ export interface UserModel {
     confirmPassword?:string;
     isTempPassword? : boolean;
     isFirstTimeVendorLogin? : boolean;
+    jdeNumber?:string;
     oldVendor_Id :string;
     accountTypeId? :number;
     accountType : string;
