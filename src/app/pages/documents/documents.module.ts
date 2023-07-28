@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ModalsModule } from 'src/app/_metronic/partials';
 import { UploadDocumentComponent } from './manage-documents/upload-document/upload-document.component';
 import { DocumentListComponent } from './document-list/document-list.component';
-
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 @NgModule({
@@ -22,7 +22,8 @@ import { DocumentListComponent } from './document-list/document-list.component';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    ModalsModule
+    ModalsModule,
+    BsDatepickerModule.forRoot(),
   ]
 })
 export class DocumentsModule { }

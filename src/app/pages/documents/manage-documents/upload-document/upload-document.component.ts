@@ -68,6 +68,8 @@ export class UploadDocumentComponent implements OnInit {
         this.Title=data.title;
         this.DocumentTypeId=data.type;
         this.Description=data.description;
+        this.UpdatedOn=data.modifiedOn;
+        this.DocumentTypeId=data.documentTypeId;
 
       },
       error: (err: any) => {

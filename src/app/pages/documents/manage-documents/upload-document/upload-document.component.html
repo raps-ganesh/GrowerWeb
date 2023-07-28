@@ -88,12 +88,14 @@
                             ><span class="required">Updated On</span></label
                             >
                             <div class="col-lg-8 fv-row">
-                            <input [(ngModel)]="UpdatedOn"
+                            <input [(ngModel)]="UpdatedOn" bsDatepicker  [bsConfig]="{adaptivePosition: true, isAnimated: true, dateInputFormat: 'YYYY-MM-DD' }"
                                 type="text"
                                 class="form-control form-control-lg form-control-solid"
                                 placeholder="Updated On"
                                 name="UpdatedOn"
                                 value=""
+                                placement="top"
+                                required
                             />
                             </div>
                         </div>
