@@ -21,10 +21,10 @@
                    
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label fw-bold fs-6"
-                        ><span class="required">Select Document</span></label
+                        ><span class="">Select Document</span></label
                         >
                         <div class="col-lg-8 fv-row">
-                        <input required [(ngModel)]="SelectDocument" (change)="onFileSelected($event)"
+                        <input [(ngModel)]="SelectDocument" (change)="onFileSelected($event)"
                             type="file"
                             class="form-control form-control-lg form-control-solid"
                             placeholder="SelectDocument"
@@ -35,10 +35,10 @@
                     </div>
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label fw-bold fs-6"
-                        ><span class="required">Select Thumbnail</span></label
+                        ><span class="">Select Thumbnail</span></label
                         >
                         <div class="col-lg-8 fv-row">
-                        <input required [(ngModel)]="SelectThumbnail"
+                        <input  [(ngModel)]="SelectThumbnail" (change)="onFileThumbSelected($event)"
                             type="file"
                             class="form-control form-control-lg form-control-solid"
                             placeholder="SelectThumbnail"

@@ -187,6 +187,9 @@ export class ManageDocumentsComponent implements OnInit {
     return true;
   }
 
+  public createImgPath = (serverPath: string) => { 
+    return `https://localhost:7073/${serverPath}`; 
+  }
   
 
 }

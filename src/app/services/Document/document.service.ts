@@ -95,4 +95,23 @@ export class DocumentService {
       })
     );
   }
+
+
+  UploadDocumentUrl() 
+  {
+    return this.baseDocumentURL +'upload';
+  }
+
+  public saveDocument(data: any): Observable<any> {
+    debugger;
+    return this.http
+      .post<any>(this.baseDocumentURL + 'SaveDocument/' + data.id, data)
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
+
+  
 }
