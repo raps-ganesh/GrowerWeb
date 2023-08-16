@@ -18,6 +18,46 @@ const API_USERS_URL = `${environment.apiUrl}/users`;
 export class AuthHTTPService {
   constructor(private http: HttpClient) {}
 
+  VerifyOTP(email: string, authType: string,phoneNo:string,otp :string): Observable<any> {
+    const notFoundError = new Error('Not Found');
+    return this.http
+    .get(
+      environment.growerPortalApiBaseUrl + 'VerifyOTP?userName={0}&authType={1}&phoneNo={2}&otp={3}'
+        .replace('{0}', encodeURIComponent(email))
+        .replace('{1}', encodeURIComponent(authType))
+        .replace('{2}', encodeURIComponent(phoneNo))
+        .replace('{3}', encodeURIComponent(otp))
+    ).pipe(
+      map((result: any) => {
+        debugger;
+          if (result == null) {
+            return "Invalide OTP";
+          }
+
+          localStorage.setItem('AuthenticationType',result.authenticationType);
+          const auth = new AuthModel();
+          auth.authAPIToken = result.authToken;
+          auth.authToken = 'auth-token-8f3ae836da744329a6f93bf20594b5cc';
+          auth.refreshToken = 'auth-token-f8c137a2c98743f48b643e71161d90aa';
+          auth.expiresIn = new Date(Date.now() + 2 * 60 * 60 * 1000);
+
+          localStorage.setItem('loggedinUser', result.username);
+          localStorage.setItem('JDENumber', result.oldVendor_Id);
+          
+          localStorage.setItem(
+            'loggedinUserRoles',
+            JSON.stringify(result.groups)
+          );
+          localStorage.setItem('loggedinData', JSON.stringify(result));
+          localStorage.setItem('apitkn',result.authToken);
+          localStorage.setItem('AuthenticationType',result.authenticationType);
+
+          return auth;
+      })
+    );
+  }
+
+
   // public methods
   login(email: string, password: string): Observable<any> {
     const notFoundError = new Error('Not Found');

@@ -43,6 +43,21 @@ export class AuthService implements OnDestroy {
     this.unsubscribe.push(subscr);
   }
 
+  VerifyOTP(email: string, authType: string,phoneNo:string,otp :string): Observable<any>
+  {
+    return this.authHttpService.VerifyOTP(email,authType,phoneNo,otp).pipe(
+      map((auth: any) => {
+        debugger;
+        if(auth=='Invalide OTP')
+        {
+          return auth
+        }
+        // const result = this.setAuthFromLocalStorage(auth);
+        // return result;
+      })
+    );
+  }
+
   // public methods
   login(email: string, password: string): Observable<UserType> {
     this.isLoadingSubject.next(true);

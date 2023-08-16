@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { UserModel } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   returnUrl: string;
   isLoading$: Observable<boolean>;
   showOTP:boolean=false;
+  OTPError :any="";
 
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
@@ -103,6 +105,63 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
       });
     this.unsubscribe.push(loginSubscr);
+  }
+  cancelOTP(){
+    this.showOTP=false;
+  }
+
+  VerifyOTP(){
+    
+    this.authService.VerifyOTP(this.f.email.value,'2','19547064888','224289').subscribe({
+      next: (data: any) => {
+        //
+        var insertId= data;
+        if(data=='Invalide OTP')
+        {
+            this.OTPError='Invalide OTP';
+            Swal.fire({
+              text: this.OTPError,
+              icon: 'error',
+              buttonsStyling: false,
+              confirmButtonText: 'Ok, got it!',
+              customClass: {
+                confirmButton: 'btn btn-primary',
+              },
+            });
+        }
+        else{
+          Swal.fire({
+            text: 'OTP validate successfully.',
+            icon: 'success',
+            buttonsStyling: false,
+            confirmButtonText: 'Ok, got it!',
+            customClass: {
+              confirmButton: 'btn btn-primary',
+            },
+          });
+          this.router.navigate([this.returnUrl]);
+        }
+
+
+       
+      },
+      error: (err: any) => {
+        console.log(err);
+        Swal.fire({
+          text: err.error.text,
+          icon: 'error',
+          buttonsStyling: false,
+          confirmButtonText: 'Ok, got it!',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+        });
+
+      },
+      complete:()=>{
+        
+      }
+    });
   }
 
   ngOnDestroy() {

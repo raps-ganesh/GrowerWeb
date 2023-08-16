@@ -119,21 +119,15 @@
     </div>
 
     <input class="form-control form-control-lg form-control-solid" type="text" name="otp" autocomplete="off"
-      formControlName="otp" [ngClass]="{
-        'is-invalid': loginForm.controls['otp'].invalid,
-        'is-valid': loginForm.controls['otp'].valid
-      }" />
-    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-        validation: 'required',
-        message: 'OTP is required',
-        control: loginForm.controls['otp']
-      }"></ng-container>
+      formControlName="otp"  />
+    <label class="error--">{{OTPError}}</label>
+    
   </div>
   <!--end::Form group-->
 
   <!--begin::Action-->
   <div class="text-center">
-    <button type="button" id="kt_sign_in_submit_otp" class="btn btn-lg btn-primary w-100 mb-5"
+    <button style="margin-right: 5px;" (click)="VerifyOTP()" type="button" id="kt_sign_in_submit_otp" class="btn btn-lg btn-primary w-10 mb-5"
       >
       <ng-container *ngIf="isLoading$ | async">
         <span class="indicator-progress" [style.display]="'block'">
@@ -143,6 +137,18 @@
       </ng-container>
       <ng-container *ngIf="(isLoading$ | async) === false">
         <span class="indicator-label">Submit OTP</span>
+      </ng-container>
+    </button>
+    <button (click)="cancelOTP()" type="button" id="kt_sign_in_submit_otp" class="btn btn-lg btn-primary w-10 mb-5"
+      >
+      <ng-container *ngIf="isLoading$ | async">
+        <span class="indicator-progress" [style.display]="'block'">
+          Please wait...
+          <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </ng-container>
+      <ng-container *ngIf="(isLoading$ | async) === false">
+        <span class="indicator-label">Cancel</span>
       </ng-container>
     </button>
   </div>
