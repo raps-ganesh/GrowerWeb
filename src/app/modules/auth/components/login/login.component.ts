@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   hasError: boolean;
   returnUrl: string;
   isLoading$: Observable<boolean>;
+  showOTP:boolean=false;
 
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
@@ -78,9 +79,25 @@ export class LoginComponent implements OnInit, OnDestroy {
       .login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe((user: UserModel | undefined) => {
+        debugger;
         
         if (user) {
-          this.router.navigate([this.returnUrl]);
+          if(user.authenticationType==2)
+          {
+            this.router.navigate([this.returnUrl]);
+          }
+          else if(user.authenticationType==1)
+          {
+
+          }
+          else{
+            this.showOTP = true;
+          }
+
+
+
+
+          
         } else {
           this.hasError = true;
         }

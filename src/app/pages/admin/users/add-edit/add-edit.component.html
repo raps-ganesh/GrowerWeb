@@ -97,6 +97,21 @@
                         />
                         </div>
                     </div>
+
+                    <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6"
+                        ><span>Phone No</span></label
+                        >
+                        <div class="col-lg-8 fv-row">
+                        <input [(ngModel)]="usermodel.phoneNo"
+                            type="Email"
+                            class="form-control form-control-lg form-control-solid"
+                            placeholder="Phone No"
+                            name="phoneNo"
+                            value=""
+                        />
+                        </div>
+                    </div>
                     
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label fw-bold fs-6"
@@ -135,14 +150,27 @@
                         ><span class="required">Password</span></label
                         >
                         <div class="col-lg-8 fv-row">
-                        <input  [(ngModel)]="usermodel.password"
-                            type="Password"
-                            class="form-control form-control-lg form-control-solid"
-                            placeholder="Password"
-                            name="Password"
-                            value=""
-                        />
+                            <input  [(ngModel)]="usermodel.password"
+                                type="Password"
+                                class="form-control form-control-lg form-control-solid"
+                                placeholder="Password"
+                                name="Password"
+                                value=""
+                                (blur)="ValidatePassword()"
+                            />
+
+
+                            <div [innerHtml]="passwordError"  *ngIf="passwordError !=''" 
+                            id="password-error" 
+                            class="col-lg-8 fv-row">
+                                At least 6 characters long <i id="password-length-icon" class="fa"></i>
+                            </div>
+
                         </div>
+                        
+                            <!-- <div id="password-caps" class="valid-password">At least one capital letter <i id="password-caps-icon" class="fa"></i></div>
+                            <div id="password-number" class="valid-password">At least one number <i id="password-number-icon" class="fa"></i></div>
+                            <div id="password-special" class="valid-password">At least one special character <i id="password-special-icon" class="fa"></i></div> -->
                     </div>
 
                     <div class="row mb-6">
@@ -181,6 +209,23 @@
                         </div>
                         </div>
                       </div>
+
+                      <div class="row mb-6">
+                        <label class="col-lg-4 col-form-label fw-bold fs-6"
+                        ><span class="required">Authentication Type</span></label
+                        >
+                        <div class="col-lg-8 fv-row">
+                        <select [(ngModel)]="usermodel.authenticationType"
+                            class="form-select form-select-solid form-select-lg fw-bold"
+                            name="authenticationType"
+                        >
+                          <option *ngFor="let objlst of AuthTypes" value={{objlst.id}}>
+                            {{objlst.accountTypeValue}}
+                          </option>
+                        </select>
+                       
+                        </div>
+                    </div>
                     
 
                     

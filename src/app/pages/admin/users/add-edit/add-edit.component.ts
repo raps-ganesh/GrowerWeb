@@ -55,6 +55,7 @@ export class AddEditComponent implements OnInit {
   cropYear:any;
   receivingLocation:any;
   UserAccountTypes:any;
+  AuthTypes:any;
   UserGroups:any;
   paramsObject:any;
 
@@ -91,6 +92,7 @@ export class AddEditComponent implements OnInit {
 
 
             this.GetAccountTypes(); 
+            this.GetAuthTypes();
             this.GetGroup();      
                        
             if(this.id > 0)
@@ -130,6 +132,18 @@ export class AddEditComponent implements OnInit {
     });
   }
 
+  GetAuthTypes() {
+    this.adminService.GetAuthTypes().subscribe({
+      next: (data: any) => {
+        //
+        this.AuthTypes = data;
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
+  }
+
   GetGroup() {
     this.adminService.GetGroup().subscribe({
       next: (data: any) => {
@@ -146,6 +160,7 @@ export class AddEditComponent implements OnInit {
     this.adminService.GetUserById(userId).subscribe({
       next: (data: any) => {
         
+        debugger;
         this.usermodel = data;
         this.usermodel.confirmPassword='';
 
@@ -268,7 +283,7 @@ export class AddEditComponent implements OnInit {
   }
 
   SaveUser() {
-    
+    debugger;
     var gropupIds ="";
     
     this.selectedItems.forEach((element:any) => {
@@ -336,7 +351,7 @@ export class AddEditComponent implements OnInit {
         cancelButtonText: 'No',
       }).then((result) => {
         if (result.value) {
-         
+          this.saveSettings();
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           Swal.fire('Cancelled', 'User not saved.', 'error');
         }
@@ -378,6 +393,56 @@ export class AddEditComponent implements OnInit {
     //.setErrors({'incorrect': true});
     this.userForm.controls['usermodel.password'].setValidators([Validators.required]);
     //this.userForm.controls['Password'].setErrors({'incorrect': true});
+  }
+
+  passwordError:any='';
+  ValidatePassword()
+  {
+    
+    var isValid = true;
+    //showPasswordValidation();
+
+
+    var password = this.usermodel.password;
+    //console.log(password);
+
+    if (password.length < 6) {
+     isValid = false;
+     this.setInValidState("At least 6 characters long");
+    } else
+    this.setValidState("password-length");
+
+    console.log(password.match(/[0-9]/g));
+
+    if (!password.match(/[0-9]/g)) {
+     isValid = false;
+     this.setInValidState("At least one number");
+    } else
+    this.setValidState("password-number");
+
+    if (!password.match(/[A-Z]/g)) {
+     isValid = false;
+     this.setInValidState("At least one capital letter");
+    } else
+    this.setValidState("password-caps");
+
+
+    if (!password.match(/[!@@#$%^&*()_=\[\]{};':"\\|,.<>\/?+-]/g)) {
+     isValid = false;
+     this.setInValidState("At least one special character");
+    } else
+    this.setValidState("password-special");
+
+    return isValid;
+  }
+
+  setInValidState(msg:any)
+  {
+    this.passwordError=this.passwordError+"<br/>" + msg;
+  }
+  setValidState(msg:any)
+  {
+
   }
 
 

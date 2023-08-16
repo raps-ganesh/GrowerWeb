@@ -22,6 +22,7 @@ export class UserModel extends AuthModel {
   // account information
   language: string;
   timeZone: string;
+  authenticationType:number;
   communication: {
     email: boolean;
     sms: boolean;
@@ -49,6 +50,7 @@ export class UserModel extends AuthModel {
   };
 
   setUser(_user: unknown) {
+    debugger;
     const user = _user as UserModel;
     this.id = user.id;
     this.username = user.username || '';
@@ -62,5 +64,6 @@ export class UserModel extends AuthModel {
     this.phone = user.phone || '';
     this.address = user.address;
     this.socialNetworks = user.socialNetworks;
+    this.authenticationType=user.authenticationType;
   }
 }

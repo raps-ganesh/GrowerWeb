@@ -65,6 +65,8 @@ export class AuthService implements OnDestroy {
     localStorage.removeItem('loggedinUser');
     localStorage.removeItem('loggedinUserRoles');
     localStorage.removeItem('loggedinData');
+    localStorage.removeItem('AuthenticationType');
+
     localStorage.removeItem(this.authLocalStorageToken);
     this.router.navigate(['/auth/login'], {
       queryParams: {},
@@ -116,6 +118,7 @@ export class AuthService implements OnDestroy {
 
   // private methods
   private setAuthFromLocalStorage(auth: AuthModel): boolean {
+    debugger;
     // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
     if (auth && auth.authToken) {
       localStorage.setItem(this.authLocalStorageToken, JSON.stringify(auth));

@@ -32,10 +32,18 @@ export class AuthHTTPService {
         .replace('{1}', encodeURIComponent(password))
     ).pipe(
       map((result: any) => {
-        
+        debugger;
           if (result.username == undefined) {
             return notFoundError;
           }
+
+          // if(result.authenticationType==1)
+          // {
+          //   debugger;
+          //   //return notFoundError;
+          // }
+
+          localStorage.setItem('AuthenticationType',result.authenticationType);
           const auth = new AuthModel();
           auth.authAPIToken = result.authToken;
           auth.authToken = 'auth-token-8f3ae836da744329a6f93bf20594b5cc';
@@ -51,6 +59,7 @@ export class AuthHTTPService {
           );
           localStorage.setItem('loggedinData', JSON.stringify(result));
           localStorage.setItem('apitkn',result.authToken);
+          localStorage.setItem('AuthenticationType',result.authenticationType);
 
           return auth;
       })
@@ -90,6 +99,12 @@ export class AuthHTTPService {
       return of(undefined);
     }
 
+    if(new Number(localStorage.getItem('AuthenticationType')) > 0 &&  new Boolean(localStorage.getItem('IsOTPAuthenticated')) == false)
+    {
+      return of(undefined);
+    }
+     
+
     const newUser = UsersTable.users.find((u: UserModel) => {
       return u.authToken === token;
     });
@@ -99,7 +114,7 @@ export class AuthHTTPService {
     }
 
     newUser.firstname=  localStorage.getItem('loggedinUser')! ;
-    
+    newUser.authenticationType=localStorage.getItem('AuthenticationType');
     return of(newUser);
   }
 

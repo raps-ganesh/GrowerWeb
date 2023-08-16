@@ -18,4 +18,7 @@ export interface UserModel {
     isActive : boolean;
     sendWelcomeEmail?:boolean
     userGroups?:string;
+    phoneNo?:string;
+
+    authenticationType?:number;
 }

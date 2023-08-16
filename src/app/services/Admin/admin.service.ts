@@ -50,6 +50,16 @@ export class AdminService {
       );
   }
 
+  public GetAuthTypes(): Observable<any> {
+    return this.http
+      .get<any>(this.baseAdminURL + 'getauthtypes')
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }   
+
   public GetGroup(): Observable<any> {
     return this.http
       .get<any>(this.baseAdminURL + 'getgroups')
