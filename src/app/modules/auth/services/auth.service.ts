@@ -43,17 +43,27 @@ export class AuthService implements OnDestroy {
     this.unsubscribe.push(subscr);
   }
 
-  VerifyOTP(email: string, authType: string,phoneNo:string,otp :string): Observable<any>
-  {
-    return this.authHttpService.VerifyOTP(email,authType,phoneNo,otp).pipe(
+  VerifyOTP(email: string, authType: string, phoneNo: string, otp: string): Observable<any> {
+    return this.authHttpService.VerifyOTP(email, authType, phoneNo, otp).pipe(
       map((auth: any) => {
         debugger;
-        if(auth=='Invalide OTP')
-        {
+        if (auth == 'Invalide OTP') {
           return auth
         }
         // const result = this.setAuthFromLocalStorage(auth);
         // return result;
+      })
+    );
+  }
+
+  preLogin(email: string, password: string): Observable<any> {
+    return this.authHttpService.prelogin(email, password).pipe(
+      map((user: any) => {
+        debugger;
+        if (user != null) {
+          return user
+        }
+        return null;
       })
     );
   }
@@ -150,7 +160,7 @@ export class AuthService implements OnDestroy {
       }
 
       const authData = JSON.parse(lsValue);
-      
+
       return authData;
     } catch (error) {
       console.error(error);

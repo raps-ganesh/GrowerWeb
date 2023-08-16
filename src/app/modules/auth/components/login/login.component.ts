@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { UserModel } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -22,8 +24,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   hasError: boolean;
   returnUrl: string;
   isLoading$: Observable<boolean>;
-  showOTP:boolean=false;
-  OTPError :any="";
+  showOTP: boolean = false;
+  OTPError: any = "";
+  user: any;
+  otp: any;
 
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
@@ -32,7 +36,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
     this.isLoading$ = this.authService.isLoading$;
     // redirect to home if already logged in
@@ -77,59 +82,59 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   submit() {
     this.hasError = false;
-    const loginSubscr = this.authService
-      .login(this.f.email.value, this.f.password.value)
-      .pipe(first())
-      .subscribe((user: UserModel | undefined) => {
-        debugger;
-        
-        if (user) {
-          if(user.authenticationType==2)
-          {
-            this.router.navigate([this.returnUrl]);
-          }
-          else if(user.authenticationType==1)
-          {
-
-          }
-          else{
-            this.showOTP = true;
-          }
-
-
-
-
-          
-        } else {
+    this.authService.preLogin(this.f.email.value, this.f.password.value).subscribe({
+      next: (result: any) => {
+        if (result == null) {
           this.hasError = true;
+          return;
         }
-      });
-    this.unsubscribe.push(loginSubscr);
-  }
-  cancelOTP(){
-    this.showOTP=false;
+        this.user = result;
+        if (result.authenticationType > 0) {
+          this.showOTP = true;
+        }
+        else {
+          const loginSubscr = this.authService
+            .login(this.f.email.value, this.f.password.value)
+            .pipe(first())
+            .subscribe((user: UserModel | undefined) => {
+              if (user) {
+                this.router.navigate([this.returnUrl]);
+
+              } else {
+                this.hasError = true;
+              }
+            });
+          this.unsubscribe.push(loginSubscr);
+        }
+      }
+    });
   }
 
-  VerifyOTP(){
-    
-    this.authService.VerifyOTP(this.f.email.value,'2','19547064888','224289').subscribe({
+
+  cancelOTP() {
+    this.showOTP = false;
+  }
+
+  VerifyOTP() {
+    debugger;
+    var otp: any = document.getElementById('otp');
+    this.authService.VerifyOTP(this.f.email.value, this.user.authenticationType, this.user.phoneNumber, otp.value).subscribe({
       next: (data: any) => {
-        //
-        var insertId= data;
-        if(data=='Invalide OTP')
-        {
-            this.OTPError='Invalide OTP';
-            Swal.fire({
-              text: this.OTPError,
-              icon: 'error',
-              buttonsStyling: false,
-              confirmButtonText: 'Ok, got it!',
-              customClass: {
-                confirmButton: 'btn btn-primary',
-              },
-            });
+        debugger;
+        var insertId = data;
+        if (data == 'Invalid OTP') {
+          this.OTPError = 'Invalid OTP';
+          Swal.fire({
+            text: this.OTPError,
+            icon: 'error',
+            buttonsStyling: false,
+            confirmButtonText: 'Ok, got it!',
+            customClass: {
+              confirmButton: 'btn btn-primary',
+            },
+          });
         }
-        else{
+        else {
           Swal.fire({
             text: 'OTP validate successfully.',
             icon: 'success',
@@ -139,14 +144,26 @@ export class LoginComponent implements OnInit, OnDestroy {
               confirmButton: 'btn btn-primary',
             },
           });
-          this.router.navigate([this.returnUrl]);
+
+          const loginSubscr = this.authService
+            .login(this.f.email.value, this.f.password.value)
+            .pipe(first())
+            .subscribe((user: UserModel | undefined) => {
+              if (user) {
+                this.router.navigate([this.returnUrl]);
+
+              } else {
+                this.hasError = true;
+              }
+            });
+          this.unsubscribe.push(loginSubscr);
         }
 
 
-       
+
       },
       error: (err: any) => {
-        console.log(err);
+        debugger;
         Swal.fire({
           text: err.error.text,
           icon: 'error',
@@ -158,8 +175,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         });
 
       },
-      complete:()=>{
-        
+      complete: () => {
+
       }
     });
   }

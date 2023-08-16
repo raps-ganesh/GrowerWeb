@@ -11,7 +11,7 @@ import { AppSettingsService } from 'src/app/shared/app-settings.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { EventEmitterService } from '../../event-emitter.service';
-
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-payment-calculation-report',
   templateUrl: './payment-calculation-report.component.html',
@@ -35,17 +35,18 @@ export class PaymentCalculationReportComponent implements OnInit {
   loadingService: any;
   isEnabled = false;
   @Input() childProperty: string;
-
+  pdfpath: any;
 
   constructor(
-    
+
     private reportService: ReportsService,
     public appSettingService: AppSettingsService,
     public excelService: ExcelService,
     @Inject(LOCALE_ID) public locale: string,
     private authHttpService: AuthHTTPService,
     private router: Router,
-    private eventEmitterService: EventEmitterService
+    private eventEmitterService: EventEmitterService,
+    private sanitizer: DomSanitizer
   ) {
     var calcBatchType =
       this.router.url.split('/')[2] != null
@@ -76,18 +77,18 @@ export class PaymentCalculationReportComponent implements OnInit {
     }
   }
 
-  firstFunction(name: string) {
-    alert('Hello "' + name + '"\nWelcome to C# Corner \nFunction in First Component');
+  public getSanitizeUrl(url: string): SafeUrl {
+    debugger;
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
-  loadDataFromMasterMenu(_accountnumber:any)
-  {
+  loadDataFromMasterMenu(_accountnumber: any) {
     this.isEnabled = true;
     this.accountnumber = _accountnumber;
     this.GetBatches();
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     if (this.eventEmitterService.subsVar == undefined) {
       this.eventEmitterService.subsVar = this.eventEmitterService.
         invokeFirstComponentFunction.subscribe((name: string) => {
@@ -120,26 +121,28 @@ export class PaymentCalculationReportComponent implements OnInit {
       });
       return;
     }
-    this.reportHeaders = [];
-    this.reportData = [];
 
-    this.reportService
-      .PaymentReport({
-        cropyear: this.cropyear,
-        accountnumber: this.accountnumber,
-        calculationbatchid: this.calculationbatchid,
-        calculationBatchType: this.calculationBatchType,
-      })
-      .subscribe({
-        next: (data: any) => {
-          this.growerInfo = data.growerInfo[0];
-          this.ticketInfo = data.ticketInfo;
-          this.paymentInfo = data.paymentInfo;
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-      });
+    this.pdfpath = 'http://ussacgptsapp:5000/statement/' + this.title + "_" + this.accountnumber + '.pdf';
+    // this.reportHeaders = [];
+    // this.reportData = [];
+
+    // this.reportService
+    //   .PaymentReport({
+    //     cropyear: this.cropyear,
+    //     accountnumber: this.accountnumber,
+    //     calculationbatchid: this.calculationbatchid,
+    //     calculationBatchType: this.calculationBatchType,
+    //   })
+    //   .subscribe({
+    //     next: (data: any) => {
+    //       this.growerInfo = data.growerInfo[0];
+    //       this.ticketInfo = data.ticketInfo;
+    //       this.paymentInfo = data.paymentInfo;
+    //     },
+    //     error: (err: any) => {
+    //       console.log(err);
+    //     },
+    //   });
   }
   GetBatches() {
     if (this.accountnumber.trim() != '')
@@ -221,36 +224,36 @@ export class PaymentCalculationReportComponent implements OnInit {
       'Description',
       'Payee $',
       'Account Total',
-      
-      
+
+
     ];
 
 
     let paymentInfoData = this.paymentInfo.map((obj: any) => {
       return {
-        Empty1 : '',
-        Empty2 : '',
-        Empty3 : '',
-        Empty4 : '',
-        Empty5 : '',
-        Empty6 : '',
-        Empty7 : '',
-        Empty8 : '',
-        Empty9 : '',
-        Empty10 : '',
-        Empty11 : '',
+        Empty1: '',
+        Empty2: '',
+        Empty3: '',
+        Empty4: '',
+        Empty5: '',
+        Empty6: '',
+        Empty7: '',
+        Empty8: '',
+        Empty9: '',
+        Empty10: '',
+        Empty11: '',
 
 
         Date: obj.Date,
-        
+
         Check: obj.Check,
         Payee: obj.Payee,
         allocationpercent: obj.allocationpercent,
         Description: obj.Description,
         payeeshare: obj.payeeshare,
         totalAmount: obj.totalAmount
-        
-        
+
+
       };
     });
 
@@ -303,7 +306,7 @@ export class PaymentCalculationReportComponent implements OnInit {
       'Kernel Value',
       'Total Value',
     ];
-    
+
 
     this.excelService.exportAsExcelFileDeliveryReport(
       this.title,
@@ -351,60 +354,59 @@ export class PaymentCalculationReportComponent implements OnInit {
 
   GeneratePDFForPaymentReport() {
     //
-    try
-    {
-    if (this.accountData.length == 0) {
-      Swal.fire({
-        html: 'No data found for selected batch',
-        icon: 'error',
-        buttonsStyling: false,
-        confirmButtonText: 'Ok, got it!',
-        customClass: {
-          confirmButton: 'btn btn-primary',
-        },
-      });
-      return;
-    }
-    var doc = new jsPDF('l', 'mm', 'a3', true);
-    var fileName: string =
-      'Bulk Print ' +
-      formatDate(new Date(), 'dd-MM-yyyy hh:mm:ss a', 'en-US', '-0800');
-    var progressPaymentHeader = this.cropyear + ' Crop Feb ' + new Date().getFullYear() % 100 + ' Progress Payment';
+    try {
+      if (this.accountData.length == 0) {
+        Swal.fire({
+          html: 'No data found for selected batch',
+          icon: 'error',
+          buttonsStyling: false,
+          confirmButtonText: 'Ok, got it!',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+        });
+        return;
+      }
+      var doc = new jsPDF('l', 'mm', 'a3', true);
+      var fileName: string =
+        'Bulk Print ' +
+        formatDate(new Date(), 'dd-MM-yyyy hh:mm:ss a', 'en-US', '-0800');
+      var progressPaymentHeader = this.cropyear + ' Crop Feb ' + new Date().getFullYear() % 100 + ' Progress Payment';
 
-    switch (this.calculationBatchType) {
-      case 3:
-        fileName =
-          'Delivery_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
-        progressPaymentHeader = this.cropyear + ' Crop Delivery \'' + new Date().getFullYear() % 100 + ' Progress Payment';
+      switch (this.calculationBatchType) {
+        case 3:
+          fileName =
+            'Delivery_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
+          progressPaymentHeader = this.cropyear + ' Crop Delivery \'' + new Date().getFullYear() % 100 + ' Progress Payment';
 
-        break;
-      case 4:
-        fileName =
-          'February_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
-        progressPaymentHeader = this.cropyear + ' Crop Feb \'' + new Date().getFullYear() % 100 + ' Progress Payment';
+          break;
+        case 4:
+          fileName =
+            'February_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
+          progressPaymentHeader = this.cropyear + ' Crop Feb \'' + new Date().getFullYear() % 100 + ' Progress Payment';
 
-        break;
-      case 5:
-        fileName =
-          'May_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
-        progressPaymentHeader = this.cropyear + ' Crop May \'' + new Date().getFullYear() % 100 + ' Progress Payment';
+          break;
+        case 5:
+          fileName =
+            'May_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
+          progressPaymentHeader = this.cropyear + ' Crop May \'' + new Date().getFullYear() % 100 + ' Progress Payment';
 
-        break;
-      case 6:
-        fileName =
-          'Final_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
-        progressPaymentHeader = this.cropyear + ' Crop Final \'' + new Date().getFullYear() % 100 + ' Progress Payment';
+          break;
+        case 6:
+          fileName =
+            'Final_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
+          progressPaymentHeader = this.cropyear + ' Crop Final \'' + new Date().getFullYear() % 100 + ' Progress Payment';
 
-        break;
-      case 10:
+          break;
+        case 10:
           fileName =
             'Spot_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
           progressPaymentHeader = this.cropyear + ' Crop SPOT \'' + new Date().getFullYear() % 100 + ' Progress Payment';
-  
-          break;
-    }
 
-    
+          break;
+      }
+
+
       // IN loop
       var prevoiousPageCount = 0;
 
@@ -448,7 +450,7 @@ export class PaymentCalculationReportComponent implements OnInit {
           arr[i][0] = ticketInfoList[i].DeliveryNumber;
           arr[i][1] = ticketInfoList[i].varietyName;
           arr[i][2] = ticketInfoList[i].DeliveryDate;
-          arr[i][3] = formatNumber(ticketInfoList[i].NetWeight,this.locale);
+          arr[i][3] = formatNumber(ticketInfoList[i].NetWeight, this.locale);
           arr[i][4] = ticketInfoList[i].PercentEdibleYield;
           arr[i][5] = ticketInfoList[i].PercentJumboSound;
           arr[i][6] = ticketInfoList[i].PercentOffGrade;
@@ -481,7 +483,7 @@ export class PaymentCalculationReportComponent implements OnInit {
 
         let index;
         for (index = 0; index < rptPaymentInfo.length; index++) {
-          if(rptPaymentInfo[index].Date != null && rptPaymentInfo[index].Date != undefined){
+          if (rptPaymentInfo[index].Date != null && rptPaymentInfo[index].Date != undefined) {
             statementDate = rptPaymentInfo[index].Date;
           }
           paymentInfoData.push([
@@ -527,7 +529,7 @@ export class PaymentCalculationReportComponent implements OnInit {
         ];
         let growerInfoColumns: any[][] = [];
         let addressDetails: any[][] = [];
-        
+
 
         growerInfoColumns.push(['Statement Date : ' + statementDate]);
         growerInfoColumns.push(['Account Number : ' + rptGrowerInfo.AccountNumber]);
@@ -587,7 +589,7 @@ export class PaymentCalculationReportComponent implements OnInit {
         //doc.roundedRect(doc.internal.pageSize.height - 215, 160, 40, 100, 5, 5, 'S')
         doc.setFontSize(15);
         var addrPosition = 205;
-        doc.text(addressDetails[0]==null ? '': addressDetails[0], doc.internal.pageSize.height - addrPosition, 275, { angle: 90 });
+        doc.text(addressDetails[0] == null ? '' : addressDetails[0], doc.internal.pageSize.height - addrPosition, 275, { angle: 90 });
         if (addressDetails[1].toString() != '') {
           addrPosition = addrPosition - 7;
           doc.text(addressDetails[1], doc.internal.pageSize.height - addrPosition, 275, { angle: 90 });
@@ -609,7 +611,7 @@ export class PaymentCalculationReportComponent implements OnInit {
         autoTable(doc, {
           head: [],
           body: [],
-          theme: 'plain',          
+          theme: 'plain',
           bodyStyles: {},
         });
         // if (format == 'a3') {
@@ -641,8 +643,8 @@ export class PaymentCalculationReportComponent implements OnInit {
             lineColor: [0, 0, 0]
           },
           //startY: doc.getCurrentPageInfo().pageNumber == 0 ? 30 : 50,
-          margin : { top: 30 },
-          rowPageBreak : 'avoid',
+          margin: { top: 30 },
+          rowPageBreak: 'avoid',
           showHead: 'firstPage',
           willDrawCell: (data) => {
             if (data.row.raw.toString().indexOf('Account Total') > 0 || data.row.raw.toString().indexOf('Variety Total') > 0) {
@@ -674,8 +676,8 @@ export class PaymentCalculationReportComponent implements OnInit {
             5: { halign: 'right' },
             6: { halign: 'right' }
           },
-          rowPageBreak : 'avoid',
-          margin : { top : doc.getCurrentPageInfo().pageNumber == 0 ? 0 : 30 },
+          rowPageBreak: 'avoid',
+          margin: { top: doc.getCurrentPageInfo().pageNumber == 0 ? 0 : 30 },
           willDrawCell: (data) => {
             if (data.row.raw.toString().indexOf('NET PAYMENT') > 0 || data.row.raw.toString().indexOf('DEFERRED') > 0) {
               doc.setFont('Helvetica', 'bold').setTextColor('black');
@@ -734,7 +736,7 @@ export class PaymentCalculationReportComponent implements OnInit {
     }
     catch (Error) { console.log('test') }
     //this.loadingService.setLoading(false);
-    
+
   }
 }
 

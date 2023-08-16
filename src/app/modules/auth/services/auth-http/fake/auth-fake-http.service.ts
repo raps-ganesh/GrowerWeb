@@ -16,25 +16,25 @@ const API_USERS_URL = `${environment.apiUrl}/users`;
   providedIn: 'root',
 })
 export class AuthHTTPService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  VerifyOTP(email: string, authType: string,phoneNo:string,otp :string): Observable<any> {
+  VerifyOTP(email: string, authType: string, phoneNo: string, otp: string): Observable<any> {
     const notFoundError = new Error('Not Found');
     return this.http
-    .get(
-      environment.growerPortalApiBaseUrl + 'VerifyOTP?userName={0}&authType={1}&phoneNo={2}&otp={3}'
-        .replace('{0}', encodeURIComponent(email))
-        .replace('{1}', encodeURIComponent(authType))
-        .replace('{2}', encodeURIComponent(phoneNo))
-        .replace('{3}', encodeURIComponent(otp))
-    ).pipe(
-      map((result: any) => {
-        debugger;
-          if (result == null) {
-            return "Invalide OTP";
+      .get(
+        environment.growerPortalApiBaseUrl + 'VerifyOTP?userName={0}&authType={1}&phoneNo={2}&otp={3}'
+          .replace('{0}', encodeURIComponent(email))
+          .replace('{1}', encodeURIComponent(authType))
+          .replace('{2}', encodeURIComponent(phoneNo))
+          .replace('{3}', encodeURIComponent(otp))
+      ).pipe(
+        map((result: any) => {
+          debugger;
+          if (result == null || result.Value == 'Invalid OTP') {
+            return "Invalid OTP";
           }
 
-          localStorage.setItem('AuthenticationType',result.authenticationType);
+          localStorage.setItem('AuthenticationType', result.authenticationType);
           const auth = new AuthModel();
           auth.authAPIToken = result.authToken;
           auth.authToken = 'auth-token-8f3ae836da744329a6f93bf20594b5cc';
@@ -43,18 +43,18 @@ export class AuthHTTPService {
 
           localStorage.setItem('loggedinUser', result.username);
           localStorage.setItem('JDENumber', result.oldVendor_Id);
-          
+
           localStorage.setItem(
             'loggedinUserRoles',
             JSON.stringify(result.groups)
           );
           localStorage.setItem('loggedinData', JSON.stringify(result));
-          localStorage.setItem('apitkn',result.authToken);
-          localStorage.setItem('AuthenticationType',result.authenticationType);
+          localStorage.setItem('apitkn', result.authToken);
+          localStorage.setItem('AuthenticationType', result.authenticationType);
 
           return auth;
-      })
-    );
+        })
+      );
   }
 
 
@@ -66,13 +66,13 @@ export class AuthHTTPService {
     }
 
     return this.http
-    .get(
-      environment.authenticationApiUrl
-        .replace('{0}', encodeURIComponent(email))
-        .replace('{1}', encodeURIComponent(password))
-    ).pipe(
-      map((result: any) => {
-        debugger;
+      .get(
+        environment.authenticationApiUrl
+          .replace('{0}', encodeURIComponent(email))
+          .replace('{1}', encodeURIComponent(password))
+      ).pipe(
+        map((result: any) => {
+          debugger;
           if (result.username == undefined) {
             return notFoundError;
           }
@@ -83,29 +83,59 @@ export class AuthHTTPService {
           //   //return notFoundError;
           // }
 
-          localStorage.setItem('AuthenticationType',result.authenticationType);
+          localStorage.setItem('AuthenticationType', result.authenticationType);
           const auth = new AuthModel();
           auth.authAPIToken = result.authToken;
           auth.authToken = 'auth-token-8f3ae836da744329a6f93bf20594b5cc';
           auth.refreshToken = 'auth-token-f8c137a2c98743f48b643e71161d90aa';
           auth.expiresIn = new Date(Date.now() + 2 * 60 * 60 * 1000);
-
+          auth.authenticationType = result.authenticationType;
+          auth.phoneNumber = result.phoneNo;
           localStorage.setItem('loggedinUser', result.username);
           localStorage.setItem('JDENumber', result.oldVendor_Id);
-          
+
           localStorage.setItem(
             'loggedinUserRoles',
             JSON.stringify(result.groups)
           );
           localStorage.setItem('loggedinData', JSON.stringify(result));
-          localStorage.setItem('apitkn',result.authToken);
-          localStorage.setItem('AuthenticationType',result.authenticationType);
+          localStorage.setItem('apitkn', result.authToken);
+          localStorage.setItem('AuthenticationType', result.authenticationType);
 
           return auth;
-      })
-    );
+        })
+      );
   }
-  
+
+  prelogin(email: string, password: string): Observable<any> {
+    const notFoundError = new Error('Not Found');
+    if (!email || !password) {
+      return of(notFoundError);
+    }
+
+    return this.http
+      .get(
+        environment.growerPortalApiBaseUrl + 'preauthenticate?username={0}&password={1}'
+          .replace('{0}', encodeURIComponent(email))
+          .replace('{1}', encodeURIComponent(password))
+      ).pipe(
+        map((result: any) => {
+
+          if (result.username == undefined) {
+            return notFoundError;
+          }
+          const auth = new AuthModel();
+          auth.authAPIToken = result.authToken;
+          auth.authToken = 'auth-token-8f3ae836da744329a6f93bf20594b5cc';
+          auth.refreshToken = 'auth-token-f8c137a2c98743f48b643e71161d90aa';
+          auth.expiresIn = new Date(Date.now() + 2 * 60 * 60 * 1000);
+          auth.authenticationType = result.authenticationType;
+          auth.phoneNumber = result.phoneNo;
+          return auth;
+        })
+      );
+  }
+
   getLoggedInUserName() {
     return localStorage.getItem('loggedinUser');
   }
@@ -132,18 +162,16 @@ export class AuthHTTPService {
 
   getUserByToken(token: string): Observable<UserModel | undefined> {
 
-    
 
-    if(localStorage.getItem('loggedinUser')==null)
-    {
+
+    if (localStorage.getItem('loggedinUser') == null) {
       return of(undefined);
     }
 
-    if(new Number(localStorage.getItem('AuthenticationType')) > 0 &&  new Boolean(localStorage.getItem('IsOTPAuthenticated')) == false)
-    {
+    if (new Number(localStorage.getItem('AuthenticationType')) > 0 && new Boolean(localStorage.getItem('IsOTPAuthenticated')) == false) {
       return of(undefined);
     }
-     
+
 
     const newUser = UsersTable.users.find((u: UserModel) => {
       return u.authToken === token;
@@ -153,12 +181,15 @@ export class AuthHTTPService {
       return of(undefined);
     }
 
-    newUser.firstname=  localStorage.getItem('loggedinUser')! ;
-    newUser.authenticationType=localStorage.getItem('AuthenticationType');
+    newUser.firstname = localStorage.getItem('loggedinUser')!;
+    newUser.authenticationType = localStorage.getItem('AuthenticationType');
     return of(newUser);
   }
 
   getAllUsers(): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(API_USERS_URL);
   }
+
+
+
 }
