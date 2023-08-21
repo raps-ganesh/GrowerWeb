@@ -270,23 +270,33 @@
                     
                     
                     <div class="row mb-6">
-                        <label class="col-lg-4 col-form-label fw-bold fs-6"
-                        ><span class="required">Dehydrator Account Number</span></label
-                        >
-                        <div class="col-lg-8 fv-row">
-                        <input disabled [(ngModel)]="usermodel.accountNumber"
-                            type="text"
-                            class="form-control form-control-lg form-control-solid"
-                            placeholder="Dehydrator Account Number"
-                            name="AccountNumber"
-                            value=""
-                        />
+                        <label class="col-lg-4 col-form-label fw-bold fs-6">
+                            <span class="required"># Account Number</span>
+                        </label>
+                        <div class="col-lg-6 fv-row">
+                            <!-- <input [(ngModel)]="usermodel.accountNumber"
+                                type="text"
+                                class="form-control form-control-lg form-control-solid"
+                                placeholder="Dehydrator Account Number"
+                                name="AccountNumber"
+                                value=""
+                            /> -->
+                            <app-type-ahead [urlToSearch]="accounttypeaheadUrl" [inputClass]="'form-control form-control-solid'"
+                                [placeholder]="'Account Number'" [inputid]=" 'AccountNumber'" [inputValue]="receipient1"
+                                (onSelect)="populateAccountInfo($event)">
+                            </app-type-ahead>
+                        </div>
+                        <div class="col-lg-2">
+                            <button 
+                             class="btn btn-primary"
+                             (click)="AddAccountNumber()"
+                            >Add</button>
                         </div>
                     </div>
 
                     <div class="row mb-6">
                         <label class="col-lg-4 col-form-label fw-bold fs-6">
-                            <span class="required">Add JDE Long Address Book No</span>
+                            <span class="required"># Supplier</span>
                         </label>
                         <div class="col-lg-6 fv-row">
                             <input [(ngModel)]="usermodel.oldVendor_Id" style="display: none;"
@@ -297,8 +307,9 @@
                                 value=""
                             />
                             <app-type-ahead [urlToSearch]="receipienttypeaheadUrl" [inputClass]="'form-control form-control-solid'"
-          [placeholder]="'Supplier Name'" [inputid]="'Receipient'" [inputValue]="receipient"
-          (onSelect)="populateSupplierInfo($event)"></app-type-ahead>
+                                [placeholder]="'Supplier Name'" [inputid]="'Receipient'" [inputValue]="receipient"
+                                (onSelect)="populateSupplierInfo($event)">
+                            </app-type-ahead>
                         </div>
                         <div class="col-lg-2">
                             <button 
@@ -316,7 +327,7 @@
                                 <thead>
                                     <tr class="fw-bolder text-muted bg-light">
                                         <td class="ps-4 min-w-200px rounded-start">
-                                            JED Long Address Book No
+                                            Account #
                                         </td>
                                         <td class="min-w-125px text-center rounded-end">
                                             Action

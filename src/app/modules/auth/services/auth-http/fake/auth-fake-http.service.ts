@@ -42,6 +42,7 @@ export class AuthHTTPService {
           auth.expiresIn = new Date(Date.now() + 2 * 60 * 60 * 1000);
 
           localStorage.setItem('loggedinUser', result.username);
+          localStorage.setItem('UserId', result.userId);
           localStorage.setItem('JDENumber', result.oldVendor_Id);
 
           localStorage.setItem(
@@ -92,6 +93,7 @@ export class AuthHTTPService {
           auth.authenticationType = result.authenticationType;
           auth.phoneNumber = result.phoneNo;
           localStorage.setItem('loggedinUser', result.username);
+          localStorage.setItem('UserId', result.userId);
           localStorage.setItem('JDENumber', result.oldVendor_Id);
 
           localStorage.setItem(

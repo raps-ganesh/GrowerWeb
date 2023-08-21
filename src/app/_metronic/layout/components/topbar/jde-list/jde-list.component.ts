@@ -36,8 +36,8 @@ export class JdeListComponent {
   }
   GetUserAccountbyJDE() {
     //
-    var localNumber  = localStorage.getItem("JDENumber");
-    this.growerPortalService.GetUserAccountbyJDE(localNumber).subscribe({
+    var localNumber  = localStorage.getItem("UserId");
+    this.growerPortalService.GetUserAccounts(localNumber).subscribe({
       next: (data: any) => {
         //
         this.jdeAccountList = data;

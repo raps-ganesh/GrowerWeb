@@ -81,6 +81,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    debugger;
     this.hasError = false;
     this.authService.preLogin(this.f.email.value, this.f.password.value).subscribe({
       next: (result: any) => {

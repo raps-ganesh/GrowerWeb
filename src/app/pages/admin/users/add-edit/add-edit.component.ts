@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { filter } from 'rxjs/operators';
 import { Item } from 'angular2-multiselect-dropdown';
 import { environment } from 'src/environments/environment';
+import { GrowerPortalService } from 'src/app/services/Grower/grower-portal.service';
 
 @Component({
   selector: 'app-add-edit',
@@ -62,15 +63,28 @@ export class AddEditComponent implements OnInit {
 
 
   receipienttypeaheadUrl: string = environment.growerAccountingApiBaseUrl + 'ReceipientTypeAhead';
+  accounttypeaheadUrl: string = environment.growerAccountingApiBaseUrl + 'AccountsTypeAheadForStatementOnly';
+
   @Input() receipient: string;
+  @Input() receipient1: string;
+
+  @Input() accountNumber: string;
   @Input() supplierId: any;
   populateSupplierInfo(event: any) {
     this.supplierId = event;
     console.log(this.supplierId);
     
   }
+  populateAccountInfo(event: any) {
+    debugger;
+    this.accountNumber = event;
+    console.log(this.accountNumber);
+    console.log(this.receipient1);
+    
+  }
 
-  constructor(private cdr: ChangeDetectorRef,private adminService: AdminService,private route: ActivatedRoute) {
+  constructor(private cdr: ChangeDetectorRef,private adminService: AdminService,private route: ActivatedRoute
+    ,private growerPortalService : GrowerPortalService,) {
     const loadingSubscr = this.isLoading$
       .asObservable()
       .subscribe((res) => (this.isLoading = res));
@@ -218,22 +232,22 @@ export class AddEditComponent implements OnInit {
   EnableDisableAccount()
   {
     //
-    const result1 = this.selectedItems.filter((x:any) => x.id === 4);
-    const result2 = this.selectedItems.filter((x:any) => x.id === 3);
+    // const result1 = this.selectedItems.filter((x:any) => x.id === 4);
+    // const result2 = this.selectedItems.filter((x:any) => x.id === 3);
      
-    if(result1.length>0)
-      this.userForm.controls.AccountNumber.enable();
-    else
-    {
-      this.userForm.controls.AccountNumber.disable();
-      this.usermodel.accountNumber="";
-    }
-    if(result2.length>0)
-    this.userForm.controls.oldVendor_Id.enable();
-    else{
-      this.usermodel.oldVendor_Id="";
-      this.userForm.controls.oldVendor_Id.disable();
-    }
+    // if(result1.length>0)
+    //   this.userForm.controls.AccountNumber.enable();
+    // else
+    // {
+    //   this.userForm.controls.AccountNumber.disable();
+    //   this.usermodel.accountNumber="";
+    // }
+    // if(result2.length>0)
+    // this.userForm.controls.oldVendor_Id.enable();
+    // else{
+    //   this.usermodel.oldVendor_Id="";
+    //   this.userForm.controls.oldVendor_Id.disable();
+    // }
     
   }
 
@@ -241,7 +255,19 @@ export class AddEditComponent implements OnInit {
   {
     if(this.usermodel.password !=this.usermodel.confirmPassword )
     {
-      this.userForm.controls['usermodel.password'].setErrors({'incorrect': true});
+      //this.userForm.controls['usermodel.password'].setErrors({'incorrect': true});
+
+      Swal.fire({
+        text: "Password and confirm password not matched.",
+        icon: 'error',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok, got it!',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+        },
+      });
+
+
       return false
     }
     return true;
@@ -288,7 +314,7 @@ export class AddEditComponent implements OnInit {
     
     this.selectedItems.forEach((element:any) => {
       if(gropupIds=="")
-          gropupIds=element.id
+          gropupIds=""+element.id
       else
         gropupIds= gropupIds +"," +element.id 
 
@@ -372,14 +398,49 @@ export class AddEditComponent implements OnInit {
   }
 
   listJDENumber :any=[];
+  jdeAccountList : any;
 
   AddJDENumber()
   {
-    let index = this.listJDENumber.indexOf(this.supplierId);
+
+    debugger;
+    this.growerPortalService.GetUserAccountbyJDE(this.supplierId).subscribe({
+      next: (data: any) => {
+        //
+        this.jdeAccountList = data;
+        if(data.length>0)
+        {
+          data.forEach((itm:any) => {
+
+            let index = this.listJDENumber.indexOf(itm);
+          if(index==-1)
+            this.listJDENumber.push(itm);
+          else
+            alert("Already added account number : "+ itm); 
+
+          });
+
+          
+
+
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
+  }
+
+  AddAccountNumber()
+  {
+    this.accountNumber= (
+      document.getElementById('AccountNumber') as HTMLInputElement
+    ).value
+    let index = this.listJDENumber.indexOf(this.accountNumber);
     if(index==-1)
-      this.listJDENumber.push(this.supplierId);
+      this.listJDENumber.push(this.accountNumber);
     else
-      alert("Already added jde number")
+      alert("Already added account number");
   }
   removeJDENumber(item:any)
   {
@@ -391,7 +452,7 @@ export class AddEditComponent implements OnInit {
   CheckPassword()
   {
     //.setErrors({'incorrect': true});
-    this.userForm.controls['usermodel.password'].setValidators([Validators.required]);
+    //this.userForm.controls['usermodel.password'].setValidators([Validators.required]);
     //this.userForm.controls['Password'].setErrors({'incorrect': true});
   }
 
@@ -401,7 +462,7 @@ export class AddEditComponent implements OnInit {
     
     var isValid = true;
     //showPasswordValidation();
-
+    this.passwordError="";
 
     var password = this.usermodel.password;
     //console.log(password);

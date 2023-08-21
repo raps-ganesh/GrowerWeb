@@ -22,4 +22,16 @@ export class GrowerPortalService {
         })
       );
   }
+
+  public GetUserAccounts(jdenumber: any): Observable<any> {
+    return this.http
+      .get<any>(
+        this.baseUrl + 'GetUserAccounts?JDELongAddressBookNumber=' + jdenumber
+      )
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
 }
