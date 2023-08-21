@@ -144,9 +144,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             customClass: {
               confirmButton: 'btn btn-primary',
             },
-          });
-
-          const loginSubscr = this.authService
+          }).then(({value}) => {
+            const loginSubscr = this.authService
             .login(this.f.email.value, this.f.password.value)
             .pipe(first())
             .subscribe((user: UserModel | undefined) => {
@@ -158,6 +157,9 @@ export class LoginComponent implements OnInit, OnDestroy {
               }
             });
           this.unsubscribe.push(loginSubscr);
+          });
+
+     
         }
 
 

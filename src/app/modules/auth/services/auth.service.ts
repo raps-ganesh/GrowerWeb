@@ -46,10 +46,10 @@ export class AuthService implements OnDestroy {
   VerifyOTP(email: string, authType: string, phoneNo: string, otp: string): Observable<any> {
     return this.authHttpService.VerifyOTP(email, authType, phoneNo, otp).pipe(
       map((auth: any) => {
-        debugger;
-        if (auth == 'Invalide OTP') {
-          return auth
-        }
+        //debugger;
+        //if (auth == 'Invalide OTP') {
+          return auth;
+        //}
         // const result = this.setAuthFromLocalStorage(auth);
         // return result;
       })
