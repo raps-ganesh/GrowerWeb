@@ -5,6 +5,7 @@ import { UsersComponent } from './admin/users/users.component';
 import { DocumentListComponent } from './documents/document-list/document-list.component';
 import { ManageDocumentsComponent } from './documents/manage-documents/manage-documents.component';
 import { UploadDocumentComponent } from './documents/manage-documents/upload-document/upload-document.component';
+import { GrowerQualitySummaryDetailedComponent } from './reports/grower-quality-summary-detailed/grower-quality-summary-detailed.component';
 import { PaymentCalculationReportComponent } from './reports/payment-calculation-report/payment-calculation-report.component';
 
 const Routing: Routes = [
@@ -63,6 +64,13 @@ const Routing: Routes = [
     data: {
       expectedRole: ['Administrators', 'Internal Users']
     }, component: AddEditComponent
+  },
+  {
+    path: 'reports/gradingdatareport',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+    }, component: GrowerQualitySummaryDetailedComponent
   },
   {
     path: 'reports/deliverypayment',
