@@ -1,7 +1,7 @@
 <!-- Dashboard -->
 <div class="menu-item me-lg-1">
   <a class="menu-link py-3" routerLinkActive="active" routerLink="/dashboard"
-  ><span class="menu-title" translate="MENU.DASHBOARD"></span
+    ><span class="menu-title" translate="MENU.DASHBOARD"></span
   ></a>
 </div>
 
@@ -11,102 +11,121 @@
   data-kt-menu-trigger="click"
   data-kt-menu-placement="bottom-start"
 >
-  <span class="menu-link py-3" [ngClass]="calculateMenuItemCssClass('/crafted')">
+  <span
+    class="menu-link py-3"
+    [ngClass]="calculateMenuItemCssClass('/crafted')"
+  >
     <span class="menu-title">Documents</span>
     <span class="menu-arrow d-lg-none"></span>
   </span>
   <div
-    class="
-      menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0
-      py-lg-4
-      w-lg-225px
-    "
+    class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px"
     data-kt-menu-dismiss="true"
     data-popper-placement="bottom-start"
   >
-    
-    <div class="menu-item me-lg-1" [hidden]="!ShowAdminOnly()" >
+    <div class="menu-item me-lg-1" [hidden]="!ShowAdminOnly()">
       <a class="menu-link py-3" routerLink="/documents">
         <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
         <span class="menu-title">Manage</span>
       </a>
     </div>
 
-    <div class="menu-item me-lg-1" >
+    <div class="menu-item me-lg-1">
       <a class="menu-link py-3" routerLink="/documents/growers">
         <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
         <span class="menu-title">Growers</span>
       </a>
     </div>
-    
-    <div class="menu-item me-lg-1" >
+
+    <div class="menu-item me-lg-1">
       <a class="menu-link py-3" routerLink="/documents/dehydrators">
         <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
         <span class="menu-title">Dehydrators</span>
       </a>
     </div>
-
-
-
-
   </div>
 </div>
 
 <!-- Admin -->
-<div [hidden]="!ShowAdminOnly()"
+<div
+  [hidden]="!ShowAdminOnly()"
   class="menu-item menu-lg-down-accordion me-lg-1 menu-dropdown"
   data-kt-menu-trigger="click"
   data-kt-menu-placement="bottom-start"
 >
-  <span class="menu-link py-3" [ngClass]="calculateMenuItemCssClass('/crafted')">
+  <span
+    class="menu-link py-3"
+    [ngClass]="calculateMenuItemCssClass('/crafted')"
+  >
     <span class="menu-title">Admin</span>
     <span class="menu-arrow d-lg-none"></span>
   </span>
   <div
-    class="
-      menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0
-      py-lg-4
-      w-lg-225px
-    "
+    class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px"
     data-kt-menu-dismiss="true"
     data-popper-placement="bottom-start"
   >
-    
     <div class="menu-item me-lg-1">
       <a class="menu-link py-3" routerLink="/users">
         <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
         <span class="menu-title">Users</span>
       </a>
     </div>
-
   </div>
 </div>
 
-
 <!-- Reports -->
-<div [hidden]="!ShowAll()"
+<div
+  [hidden]="!ShowAll()"
   class="menu-item menu-lg-down-accordion me-lg-1 menu-dropdown"
   data-kt-menu-trigger="click"
   data-kt-menu-placement="bottom-start"
 >
-  <span class="menu-link py-3" [ngClass]="calculateMenuItemCssClass('/crafted')">
+  <span
+    class="menu-link py-3"
+    [ngClass]="calculateMenuItemCssClass('/crafted')"
+  >
     <span class="menu-title">Reports</span>
     <span class="menu-arrow d-lg-none"></span>
   </span>
   <div
-    class="
-      menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0
-      py-lg-4
-      w-lg-225px
-    "
+    class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px"
     data-kt-menu-dismiss="true"
     data-popper-placement="bottom-start"
   >
-    
     <div class="menu-item me-lg-1">
       <a class="menu-link py-3" href="/reports/delivery">
-        <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
-        <span class="menu-title">Crop Delivery Payment</span>
+        <span class="menu-icon"><i class="bi fs-3 bi-truck"></i></span>
+        <span class="menu-title">Delivery Payment</span>
+      </a>
+    </div>
+    <div class="menu-item me-lg-1">
+      <a class="menu-link py-3" href="/reports/february">
+        <span class="menu-icon"><i class="bi fs-3 bi-calendar-range"></i></span>
+        <span class="menu-title">February Payment</span>
+      </a>
+    </div>
+    <div class="menu-item me-lg-1">
+      <a class="menu-link py-3" href="/reports/may">
+        <span class="menu-icon"
+          ><i class="bi fs-3 bi-calendar-range-fill"></i
+        ></span>
+        <span class="menu-title">May Payment</span>
+      </a>
+    </div>
+    <div class="menu-item me-lg-1">
+      <a class="menu-link py-3" href="/reports/final">
+        <span class="menu-icon"
+          ><i class="bi fs-3 bi-calendar-month-fill"></i
+        ></span>
+        <span class="menu-title">Final Payment</span>
+      </a>
+    </div>
+
+    <div class="menu-item me-lg-1">
+      <a class="menu-link py-3" href="/reports/trueup">
+        <span class="menu-icon"><i class="bi fs-3 bi-box-arrow-up"></i></span>
+        <span class="menu-title">True Up Payment</span>
       </a>
     </div>
 
@@ -116,7 +135,7 @@
         <span class="menu-title">Growers</span>
       </a>
     </div>
-    
+
     <div class="menu-item me-lg-1">
       <a class="menu-link py-3" routerLink="/reports/delivery">
         <span class="menu-icon"><i class="bi fs-3 bi-archive"></i></span>
@@ -138,11 +157,6 @@
       </a>
     </div>
 
-
-
-
-
-  
     <!-- <div
       class="menu-item menu-lg-down-accordion me-lg-1"
       data-kt-menu-trigger="{default:'click', lg: 'hover'}"
@@ -183,66 +197,39 @@
         
       </div>
     </div> -->
- 
-
-
-
-
   </div>
 </div>
 
 <!-- Reports -->
-<div [hidden]="!ShowAll()"
+<div
+  [hidden]="!ShowAll()"
   class="menu-item menu-lg-down-accordion me-lg-1 menu-dropdown"
   data-kt-menu-trigger="click"
   data-kt-menu-placement="bottom-start"
 >
-  <span class="menu-link py-3" [ngClass]="calculateMenuItemCssClass('/crafted')">
+  <span
+    class="menu-link py-3"
+    [ngClass]="calculateMenuItemCssClass('/crafted')"
+  >
     <span class="menu-title">Grower Account</span>
     <span class="menu-arrow d-lg-none"></span>
   </span>
   <div
-    class="
-      menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0
-      py-lg-4
-      w-lg-225px
-    "
+    class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px"
     data-kt-menu-dismiss="true"
     data-popper-placement="bottom-start"
   >
-    
-    
     <div class="menu-item me-lg-1">
       <a
         class="menu-link py-3"
         routerLinkActive="active"
         routerLink="/apps/chat/private-chat"
-      ><span class="menu-bullet"
-      ><span class="bullet bullet-dot"></span></span
-      ><span class="menu-title">Dehydrator Deliveries by Manifest</span></a
+        ><span class="menu-bullet"><span class="bullet bullet-dot"></span></span
+        ><span class="menu-title">Dehydrator Deliveries by Manifest</span></a
       >
     </div>
-
-
-
-
-  
-
- 
-
-
-
-
   </div>
 </div>
-
-
-
-
-
-
-
-
 
 <!-- 
 

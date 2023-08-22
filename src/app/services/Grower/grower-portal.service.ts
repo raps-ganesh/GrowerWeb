@@ -10,6 +10,7 @@ export class GrowerPortalService {
 
   constructor(private http: HttpClient) { }
   baseUrl: string = environment.growerPortalApiBaseUrl;
+  growerAccountingUrl: any = environment.growerAccountingApiBaseUrl;
 
   public GetUserAccountbyJDE(jdenumber: any): Observable<any> {
     return this.http
@@ -34,4 +35,17 @@ export class GrowerPortalService {
         })
       );
   }
+
+  public GetJdeAddressBookNumber(accountNumber: any): Observable<any> {
+    return this.http
+      .get<any>(
+        this.growerAccountingUrl + 'GetJdeAddressBookNumber/' + accountNumber
+      )
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
+
 }

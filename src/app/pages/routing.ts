@@ -66,60 +66,53 @@ const Routing: Routes = [
     }, component: AddEditComponent
   },
   {
-    path: 'reports/gradingdatareport',
-    //canActivate: [RoleGuard],
-    data: {
-      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
-    }, component: GrowerQualitySummaryDetailedComponent
-  },
-  {
-    path: 'reports/deliverypayment',
-    canActivate: [RoleGuard],
-    data: {
-      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
-    }, component: PaymentCalculationReportComponent
-  },
-  {
-    path: 'febprogress',
-    canActivate: [RoleGuard],
-    data: {
-      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
-    }, component: PaymentCalculationReportComponent
-  },
-  {
-    path: 'spotemf',
-    canActivate: [RoleGuard],
-    data: {
-      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
-    }, component: PaymentCalculationReportComponent
-  },
-  {
     path: 'reports/delivery',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+      expectedRole: ['Administrators', '']
     }, component: PaymentCalculationReportComponent
   },
   {
-    path: 'finalpayment',
+    path: 'reports/february',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['Administrators', '']
+    }, component: PaymentCalculationReportComponent
+  },
+  {
+    path: 'reports/may',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['Administrators', '']
+    }, component: PaymentCalculationReportComponent
+  },
+  {
+    path: 'reports/final',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['Administrators', '']
+    }, component: PaymentCalculationReportComponent
+  },
+  {
+    path: 'reports/trueup',
     canActivate: [RoleGuard],
     data: {
-      expectedRole: ['SEC_NPS_REPORT_ADMIN', 'SEC_NPS_REPORT_CROPPAYMENT']
+      expectedRole: ['Administrators', '']
     },
     component: PaymentCalculationReportComponent,
   },
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
   {
     path: 'document',
     loadChildren: () =>
       import('./documents/documents.module').then((m) => m.DocumentsModule),
   },
-  
+
   {
     path: 'admin',
     loadChildren: () =>

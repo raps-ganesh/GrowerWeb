@@ -1,5 +1,5 @@
 import { formatNumber, formatDate, formatCurrency } from '@angular/common';
-import { Component, Inject, Input, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, Input, LOCALE_ID, OnInit, } from '@angular/core';
 import { Router } from '@angular/router';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -12,6 +12,8 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { EventEmitterService } from '../../event-emitter.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { GrowerPortalService } from 'src/app/services/Grower/grower-portal.service';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-payment-calculation-report',
   templateUrl: './payment-calculation-report.component.html',
@@ -36,7 +38,7 @@ export class PaymentCalculationReportComponent implements OnInit {
   isEnabled = false;
   @Input() childProperty: string;
   pdfpath: any;
-
+  jdeAddressBookNumber: any;
   constructor(
 
     private reportService: ReportsService,
@@ -46,7 +48,9 @@ export class PaymentCalculationReportComponent implements OnInit {
     private authHttpService: AuthHTTPService,
     private router: Router,
     private eventEmitterService: EventEmitterService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private growerPortalService: GrowerPortalService,
+    private http: HttpClient
   ) {
     var calcBatchType =
       this.router.url.split('/')[2] != null
@@ -62,23 +66,26 @@ export class PaymentCalculationReportComponent implements OnInit {
         this.calculationBatchType = CalculationBatchTypes.SpotEMF;
         this.title = 'Spot EMF';
         break;
-      case 'FebProgress'.toLowerCase():
+      case 'February'.toLowerCase():
         this.calculationBatchType = CalculationBatchTypes.FebProgress;
         this.title = 'February';
         break;
-      case 'MayProgress'.toLowerCase():
+      case 'May'.toLowerCase():
         this.calculationBatchType = CalculationBatchTypes.MayProgress;
         this.title = 'May';
         break;
-      case 'FinalPayment'.toLowerCase():
+      case 'Final'.toLowerCase():
         this.calculationBatchType = CalculationBatchTypes.FinalPayment;
         this.title = 'Final';
+        break;
+      case 'TrueUp'.toLowerCase():
+        this.calculationBatchType = CalculationBatchTypes.FinalPayment;
+        this.title = 'TrueUp';
         break;
     }
   }
 
   public getSanitizeUrl(url: string): SafeUrl {
-    debugger;
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
@@ -97,6 +104,7 @@ export class PaymentCalculationReportComponent implements OnInit {
     }
   }
   GenerateReport() {
+    debugger;
     if (this.accountnumber == '') {
       Swal.fire({
         html: 'Please enter valid account number',
@@ -122,28 +130,28 @@ export class PaymentCalculationReportComponent implements OnInit {
       return;
     }
 
-    this.pdfpath = 'http://ussacgptsapp:5000/statement/' + this.title + "_" + this.accountnumber + '.pdf';
-    // this.reportHeaders = [];
-    // this.reportData = [];
+    this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
+      next: (data: any) => {
+        debugger;
+        this.jdeAddressBookNumber = data;
+        this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.calculationbatchid + '_' + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
+        var pdfViewer = document.getElementById('pdf');
+        pdfViewer?.setAttribute("src", this.pdfpath);
+        this.http.get(this.pdfpath).subscribe(() => {
 
-    // this.reportService
-    //   .PaymentReport({
-    //     cropyear: this.cropyear,
-    //     accountnumber: this.accountnumber,
-    //     calculationbatchid: this.calculationbatchid,
-    //     calculationBatchType: this.calculationBatchType,
-    //   })
-    //   .subscribe({
-    //     next: (data: any) => {
-    //       this.growerInfo = data.growerInfo[0];
-    //       this.ticketInfo = data.ticketInfo;
-    //       this.paymentInfo = data.paymentInfo;
-    //     },
-    //     error: (err: any) => {
-    //       console.log(err);
-    //     },
-    //   });
+        }, (err) => {
+          if (err.status === 404) {
+            alert("No file found for the selected account");
+          }
+        });
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
   }
+
+
   GetBatches() {
     if (this.accountnumber.trim() != '')
       this.reportService
