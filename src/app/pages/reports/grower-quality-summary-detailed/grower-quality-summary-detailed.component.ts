@@ -54,7 +54,9 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
   pagesize: number = 10;
   searchstring: string = '';
   selected_count: number = 0;
-  imagepath:string ="";
+  colorImagePath:string ="";
+  classImagePath:string ="";
+
   @ViewChild('modalImage') public modalImageComponent: ModalComponent;
 
   modalConfig: ModalConfig = {
@@ -164,10 +166,21 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
     );
   }
 
+
+
   ShowImage(imagepath:any)
   {
-    this.imagepath='./assets/media/logos/demo2.png';
+    //environment.imagePathUrl+`${imagepath}`
+    this.colorImagePath='./assets/media/logos/demo2.png';
+    this.classImagePath='./assets/media/logos/demo2.png';
+
     this.modalImageComponent.open();
+  }
+  imageErrordispaly() {
+    console.log('Image not available..');
+    // $("#colorImages").css('display', 'none');
+    // $("#errorColorImages").css('display', 'block');
+    // $("#imageModalContent").css('height', '200px');
   }
 
   getGrowerNonDeliveryReport(

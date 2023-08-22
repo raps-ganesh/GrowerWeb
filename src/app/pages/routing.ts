@@ -101,6 +101,14 @@ const Routing: Routes = [
     },
     component: PaymentCalculationReportComponent,
   },
+  {
+    path: 'reports/gradingdatareport',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['Administrators', '']
+    },
+    component: GrowerQualitySummaryDetailedComponent,
+  },
 
 
 

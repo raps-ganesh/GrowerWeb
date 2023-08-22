@@ -1314,6 +1314,15 @@
   </div>
 
   <app-modal class="min-w-300px" #modalImage [modalConfig]="modalConfig">
-    <img alt="Logo" src="imagepath" class="logo-default h-35px">
+    <!-- <img alt="Logo" src="imagepath" class="logo-default h-35px"> -->
+    <div id="colorImages">
+
+      <div>
+          <img id="colorImage" (error)="imageErrordispaly()" alt="This image is not available." loading="lazy" [src]="colorImagePath" height="350" width="350" />
+      </div>
+      <div>
+          <img id="classImage" alt="This image is not available ." loading="lazy" [src]="classImagePath" height="350" width="350" />
+      </div>
+  </div>
   </app-modal>
   

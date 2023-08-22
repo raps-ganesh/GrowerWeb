@@ -4,6 +4,7 @@ import { ExcelService } from 'src/app/services/Excel/excel.service';
 import { AppSettingsService } from 'src/app/shared/app-settings.service';
 import Swal from 'sweetalert2';
 import {Safe} from 'src/app/models/Safe '
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-manage-documents',
@@ -188,7 +189,7 @@ export class ManageDocumentsComponent implements OnInit {
   }
 
   public createImgPath = (serverPath: string) => { 
-    return `https://localhost:7073/${serverPath}`; 
+    return environment.imagePathUrl+`${serverPath}`; 
   }
   
 
