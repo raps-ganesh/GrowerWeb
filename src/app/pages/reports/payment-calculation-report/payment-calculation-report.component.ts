@@ -137,13 +137,7 @@ export class PaymentCalculationReportComponent implements OnInit {
         this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.calculationbatchid + '_' + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
         var pdfViewer = document.getElementById('pdf');
         pdfViewer?.setAttribute("src", this.pdfpath);
-        this.http.get(this.pdfpath).subscribe(() => {
 
-        }, (err) => {
-          if (err.status === 404) {
-            alert("No file found for the selected account");
-          }
-        });
       },
       error: (err: any) => {
         console.log(err);
