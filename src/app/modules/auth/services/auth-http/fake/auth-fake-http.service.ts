@@ -7,7 +7,8 @@ import { UserModel } from '../../../models/user.model';
 import { AuthModel } from '../../../models/auth.model';
 import { UsersTable } from '../../../../../_fake/users.table';
 import { environment } from '../../../../../../environments/environment';
-
+import { AESHelper } from 'src/app/pages/SecurityHelpers/AESHelper';
+import { RSAHelper } from 'src/app/pages/SecurityHelpers/RSAHelper';
 
 
 const API_USERS_URL = `${environment.apiUrl}/users`;
@@ -16,9 +17,9 @@ const API_USERS_URL = `${environment.apiUrl}/users`;
   providedIn: 'root',
 })
 export class AuthHTTPService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private aesHelper: AESHelper, private rsaHelper: RSAHelper) { }
 
-  
+
 
   VerifyOTP(email: string, authType: string, phoneNo: string, otp: string): Observable<any> {
     const notFoundError = new Error('Not Found');
@@ -31,31 +32,9 @@ export class AuthHTTPService {
           .replace('{3}', encodeURIComponent(otp))
       ).pipe(
         map((result: any) => {
-          // debugger;
-          // if (result == null || result.Value == 'Invalid OTP') {
-          //   return "Invalid OTP";
-          // }
-
-          // localStorage.setItem('AuthenticationType', result.authenticationType);
-          // const auth = new AuthModel();
-          // auth.authAPIToken = result.authToken;
-          // auth.authToken = 'auth-token-8f3ae836da744329a6f93bf20594b5cc';
-          // auth.refreshToken = 'auth-token-f8c137a2c98743f48b643e71161d90aa';
-          // auth.expiresIn = new Date(Date.now() + 2 * 60 * 60 * 1000);
-
           localStorage.setItem('loggedinUser', result.username);
           localStorage.setItem('UserId', result.userId);
           localStorage.setItem('JDENumber', result.oldVendor_Id);
-
-          // localStorage.setItem(
-          //   'loggedinUserRoles',
-          //   JSON.stringify(result.groups)
-          // );
-          // localStorage.setItem('loggedinData', JSON.stringify(result));
-          // localStorage.setItem('apitkn', result.authToken);
-          // localStorage.setItem('AuthenticationType', result.authenticationType);
-
-          // return auth;
           return result;
         })
       );
@@ -68,25 +47,22 @@ export class AuthHTTPService {
     if (!email || !password) {
       return of(notFoundError);
     }
-
+    const aesKeyValue = this.aesHelper.aesKey();
+    const rsaKey = this.rsaHelper.encryptWithPublicKey(aesKeyValue);
+    const encUser: any = {
+      userName: this.aesHelper.encrypt(email),
+      password: this.aesHelper.encrypt(password),
+      aesKey: rsaKey,
+    };
     return this.http
-      .get(
-        environment.authenticationApiUrl
-          .replace('{0}', encodeURIComponent(email))
-          .replace('{1}', encodeURIComponent(password))
+      .post(
+        environment.authenticationApiUrl + 'authenticate', encUser
       ).pipe(
         map((result: any) => {
           debugger;
           if (result.username == undefined) {
             return notFoundError;
           }
-
-          // if(result.authenticationType==1)
-          // {
-          //   debugger;
-          //   //return notFoundError;
-          // }
-
           localStorage.setItem('AuthenticationType', result.authenticationType);
           const auth = new AuthModel();
           auth.authAPIToken = result.authToken;
@@ -118,11 +94,16 @@ export class AuthHTTPService {
       return of(notFoundError);
     }
 
+    const aesKeyValue = this.aesHelper.aesKey();
+    const rsaKey = this.rsaHelper.encryptWithPublicKey(aesKeyValue);
+    const encUser: any = {
+      userName: this.aesHelper.encrypt(email),
+      password: this.aesHelper.encrypt(password),
+      aesKey: rsaKey,
+    };
     return this.http
-      .get(
-        environment.growerPortalApiBaseUrl + 'preauthenticate?username={0}&password={1}'
-          .replace('{0}', encodeURIComponent(email))
-          .replace('{1}', encodeURIComponent(password))
+      .post(
+        environment.growerPortalApiBaseUrl + 'preauthenticate', encUser
       ).pipe(
         map((result: any) => {
 
@@ -174,7 +155,7 @@ export class AuthHTTPService {
     }
 
     //if (new Number(localStorage.getItem('AuthenticationType')) > 0 && new Boolean(localStorage.getItem('IsOTPAuthenticated')) == false) {
-     // return of(undefined);
+    // return of(undefined);
     //}
 
 
