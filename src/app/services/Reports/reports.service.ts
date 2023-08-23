@@ -55,7 +55,7 @@ export class ReportsService {
     return this.http
       .get<any>(
         this.baseURL +
-        'getgrowerqualitysummarydetailed/' +
+        'gp_getgrowerqualitysummarydetailed/' +
         '?sortcolumn=' +
         data.sortcolumn +
         '&sortDirection=' +

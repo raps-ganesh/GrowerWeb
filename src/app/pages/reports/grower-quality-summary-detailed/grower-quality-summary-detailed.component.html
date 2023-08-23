@@ -1318,10 +1318,10 @@
     <div id="colorImages">
 
       <div>
-          <img id="colorImage" (error)="imageErrordispaly()" alt="This image is not available." loading="lazy" [src]="colorImagePath" height="350" width="350" />
+          <img [height]="250" [width]="250" id="colorImage" (error)="imageErrordispaly()" alt="This image is not available." loading="lazy" [src]="colorImagePath" height="350" width="350" />
       </div>
       <div>
-          <img id="classImage" alt="This image is not available ." loading="lazy" [src]="classImagePath" height="350" width="350" />
+          <img [height]="250" [width]="250" id="classImage" alt="This image is not available ." loading="lazy" [src]="classImagePath" height="350" width="350" />
       </div>
   </div>
   </app-modal>
