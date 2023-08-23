@@ -49,5 +49,33 @@ export class ReportsService {
         })
       );
   }
+
+  public GetGrowerQualitySummaryDetailed(data: any): Observable<any> {
+    debugger;
+    return this.http
+      .get<any>(
+        this.baseURL +
+        'getgrowerqualitysummarydetailed/' +
+        '?sortcolumn=' +
+        data.sortcolumn +
+        '&sortDirection=' +
+        data.sortdirection +
+        '&searchByValue=' +
+        encodeURIComponent(data.searchstring) +
+        '&pagenumber=' +
+        data.pagenumber +
+        '&pagesize=' +
+        data.pagesize +
+        '&cropyear=' +
+        data.cropyear +
+        '&accountNo=' +
+        data.accountNo
+      )
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
   
 }

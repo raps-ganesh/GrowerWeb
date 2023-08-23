@@ -5,6 +5,7 @@ import { UsersComponent } from './admin/users/users.component';
 import { DocumentListComponent } from './documents/document-list/document-list.component';
 import { ManageDocumentsComponent } from './documents/manage-documents/manage-documents.component';
 import { UploadDocumentComponent } from './documents/manage-documents/upload-document/upload-document.component';
+import { GrowerQualitySummaryDetailedComponent } from './reports/grower-quality-summary-detailed/grower-quality-summary-detailed.component';
 import { PaymentCalculationReportComponent } from './reports/payment-calculation-report/payment-calculation-report.component';
 
 const Routing: Routes = [
@@ -99,6 +100,14 @@ const Routing: Routes = [
       expectedRole: ['Administrators', '']
     },
     component: PaymentCalculationReportComponent,
+  },
+  {
+    path: 'reports/gradingdatareport',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['Administrators', '']
+    },
+    component: GrowerQualitySummaryDetailedComponent,
   },
 
 
