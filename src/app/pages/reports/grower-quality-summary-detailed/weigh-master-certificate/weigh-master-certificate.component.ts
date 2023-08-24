@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgxPrinterService, PrintItem } from 'ngx-printer';
 import { Subscription } from 'rxjs';
 import { GradingticketService } from 'src/app/services/Reports/gradingticket.service';
 import { ModalComponent } from 'src/app/_metronic/partials';
@@ -21,13 +22,13 @@ export class WeighMasterCertificateComponent implements OnInit {
   constructor(
     private gradingticketService: GradingticketService,
     private _Activatedroute: ActivatedRoute
-    //,    private printerService: NgxPrinterService
+    ,    private printerService: NgxPrinterService
   ) {
     this.gradingticketId = this._Activatedroute.snapshot.paramMap.get('id');
-    // this.printWindowSubscription =
-    //   this.printerService.$printWindowOpen.subscribe((val) => {
-    //     console.log('Print window is open:', val);
-    //   });
+    this.printWindowSubscription =
+      this.printerService.$printWindowOpen.subscribe((val) => {
+        console.log('Print window is open:', val);
+      });
   }
   @ViewChild('modal') private modalComponent: ModalComponent;
   @ViewChild('dataBlock') block: ElementRef;
@@ -56,6 +57,6 @@ export class WeighMasterCertificateComponent implements OnInit {
   }
 
   printCertificate() {
-    //this.printerService.printDiv('maintableofpdf');
+    this.printerService.printDiv('maintableofpdf');
   }
 }

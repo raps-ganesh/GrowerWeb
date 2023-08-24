@@ -1214,7 +1214,7 @@
                       (click)="sort('Id')"
                       style="cursor: pointer"
                     >
-                      FD8#
+                      Weight Certificate
                     </th>
                     <th class="text-center">Variety Name</th>
                     <th class="text-center">Receiving Date</th>
@@ -1227,8 +1227,8 @@
                     <th class="text-center" [hidden]="cropyear < 2022">% Extra Light</th>
                     <th class="text-center" [hidden]="cropyear < 2022">% Light</th>
                     <th class="text-center" [hidden]="cropyear < 2022">% Light Amber</th>
-                    <th class="text-center" [hidden]="cropyear < 2022">% Amber</th>
-                    <th class="text-center" [hidden]="cropyear < 2022">% Amber Dark</th>
+                    <!-- <th class="text-center" [hidden]="cropyear < 2022">% Amber</th>
+                    <th class="text-center" [hidden]="cropyear < 2022">% Amber Dark</th> -->
                     <th class="text-center">% Insect</th>
                     <th class="text-center">% Blow</th>
                     <th class="text-center">% Ofg</th>
@@ -1247,7 +1247,7 @@
                           'weighmastercertificate',
                           info.id
                         ]">
-                        <div class="symbol-label fs-4 bg-light-warning text-warning">
+                        <div class="symbol-label fs-8 text-primary">
                           {{ info.ticketNumber }}
                         </div>
                       </a>
@@ -1266,8 +1266,8 @@
                       
                     </td>
                     <td class="text-right" [hidden]="cropyear < 2022">{{ info.percentLightAmberKernel }}</td>
-                    <td class="text-right" [hidden]="cropyear < 2022">{{ info.percentAmberKernel }}</td>
-                    <td class="text-right" [hidden]="cropyear < 2022">{{ info.percentDarkKernel }}</td>
+                    <!-- <td class="text-right" [hidden]="cropyear < 2022">{{ info.percentAmberKernel }}</td>
+                    <td class="text-right" [hidden]="cropyear < 2022">{{ info.percentDarkKernel }}</td> -->
                     <td class="text-right">{{ info.percentInsect }}</td>
                     <td class="text-right">{{ info.percentBlowable }}</td>
                     <td class="text-right">{{ info.percentOffGrade }}</td>
