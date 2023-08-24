@@ -158,6 +158,8 @@ export const environment = {
   },
 
   authenticationApiUrl: 'https://localhost:7050/api/authenticate/authenticate?username={0}&password={1}',
+  receivingApiBaseUrl: 'https://localhost:7101/api/receiving/',
+  gradingApiBaseUrl: 'https://localhost:7068/api/grading/',
   growerPortalApiBaseUrl: 'https://localhost:7050/api/authenticate/',
   adminApiBaseUrl: 'https://localhost:7061/api/admin/',
   documentApiBaseUrl: 'https://localhost:7073/api/Document/',

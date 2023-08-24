@@ -1241,7 +1241,17 @@
                 <!-- begin::Table body -->
                 <tbody>
                   <tr *ngFor="let info of filterByAcc(itm.accountNo)">
-                    <td class="text-center">{{ info.ticketNumber }}</td>
+                    <td class="text-center">
+                      <!-- {{ info.ticketNumber }} -->
+                      <a  target="_blank" [routerLink]="[
+                          'weighmastercertificate',
+                          info.id
+                        ]">
+                        <div class="symbol-label fs-4 bg-light-warning text-warning">
+                          {{ info.ticketNumber }}
+                        </div>
+                      </a>
+                    </td>
                     <td class="">{{ info.varietyName }}</td>
                     <td class="text-center">{{ info.receivingDate }}</td>
                     <td class="text-center">{{ info.gradingTicketType }}</td>

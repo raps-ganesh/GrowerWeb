@@ -7,6 +7,7 @@ import autoTable from 'jspdf-autotable';
 import { CalculationBatchTypes } from 'src/app/models/enums';
 import { AuthHTTPService } from 'src/app/modules/auth/services/auth-http';
 import { ExcelService } from 'src/app/services/Excel/excel.service';
+import { ExportService } from 'src/app/services/Excel/export.service';
 import { ReportsService } from 'src/app/services/Reports/reports.service';
 import { AppSettingsService } from 'src/app/shared/app-settings.service';
 import { ModalComponent, ModalConfig } from 'src/app/_metronic/partials';
@@ -74,6 +75,7 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
     private reportService: ReportsService,
     public appSettingService: AppSettingsService,
     public excelService: ExcelService,
+    private exportService: ExportService,
     @Inject(LOCALE_ID) public locale: string,
     private authHttpService: AuthHTTPService,
     private router: Router,
@@ -236,6 +238,7 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
   }
 
   GetdateFormated(data: any) {
+    debugger;
     return data;
     if (data == null) {
       return '-';
@@ -248,174 +251,245 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
     }
   }
   export() {
-    let ticketInfoData = this.ticketInfo.map((obj: any) => {
+    let reportHeaders: any = this.cropyear < 2022 ? ['FD8#', 'Variety Name', 'Receiving Date', 'Grading', 'Net Weight'
+    , '% Jumbo'
+    , '% Med Baby'
+    , '% Edible'
+    , 'RLI'
+    , '% Insect'
+    , '% Blow'
+    , '% Ofg'
+    , 'Ofg Dam'
+    , '% Ext Dam'
+    , 'Ext Dam'
+  ]
+  :['FD8#', 'Variety Name', 'Receiving Date', 'Grading', 'Net Weight'
+  , '% Jumbo'
+  , '% Med Baby'
+  , '% Edible'
+  , '% Extra Light', '% Light', '% Light Amber', '% Amber', '% Amber Dark'
+  , '% Insect'
+  , '% Blow'
+  , '% Ofg'
+  , 'Ofg Dam'
+  , '% Ext Dam'
+  , 'Ext Dam'
+];
+
+    let columns: any[];
+    let mainHeaderColumn: any = [];
+    let SearchColumns: any[][] = [];
+    SearchColumns.push(['Account No ',this.accountNumber]);
+    SearchColumns.push(['Crop Year ',this.cropyear]);
+    columns = reportHeaders;
+    let new_list; 
+    debugger;
+    if (this.cropyear < 2022)
+    {
+      new_list = this.reportData.map(function (obj: any) {
+        return {
+          name: obj.name
+          ,accountNo : obj.accountNo
+          ,ticketNumber : obj.ticketNumber 
+          ,varietyName : obj.varietyName 
+          ,receivingDate : obj.receivingDate 
+          ,gradingTicketType  : obj.gradingTicketType
+          ,netWeight : obj.netWeight
+          ,percentJumboSound : obj.percentJumboSound
+          ,medbaby : obj.medbaby
+          ,percentEdibleYield : obj.percentEdibleYield
+          ,rli : obj.rli
+          ,percentInsect : obj.percentInsect
+          ,percentBlowable : obj.percentBlowable
+          ,percentOffGrade  : obj.percentOffGrade
+          ,predominantOffgradeDamage : obj.predominantOffgradeDamage
+          ,percentExternalDamage : obj.percentExternalDamage
+          ,predominantExternalDamage : obj.predominantExternalDamage 
+
+        };
+      });
+    }
+  else
+  {
+    new_list = this.reportData.map(function (obj: any) {
       return {
-        DeliveryNumber: obj.DeliveryNumber,
-        varietyName: obj.varietyName,
-        DeliveryDate: obj.DeliveryDate,
-        NetWeight: obj.NetWeight,
-        PercentEdibleYield: obj.PercentEdibleYield,
-        PercentJumboSound: obj.PercentJumboSound,
-        PercentOffGrade: obj.PercentOffGrade,
-        ExternalType: obj.ExternalType,
-        PercentInsect: obj.PercentInsect,
-        PercentMold: obj.PercentMold,
-        PercentBlow: obj.PercentBlow,
-        PercentLightKerenels: obj.PercentLightKerenels,
-        PercentLightAmberKernels: obj.PercentLightAmberKernels,
-        PercentAmberDarkKernels: obj.PercentAmberDarkKernels,
-        Incentive: obj.Incentive,
-        InshellValue: obj.InshellValue,
-        KernelValue: obj.KernelValue,
-        Payment: obj.Payment,
+        name: obj.name
+        ,accountNo : obj.accountNo
+        ,ticketNumber : obj.ticketNumber 
+        ,varietyName : obj.varietyName 
+        ,receivingDate : obj.receivingDate 
+        ,gradingTicketType  : obj.gradingTicketType
+        ,netWeight : obj.netWeight
+        ,percentJumboSound : obj.percentJumboSound
+        ,medbaby : obj.medbaby
+        ,percentEdibleYield : obj.percentEdibleYield
+        ,percentExtraLightKernel : obj.percentExtraLightKernel
+        ,percentLightKernel : obj.percentLightKernel
+        ,percentLightAmberKernel : obj.percentLightAmberKernel
+        ,percentAmberKernel : obj.percentAmberKernel
+        ,percentDarkKernel : obj.percentDarkKernel
+        ,percentInsect : obj.percentInsect
+        ,percentBlowable : obj.percentBlowable
+        ,percentOffGrade  : obj.percentOffGrade
+        ,predominantOffgradeDamage : obj.predominantOffgradeDamage
+        ,percentExternalDamage : obj.percentExternalDamage
+        ,predominantExternalDamage : obj.predominantExternalDamage 
       };
     });
-
-    let paymentInfoColumns = [
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      'Date',
-      'Check #',
-      'Payee',
-      'Payee %',
-      'Description',
-      'Payee $',
-      'Account Total',
+  }
+    
+    var exportData: any = [];
 
 
-    ];
-
-
-    let paymentInfoData = this.paymentInfo.map((obj: any) => {
-      return {
-        Empty1: '',
-        Empty2: '',
-        Empty3: '',
-        Empty4: '',
-        Empty5: '',
-        Empty6: '',
-        Empty7: '',
-        Empty8: '',
-        Empty9: '',
-        Empty10: '',
-        Empty11: '',
-
-
-        Date: obj.Date,
-
-        Check: obj.Check,
-        Payee: obj.Payee,
-        allocationpercent: obj.allocationpercent,
-        Description: obj.Description,
-        payeeshare: obj.payeeshare,
-        totalAmount: obj.totalAmount
-
-
-      };
+    this.reportData.forEach((element: any) => {
+      exportData.push(element);
     });
 
-    let growerInfoColumns: any[][] = [];
-
-    growerInfoColumns.push(['Crop Year - ', this.cropyear]);
-    growerInfoColumns.push(['Account Number - ', this.accountnumber]);
-    growerInfoColumns.push([
-      'Grower Account #	 - ',
-      this.growerInfo.RootAccountNumber,
-    ]);
-    growerInfoColumns.push(['Account Name - ', this.growerInfo.Name]);
-    growerInfoColumns.push([
+    this.excelService.exportAsExcelFileGrowerQuality(
+      'Grower Quality Summary Detailed',
       '',
-      this.growerInfo.AddressLine1 + ' ' + this.growerInfo.AddressLine2,
-    ]);
-    growerInfoColumns.push([
-      '',
-      this.growerInfo.City.trim() +
-      ', ' +
-      this.growerInfo.StateAbbreviation +
-      ' ' +
-      this.growerInfo.PostalCode,
-    ]);
-
-
-    let ticketInfoColumns: any[];
-    let ticketInfoTopColumn: any = [];
-
-    ticketInfoTopColumn = ['', '', '', '', '', '', '', '', '', 'Serious Damage', '', '', '', '', '', '', '', '']
-
-    ticketInfoColumns = this.reportHeaders;
-    ticketInfoColumns = [
-      'Delivery#',
-      'Variety',
-      'Date',
-      'Inshell Wt',
-      '% Ey',
-      '% J Snd',
-      '% Ofg',
-      'Type',
-      'Insc %',
-      '% Other Damage',
-      '% Blow',
-      '% Light+',
-      '% Lt Am',
-      '% Am Dk',
-      'Incentive',
-      'Inshell Price',
-      'Kernel Value',
-      'Total Value',
-    ];
-
-
-    this.excelService.exportAsExcelFileDeliveryReport(
-      this.title,
-      '',
-      ticketInfoColumns,
-      ticketInfoData,
+      columns,
+      new_list,
       [],
-      this.title +
-      '_' +
+      'GrowerQualitySummaryDetailed_Report_' +
       formatDate(new Date(), 'dd-MM-yyyy hh:mm:ss a', 'en-US', '-0800'),
-      this.title,
-      growerInfoColumns,
-      ticketInfoTopColumn,
-      [],//2nd sheet data
-      '',// 2nd sheet Name
-      [],// 2nd sheet header array
-      paymentInfoData,
-      paymentInfoColumns,
-      //new_list2,
-      []
+      'Grower Quality Summary Detailed',
+      SearchColumns,
+      mainHeaderColumn,
+      this.reportData2,
+      'Grower Quality Summary Detailed2',
+      this.cropyear
     );
   }
+
   exportToPDF() {
-    this.reportService
-      .PaymentReport({
-        cropyear: this.cropyear,
-        accountnumber: this.accountnumber,
-        calculationbatchid: this.calculationbatchid,
-        calculationBatchType: this.calculationBatchType,
-      })
-      .subscribe({
-        next: (data: any) => {
-          this.accountData.push(data);
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-        complete: () => {
-          if (this.accountData.length == 1) {
-            this.GeneratePDFForPaymentReport();
-          }
-        },
-      });
+    let reportHeadersPDF: any = this.cropyear < 2022 ? ['Name','Account No','FD8#', 'Variety Name', 'Receiving Date', 'Grading', 'Net Weight'
+    , '% Jumbo'
+    , '% Med Baby'
+    , '% Edible'
+    , 'RLI'
+    , '% Insect'
+    , '% Blow'
+    , '% Ofg'
+    , 'Ofg Dam'
+    , '% Ext Dam'
+    , 'Ext Dam'
+  ] :
+  ['Name','Account No','FD8#', 'Variety Name', 'Receiving Date', 'Grading', 'Net Weight'
+    , '% Jumbo'
+    , '% Med Baby'
+    , '% Edible'
+    , '% Extra Light', '% Light', '% Light Amber', '% Amber', '% Amber Dark'
+    , '% Insect'
+    , '% Blow'
+    , '% Ofg'
+    , 'Ofg Dam'
+    , '% Ext Dam'
+    , 'Ext Dam'
+  ];
+    let SearchColumns:any[][]=[];
+    SearchColumns.push(['Account Number - '+this.accountNumber]);
+    SearchColumns.push(['Crop Year - '+this.cropyear]);
+
+    debugger;
+    var arr: any[][] = [];
+
+    if (this.cropyear < 2022)
+    {
+    for (var i: number = 0; i < this.reportData.length; i++) {
+      arr[i] = [];
+      arr[i][0] = this.reportData[i].name 
+      arr[i][1] = this.reportData[i].accountNo
+      arr[i][2] = this.reportData[i].ticketNumber 
+      arr[i][3] = this.reportData[i].varietyName 
+      arr[i][4] = this.reportData[i].receivingDate 
+      arr[i][5] = this.reportData[i].gradingTicketType 
+      arr[i][6] = formatNumber(this.reportData[i].netWeight,this.locale)
+      arr[i][7] = this.reportData[i].percentJumboSound+'%'
+      arr[i][8] = this.reportData[i].medbaby +'%'
+      arr[i][9] = this.reportData[i].percentEdibleYield +'%'
+      arr[i][10] = this.reportData[i].rli 
+      arr[i][11] = this.reportData[i].percentInsect +'%'
+      arr[i][12] = this.reportData[i].percentBlowable +'%'
+      arr[i][13] = this.reportData[i].percentOffGrade +'%'
+      arr[i][14] = this.reportData[i].predominantOffgradeDamage 
+      arr[i][15] = this.reportData[i].percentExternalDamage +'%'
+      arr[i][16] = this.reportData[i].predominantExternalDamage 
+    }
+  }
+  else
+  {
+    for (var i: number = 0; i < this.reportData.length; i++) {
+      arr[i] = [];
+      arr[i][0] = this.reportData[i].name 
+      arr[i][1] = this.reportData[i].accountNo
+      arr[i][2] = this.reportData[i].ticketNumber 
+      arr[i][3] = this.reportData[i].varietyName 
+      arr[i][4] = this.reportData[i].receivingDate 
+      arr[i][5] = this.reportData[i].gradingTicketType 
+      arr[i][6] = formatNumber(this.reportData[i].netWeight,this.locale)
+      arr[i][7] = this.reportData[i].percentJumboSound+'%'
+      arr[i][8] = this.reportData[i].medbaby +'%'
+      arr[i][9] = this.reportData[i].percentEdibleYield +'%'
+      arr[i][10] = this.reportData[i].percentExtraLightKernel  +'%'
+      arr[i][11] = this.reportData[i].percentLightKernel  +'%'
+      arr[i][12] = this.reportData[i].percentLightAmberKernel  +'%'
+      arr[i][13] = this.reportData[i].percentAmberKernel  +'%'
+      arr[i][14] = this.reportData[i].percentDarkKernel  +'%'
+      arr[i][15] = this.reportData[i].percentInsect +'%'
+      arr[i][16] = this.reportData[i].percentBlowable +'%'
+      arr[i][17] = this.reportData[i].percentOffGrade +'%'
+      arr[i][18] = this.reportData[i].predominantOffgradeDamage 
+      arr[i][19] = this.reportData[i].percentExternalDamage +'%'
+      arr[i][20] = this.reportData[i].predominantExternalDamage 
+  }
+}
+    let head = reportHeadersPDF;
+
+    var columnStyleRli: any = {
+      6: { halign: 'right' },
+      7: { halign: 'right' },
+      8: { halign: 'right' },
+      9: { halign: 'right' },
+      10: { halign: 'right' },
+      11: { halign: 'right' },
+      12: { halign: 'right' },
+      13: { halign: 'right' },
+      14: { halign: 'right' },
+      15: { halign: 'right' },
+      17: { halign: 'right' }      
+    };
+
+    
+    var columnStyle: any = {
+      6: { halign: 'right' },
+      7: { halign: 'right' },
+      8: { halign: 'right' },
+      9: { halign: 'right' },
+      10: { halign: 'right' },
+      11: { halign: 'right' },
+      12: { halign: 'right' },
+      13: { halign: 'right' },
+      14: { halign: 'right' },
+      15: { halign: 'right' },
+      17: { halign: 'right' },
+      18: { halign: 'right' },   
+      19: { halign: 'right' },  
+      20: { halign: 'right' }         
+    };
+
+
+    this.exportService.expoertToPdf(
+      arr,
+      'GrowerQualitySummaryDetailed_Report_' +
+      formatDate(new Date(), 'dd-MM-yyyy hh:mm:ss a', 'en-US', '-0800'),
+      head,
+      'Grower Quality Summary Detailed',
+      'l',
+      SearchColumns,
+      ['', ''],
+      [],'a2', this.cropyear < 2022 ? columnStyleRli : columnStyle
+    );
   }
 
   GeneratePDFForPaymentReport() {

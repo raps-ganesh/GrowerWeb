@@ -6,6 +6,7 @@ import { DocumentListComponent } from './documents/document-list/document-list.c
 import { ManageDocumentsComponent } from './documents/manage-documents/manage-documents.component';
 import { UploadDocumentComponent } from './documents/manage-documents/upload-document/upload-document.component';
 import { GrowerQualitySummaryDetailedComponent } from './reports/grower-quality-summary-detailed/grower-quality-summary-detailed.component';
+import { WeighMasterCertificateComponent } from './reports/grower-quality-summary-detailed/weigh-master-certificate/weigh-master-certificate.component';
 import { PaymentCalculationReportComponent } from './reports/payment-calculation-report/payment-calculation-report.component';
 
 const Routing: Routes = [
@@ -114,7 +115,11 @@ const Routing: Routes = [
 
 
 
-
+  
+  {
+    path: 'reports/gradingdatareport/weighmastercertificate/:id',
+    component: WeighMasterCertificateComponent,
+  },
   {
     path: 'document',
     loadChildren: () =>

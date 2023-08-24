@@ -157,6 +157,8 @@ export const environment = {
     },
   },
   authenticationApiUrl: 'http://10.12.96.192:4200/api/authenticate/authenticate?username={0}&password={1}',
+  receivingApiBaseUrl: 'http://10.12.96.194:3100/api/receiving/',
+  gradingApiBaseUrl: 'http://10.12.96.194:3000/api/grading/',
   growerPortalApiBaseUrl: 'http://10.12.96.192:4200/api/authenticate/',
   adminApiBaseUrl: 'http://10.12.96.192:4100/api/admin/',
   documentApiBaseUrl: 'http://10.12.96.192:4300/api/Document/',
