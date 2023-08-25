@@ -52,12 +52,22 @@ export class AppComponent implements OnInit {
   }
   checkTimeOut() {
     this.timeoutId = setTimeout(
-      () => { this.router.url != "/auth/login" ? this.userInactive.next("User has been inactive for 20 minutes") : null }, 1200000);
+      () => {
+        this.router.url != "/auth/login" ? this.userInactive.next("User has been inactive for 20 minutes") : null;
+        localStorage.removeItem('loggedinUser');
+        localStorage.removeItem('UserId');
+        localStorage.removeItem('JDENumber');
+        localStorage.removeItem('loggedinUserRoles');
+        localStorage.removeItem('loggedinData');
+        localStorage.removeItem('apitkn');
+        localStorage.removeItem('AuthenticationType');
+      }, 1200000);
   }
   @HostListener('window:keydown')
   @HostListener('window:mousedown')
   checkUserActivity() {
     clearTimeout(this.timeoutId);
+    localStorage.setItem("LastActive", new Date().toString());
     this.checkTimeOut();
   }
 }

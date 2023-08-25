@@ -12,24 +12,24 @@ import { RouterModule } from '@angular/router';
 
 
 @NgModule({
-    declarations: [
-        PaymentCalculationReportComponent,
-        GrowerQualitySummaryDetailedComponent,
-        ReceivingWeighMasterCertificateComponent,
-        WeighMasterCertificateComponent
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        BrowserModule,
-        PdfViewerModule,
-        ModalsModule,
-        RouterModule.forChild([
-            {
-              path: '',
-              component: GrowerQualitySummaryDetailedComponent,
-            },
-          ]),
-    ]
+  declarations: [
+    PaymentCalculationReportComponent,
+    GrowerQualitySummaryDetailedComponent,
+    ReceivingWeighMasterCertificateComponent,
+    WeighMasterCertificateComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    BrowserModule,
+    PdfViewerModule,
+    ModalsModule,
+    RouterModule.forChild([
+      {
+        path: '',
+        component: GrowerQualitySummaryDetailedComponent,
+      },
+    ]),
+  ]
 })
 export class ReportsModule { }

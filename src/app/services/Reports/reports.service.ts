@@ -77,5 +77,69 @@ export class ReportsService {
         })
       );
   }
-  
+
+  public GetReceivingTickets(data: any): Observable<any> {
+    return this.http
+      .get<any>(
+        this.baseURL +
+        'ReceivingTickets/' +
+        data.cropyear +
+        '/' +
+        data.accountnumber
+      )
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
+
+  public GetDehydratorDeliveries(data: any): Observable<any> {
+    return this.http
+      .get<any>(
+        this.baseURL +
+        'DehydratorDeliveries/' +
+        data.cropyear +
+        '/' +
+        data.accountnumber
+      )
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
+
+  public YearEndStatement(data: any): Observable<any> {
+    return this.http
+      .get<any>(
+        this.baseURL +
+        'YearEndStatement/' +
+        data.StatementYear +
+        '?accountnumber=' +
+        data.accountnumber
+      )
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
+
+
+  public DeferredStatement(data: any): Observable<any> {
+    return this.http
+      .get<any>(
+        this.baseURL +
+        'deferredstatement/' +
+        data.StatementYear +
+        '?accountnumber=' +
+        data.accountnumber + '&calculationBatchId=' + data.calculationBatchId
+      )
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
 }

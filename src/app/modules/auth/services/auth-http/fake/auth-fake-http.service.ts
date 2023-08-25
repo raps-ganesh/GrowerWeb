@@ -74,15 +74,11 @@ export class AuthHTTPService {
           localStorage.setItem('loggedinUser', result.username);
           localStorage.setItem('UserId', result.userId);
           localStorage.setItem('JDENumber', result.oldVendor_Id);
-
-          localStorage.setItem(
-            'loggedinUserRoles',
-            JSON.stringify(result.groups)
-          );
+          localStorage.setItem('loggedinUserRoles', JSON.stringify(result.groups));
           localStorage.setItem('loggedinData', JSON.stringify(result));
           localStorage.setItem('apitkn', result.authToken);
           localStorage.setItem('AuthenticationType', result.authenticationType);
-
+          localStorage.setItem("LastActive", new Date().toString());
           return auth;
         })
       );
@@ -153,7 +149,6 @@ export class AuthHTTPService {
     if (localStorage.getItem('loggedinUser') == null) {
       return of(undefined);
     }
-
     //if (new Number(localStorage.getItem('AuthenticationType')) > 0 && new Boolean(localStorage.getItem('IsOTPAuthenticated')) == false) {
     // return of(undefined);
     //}
