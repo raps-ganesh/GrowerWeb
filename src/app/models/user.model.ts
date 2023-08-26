@@ -23,4 +23,5 @@ export interface UserModel {
     authenticationType?: number;
     accountIds: any;
     userTypeIds: any;
+    userAccounts: any;
 }

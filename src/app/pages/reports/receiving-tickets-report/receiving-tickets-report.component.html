@@ -914,7 +914,11 @@
             </button>
             <!--end::Export-->
             <!--begin::Export-->
-            <a type="button" class="btn btn-light-primary me-3">
+            <button
+              type="button"
+              class="btn btn-light-primary me-3"
+              (click)="exportToPDF()"
+            >
               <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
               <span class="svg-icon svg-icon-2">
                 <svg
@@ -1113,7 +1117,7 @@
                 </svg>
               </span>
               <!--end::Svg Icon-->
-            </a>
+            </button>
             <!--end::Export-->
 
             <!--begin::Search-->

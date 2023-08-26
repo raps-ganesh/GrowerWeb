@@ -59,7 +59,7 @@ export class ExportService {
         margin: { top: 30 },
       });
     }
-
+    debugger;
     if (masterHead3.length > 0) {
       autoTable(doc, {
         head: masterHead.length > 0 ? [masterHead3, masterHead, header] : [header],
@@ -89,30 +89,37 @@ export class ExportService {
         headStyles: {
           halign: 'center',
           valign: 'middle',
-          fillColor : [211,211,211],
-          textColor: [0,0,0],
+          fillColor: [211, 211, 211],
+          textColor: [0, 0, 0],
           fontStyle: 'normal',
-          lineWidth : { top: 0.1, right: 0.1, left : 0.1, bottom:0.05 },
-          lineColor : [0,0,0]
+          lineWidth: { top: 0.1, right: 0.1, left: 0.1, bottom: 0.05 },
+          lineColor: [0, 0, 0]
         },
-        showHead : 'firstPage',
+        showHead: 'firstPage',
         willDrawCell: (data) => {
-          console.log(data.row.raw.toString().indexOf('Account Total'));
-          if(data.row.raw.toString().search('Grand Total') === 0){
-            doc.setFont('Helvetica','bold');  
-          } 
-          if(data.row.raw.toString().indexOf('Account Total') > 0){
-            doc.setFont('Helvetica','bold');  
-          } 
-          if(data.row.raw.toString().indexOf('Assignee Name') > 0){
-            doc.setFont('Helvetica','bold');  
+          console.log(data.row.raw.toString().indexOf('Totals'));
+          debugger;
+          if (data.row.raw.toString().search('Grand Total') === 0) {
+            doc.setFont('Helvetica', 'bold');
           }
-          if (data.section === 'body' && data.row.index === 0) 
-            doc.setFont('Helvetica','bold');
-          },
+          if (data.row.raw.toString().indexOf('Account Total') > 0) {
+            doc.setFont('Helvetica', 'bold');
+          }
+          if (data.row.raw.toString().indexOf('Assignee Name') > 0) {
+            doc.setFont('Helvetica', 'bold');
+          }
+          if (data.row.raw.toString().search('Totals') === 0) {
+            doc.setFont('Helvetica', 'bold');
+          }
+          if (data.row.raw.toString().search('Paid') === 0) {
+            doc.setFont('Helvetica', 'bold');
+          }
+          // if (data.section === 'body' && data.row.index === 0) 
+          //   doc.setFont('Helvetica','bold');
+        },
         margin: { top: 30 },
         columnStyles: columnStyle,
-      });    
+      });
     }
 
 
@@ -238,7 +245,7 @@ export class ExportService {
           if (data.row.raw.toString().indexOf('Assignee Name') > 0) {
             doc.setFont('Helvetica', 'bold');
           }
-         
+
           if (data.row.raw.toString().indexOf('Grand Total') > 0) {
             doc.setFont('Helvetica', 'bold').setTextColor('black');
           }
@@ -337,12 +344,12 @@ export class ExportService {
         headStyles: {
           halign: 'center',
           valign: 'middle',
-          fillColor : [211,211,211],
-          textColor: [0,0,0],
+          fillColor: [211, 211, 211],
+          textColor: [0, 0, 0],
           fontStyle: 'bold',
-          lineWidth : { top: 0.1, right: 0.1, left : 0.1, bottom:0.05 },
-          lineColor : [0,0,0]
-        },   
+          lineWidth: { top: 0.1, right: 0.1, left: 0.1, bottom: 0.05 },
+          lineColor: [0, 0, 0]
+        },
         margin: { top: 30 },
         columnStyles: columnStyle,
       });
@@ -355,30 +362,30 @@ export class ExportService {
         headStyles: {
           halign: 'center',
           valign: 'middle',
-          fillColor : [211,211,211],
-          textColor: [0,0,0],
+          fillColor: [211, 211, 211],
+          textColor: [0, 0, 0],
           fontStyle: 'bold',
-          lineWidth : { top: 0.1, right: 0.1, left : 0.1, bottom:0.05 },
-          lineColor : [0,0,0]
-        },   
-        showHead : 'firstPage',
+          lineWidth: { top: 0.1, right: 0.1, left: 0.1, bottom: 0.05 },
+          lineColor: [0, 0, 0]
+        },
+        showHead: 'firstPage',
         willDrawCell: (data) => {
           console.log(data.row.raw.toString().indexOf('Account Total'));
-          if(data.row.raw.toString().search('Grand Total') === 0){
-            doc.setFont('Helvetica','bold');  
-          } 
-          if(data.row.raw.toString().indexOf('Account Total') > 0){
-            doc.setFont('Helvetica','bold');  
-          } 
-          if(data.row.raw.toString().indexOf('Assignee Name') > 0){
-            doc.setFont('Helvetica','bold');  
+          if (data.row.raw.toString().search('Grand Total') === 0) {
+            doc.setFont('Helvetica', 'bold');
           }
-          if (data.section === 'body' && data.row.index === 0) 
-            doc.setFont('Helvetica','bold');
-          },
+          if (data.row.raw.toString().indexOf('Account Total') > 0) {
+            doc.setFont('Helvetica', 'bold');
+          }
+          if (data.row.raw.toString().indexOf('Assignee Name') > 0) {
+            doc.setFont('Helvetica', 'bold');
+          }
+          if (data.section === 'body' && data.row.index === 0)
+            doc.setFont('Helvetica', 'bold');
+        },
         margin: { top: 30 },
         columnStyles: columnStyle,
-      });    
+      });
     }
 
 
@@ -452,7 +459,7 @@ export class ExportService {
       });
     }
 
-  
+
 
     autoTable(doc, {
       head: masterHead.length > 0 ? [masterHead, header] : [header],
@@ -461,27 +468,27 @@ export class ExportService {
       headStyles: {
         halign: 'center',
         valign: 'middle',
-        fillColor : [211,211,211],
-        textColor: [0,0,0],
+        fillColor: [211, 211, 211],
+        textColor: [0, 0, 0],
         fontStyle: 'normal',
-        lineWidth : { top: 0.1, right: 0.1, left : 0.1, bottom:0.05 },
-        lineColor : [0,0,0]
-      },      
-      showHead : 'firstPage',
+        lineWidth: { top: 0.1, right: 0.1, left: 0.1, bottom: 0.05 },
+        lineColor: [0, 0, 0]
+      },
+      showHead: 'firstPage',
       willDrawCell: (data) => {
         console.log(data.row.raw.toString().indexOf('Account Total'));
-        if(data.row.raw.toString().search('Grand Total') === 0){
-          doc.setFont('Helvetica','bold');  
-        } 
-        if(data.row.raw.toString().indexOf('Account Total') > 0){
-          doc.setFont('Helvetica','bold');  
-        } 
-        if(data.row.raw.toString().indexOf('Assignee Name') > 0){
-          doc.setFont('Helvetica','bold');  
+        if (data.row.raw.toString().search('Grand Total') === 0) {
+          doc.setFont('Helvetica', 'bold');
         }
-        if (data.section === 'body' && data.row.index === 0) 
-          doc.setFont('Helvetica','bold');
-        },
+        if (data.row.raw.toString().indexOf('Account Total') > 0) {
+          doc.setFont('Helvetica', 'bold');
+        }
+        if (data.row.raw.toString().indexOf('Assignee Name') > 0) {
+          doc.setFont('Helvetica', 'bold');
+        }
+        if (data.section === 'body' && data.row.index === 0)
+          doc.setFont('Helvetica', 'bold');
+      },
       margin: { top: 30 },
       columnStyles: columnStyle,
     });
@@ -493,26 +500,26 @@ export class ExportService {
       headStyles: {
         halign: 'center',
         valign: 'middle',
-        fillColor : [211,211,211],
-        textColor: [0,0,0],
+        fillColor: [211, 211, 211],
+        textColor: [0, 0, 0],
         fontStyle: 'normal',
-        lineWidth : { top: 0.1, right: 0.1, left : 0.1, bottom:0.05 },
-        lineColor : [0,0,0]
+        lineWidth: { top: 0.1, right: 0.1, left: 0.1, bottom: 0.05 },
+        lineColor: [0, 0, 0]
       },
       bodyStyles: {
-        lineWidth : { top: 0, right: 0.1, left : 0.1, bottom:0 },
-        lineColor : [0,0,0],        
+        lineWidth: { top: 0, right: 0.1, left: 0.1, bottom: 0 },
+        lineColor: [0, 0, 0],
       },
-      showHead : 'firstPage',
+      showHead: 'firstPage',
       willDrawCell: (data) => {
-        if(data.row.raw.toString().indexOf('Account Total') > 0){
-          doc.setFont('Helvetica','bold');  
-        } 
-        if(data.row.raw.toString().indexOf('Assignee Name') > 0){
-          doc.setFont('Helvetica','bold');  
+        if (data.row.raw.toString().indexOf('Account Total') > 0) {
+          doc.setFont('Helvetica', 'bold');
         }
-        console.log(data.row.index +' '+ jsonData2.length)
-        if(data.row.index == (jsonData2.length - 1)){
+        if (data.row.raw.toString().indexOf('Assignee Name') > 0) {
+          doc.setFont('Helvetica', 'bold');
+        }
+        console.log(data.row.index + ' ' + jsonData2.length)
+        if (data.row.index == (jsonData2.length - 1)) {
           doc.line(
             data.cell.x,
             data.cell.y + data.cell.height,
@@ -524,10 +531,10 @@ export class ExportService {
         }
       },
       margin: { top: 30 },
-      columnStyles: columnStyle,      
+      columnStyles: columnStyle,
     });
 
-    
+
 
     var pageCount = doc.getNumberOfPages(); //Total Page Number
     for (var i = 0; i < pageCount; i++) {
@@ -540,23 +547,23 @@ export class ExportService {
       //   doc.internal.pageSize.width / 2 - headerText.length - 10,
       //   10
       // );
-      if(headerText != ''){
-      doc.text(headerText, 15, 10);
-      
-      doc.setFontSize(10);
-      doc.setFont('Helvetica', '', 'normal');
-      doc.text('Date and Time : ', 15, 15);
-      doc.setFont('Helvetica', '', 'bold');
-      doc.text(
-        formatDate(new Date(), 'MM-dd-yyyy hh:mm:ss a', 'en-US', '-0800'),
-        40,
-        15
-      );
-      doc.setFontSize(10);
-      doc.setFont('Helvetica', '', 'normal');
-      doc.text('Run By : ', 15, 20);
-      doc.setFont('Helvetica', '', 'bold');
-      doc.text(this.authHttpService.getLoggedInUserName() ?? "", 30, 20);
+      if (headerText != '') {
+        doc.text(headerText, 15, 10);
+
+        doc.setFontSize(10);
+        doc.setFont('Helvetica', '', 'normal');
+        doc.text('Date and Time : ', 15, 15);
+        doc.setFont('Helvetica', '', 'bold');
+        doc.text(
+          formatDate(new Date(), 'MM-dd-yyyy hh:mm:ss a', 'en-US', '-0800'),
+          40,
+          15
+        );
+        doc.setFontSize(10);
+        doc.setFont('Helvetica', '', 'normal');
+        doc.text('Run By : ', 15, 20);
+        doc.setFont('Helvetica', '', 'bold');
+        doc.text(this.authHttpService.getLoggedInUserName() ?? "", 30, 20);
       }
       let pageCurrent = doc.getCurrentPageInfo().pageNumber; //Current Page
       doc.setFontSize(8);
@@ -956,29 +963,29 @@ export class ExportService {
       headStyles: {
         halign: 'center',
         valign: 'middle',
-        fillColor : [211,211,211],
-        textColor: [0,0,0],
+        fillColor: [211, 211, 211],
+        textColor: [0, 0, 0],
         fontStyle: 'bold',
-        lineWidth : { top: 0.1, right: 0.1, left : 0.1, bottom:0.05 },
-        lineColor : [0,0,0]
-      },   
-      margin: { top: 30 },   
-      showHead : 'firstPage',
+        lineWidth: { top: 0.1, right: 0.1, left: 0.1, bottom: 0.05 },
+        lineColor: [0, 0, 0]
+      },
+      margin: { top: 30 },
+      showHead: 'firstPage',
       willDrawCell: (data) => {
         console.log(data.row.raw.toString().indexOf('Account Total'));
-        if(data.row.raw.toString().search('Grand Total') === 0){
-          doc.setFont('Helvetica','bold');  
-        } 
-        if(data.row.raw.toString().indexOf('Account Total') > 0){
-          doc.setFont('Helvetica','bold');  
-        } 
-        if(data.row.raw.toString().indexOf('Assignee Name') > 0){
-          doc.setFont('Helvetica','bold');  
+        if (data.row.raw.toString().search('Grand Total') === 0) {
+          doc.setFont('Helvetica', 'bold');
         }
-        if(data.row.raw.toString().indexOf('Check #') > 0){
-          doc.setFont('Helvetica','bold');  
+        if (data.row.raw.toString().indexOf('Account Total') > 0) {
+          doc.setFont('Helvetica', 'bold');
         }
-        },
+        if (data.row.raw.toString().indexOf('Assignee Name') > 0) {
+          doc.setFont('Helvetica', 'bold');
+        }
+        if (data.row.raw.toString().indexOf('Check #') > 0) {
+          doc.setFont('Helvetica', 'bold');
+        }
+      },
       columnStyles: columnStyle,
 
     });

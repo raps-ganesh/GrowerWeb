@@ -9,6 +9,7 @@ import { filter } from 'rxjs/operators';
 import { Item } from 'angular2-multiselect-dropdown';
 import { environment } from 'src/environments/environment';
 import { GrowerPortalService } from 'src/app/services/Grower/grower-portal.service';
+import { debug } from 'console';
 
 @Component({
   selector: 'app-add-edit',
@@ -39,6 +40,7 @@ export class AddEditComponent implements OnInit {
     isActive: false,
     accountIds: '',
     userTypeIds: '',
+    userAccounts: []
   };
   @ViewChild('userForm') userForm: NgForm;
 
@@ -177,15 +179,13 @@ export class AddEditComponent implements OnInit {
         //this.selectedItems = [{"id":1,"itemName":"Administrators"}];
 
         this.EnableDisableAccount();
-
-        data.userDetails.forEach((element: any) => {
-          let index = this.listAccounts.indexOf(element.oldVendor_Id);
-          if (index == -1)
-            this.listAccounts.push(element.oldVendor_Id);
-
-        });
-
-
+        debugger;
+        this.listAccounts = data.userAccounts;
+        // data.userDetails.forEach((element: any) => {
+        //   let index = this.listAccounts.indexOf(element.oldVendor_Id);
+        //   if (index == -1)
+        //     this.listAccounts.push(element.oldVendor_Id);
+        // });
       },
       error: (err: any) => {
         console.log(err);
