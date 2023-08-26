@@ -9,6 +9,7 @@ import { ModalsModule } from "../../_metronic/partials/layout/modals/modals.modu
 import { ReceivingWeighMasterCertificateComponent } from './grower-quality-summary-detailed/receiving-weigh-master-certificate/receiving-weigh-master-certificate.component';
 import { WeighMasterCertificateComponent } from './grower-quality-summary-detailed/weigh-master-certificate/weigh-master-certificate.component';
 import { RouterModule } from '@angular/router';
+import { ReceivingTicketsReportComponent } from './receiving-tickets-report/receiving-tickets-report.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { RouterModule } from '@angular/router';
     PaymentCalculationReportComponent,
     GrowerQualitySummaryDetailedComponent,
     ReceivingWeighMasterCertificateComponent,
-    WeighMasterCertificateComponent
+    WeighMasterCertificateComponent,
+    ReceivingTicketsReportComponent
   ],
   imports: [
     CommonModule,

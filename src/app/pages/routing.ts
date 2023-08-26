@@ -8,6 +8,7 @@ import { UploadDocumentComponent } from './documents/manage-documents/upload-doc
 import { GrowerQualitySummaryDetailedComponent } from './reports/grower-quality-summary-detailed/grower-quality-summary-detailed.component';
 import { WeighMasterCertificateComponent } from './reports/grower-quality-summary-detailed/weigh-master-certificate/weigh-master-certificate.component';
 import { PaymentCalculationReportComponent } from './reports/payment-calculation-report/payment-calculation-report.component';
+import { ReceivingTicketsReportComponent } from './reports/receiving-tickets-report/receiving-tickets-report.component';
 
 const Routing: Routes = [
   {
@@ -103,6 +104,14 @@ const Routing: Routes = [
     component: PaymentCalculationReportComponent,
   },
   {
+    path: 'reports/receivingticket',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['Administrators', '']
+    },
+    component: ReceivingTicketsReportComponent,
+  },
+  {
     path: 'reports/gradingdatareport',
     //canActivate: [RoleGuard],
     data: {
@@ -115,7 +124,7 @@ const Routing: Routes = [
 
 
 
-  
+
   {
     path: 'reports/gradingdatareport/weighmastercertificate/:id',
     component: WeighMasterCertificateComponent,
