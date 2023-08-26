@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, NgForm, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { UserModel } from 'src/app/models/user.model';
 import { AdminService } from 'src/app/services/Admin/admin.service';
@@ -16,31 +16,19 @@ import { GrowerPortalService } from 'src/app/services/Grower/grower-portal.servi
   styleUrls: ['./add-edit.component.scss']
 })
 export class AddEditComponent implements OnInit {
-  
+
 
   //private fb: FormBuilder,
- 
+
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLoading: boolean;
   private unsubscribe: Subscription[] = [];
   id: any;
 
-  title = "geeksforgeeks-multiSelect";
-  
-  cars = [
-    { id: 1, name: "BMW Hyundai" },
-    { id: 2, name: "Kia Tata" },
-    { id: 3, name: "Volkswagen Ford" },
-    { id: 4, name: "Renault Audi" },
-    { id: 5, name: "Mercedes Benz Skoda" },
-  ];
-  
-  selected = [{ id: 3, name: "Volkswagen Ford" }];
-
-  dropdownList :any = [];
-  selectedItems:any = [];
-  dropdownSettings:any = {};
-  usermodel : UserModel={
+  dropdownList: any = [];
+  selectedItems: any = [];
+  dropdownSettings: any = {};
+  usermodel: UserModel = {
     id: 0,
     firstName: '',
     email: '',
@@ -48,43 +36,50 @@ export class AddEditComponent implements OnInit {
     oldVendor_Id: '',
     accountType: '',
     accountNumber: '',
-    isActive: false
+    isActive: false,
+    accountIds: '',
+    userTypeIds: '',
   };
- @ViewChild('userForm') userForm: NgForm;
+  @ViewChild('userForm') userForm: NgForm;
 
 
-  cropYear:any;
-  receivingLocation:any;
-  UserAccountTypes:any;
-  AuthTypes:any;
-  UserGroups:any;
-  paramsObject:any;
-
-
+  cropYear: any;
+  receivingLocation: any;
+  UserAccountTypes: any;
+  AuthTypes: any;
+  UserGroups: any;
+  paramsObject: any;
+  showGrowerAccountDetails: any = false;
+  showDehydratorAccountDetails: any = false;
 
   receipienttypeaheadUrl: string = environment.growerAccountingApiBaseUrl + 'ReceipientTypeAhead';
-  accounttypeaheadUrl: string = environment.growerAccountingApiBaseUrl + 'AccountsTypeAheadForStatementOnly';
+  accounttypeaheadUrl: string = environment.growerAccountingApiBaseUrl + 'AccountsTypeAhead';
+  dehydratortypeaheadUrl: string = environment.masterDataBaseUrl + 'DehydratorTypeAhead';
 
   @Input() receipient: string;
   @Input() receipient1: string;
 
   @Input() accountNumber: string;
   @Input() supplierId: any;
+
+
+  @Input() dehyderatorId: string;
+  @Input() dehyderatoraccount: string;
   populateSupplierInfo(event: any) {
     this.supplierId = event;
     console.log(this.supplierId);
-    
+
   }
   populateAccountInfo(event: any) {
-    debugger;
     this.accountNumber = event;
-    console.log(this.accountNumber);
-    console.log(this.receipient1);
-    
   }
 
-  constructor(private cdr: ChangeDetectorRef,private adminService: AdminService,private route: ActivatedRoute
-    ,private growerPortalService : GrowerPortalService,) {
+  populateDehyderatorInfo(event: any) {
+    this.dehyderatoraccount = event;
+  }
+
+  constructor(private cdr: ChangeDetectorRef, private adminService: AdminService, private route: ActivatedRoute
+    , private growerPortalService: GrowerPortalService, private router: Router) {
     const loadingSubscr = this.isLoading$
       .asObservable()
       .subscribe((res) => (this.isLoading = res));
@@ -92,45 +87,36 @@ export class AddEditComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id1');
   }
   ngOnInit(): void {
-        
+
     this.selectedItems = [];
     //this.selectedItems = [{"id":1,"itemName":"Administrators"}];
-    this.dropdownSettings = { 
-              singleSelection: false, 
-              text:"Select Group",
-              selectAllText:'Select All',
-              unSelectAllText:'UnSelect All',
-              enableSearchFilter: true,
-              classes:"form-control form-control-solid fs-1"
-            };  
+    this.dropdownSettings = {
+      singleSelection: false,
+      text: "Select Group",
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      enableSearchFilter: true,
+      classes: "form-control form-control-solid fs-4"
+    };
 
 
-            this.GetAccountTypes(); 
-            this.GetAuthTypes();
-            this.GetGroup();      
-                       
-            if(this.id > 0)
-            {
-              //alert("Edit User");
-              this.usermodel.id=this.id
-              this.GetUserById(this.usermodel.id);
-            }
-            else
-            {
-              this.usermodel.id=0;
-              this.usermodel.isActive=true;
-              //alert("New User");
-            }
+    this.GetAccountTypes();
+    this.GetAuthTypes();
+    this.GetGroup();
 
-          //   this.userForm = this.fb.group({
-          //     name: ['', [Validators.required]],
-          //     email: ['', [Validators.required, Validators.email],
-          //     password: ['', [
-          //         Validators.required, 
-          //         Validators.pattern(/^(?=\D*\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}$/)
-          //  ]]
-          // });
-          this.CheckPassword();
+    if (this.id > 0) {
+      //alert("Edit User");
+      this.usermodel.id = this.id
+      this.GetUserById(this.usermodel.id);
+    }
+    else {
+      this.usermodel.id = 0;
+      this.usermodel.isActive = true;
+      //alert("New User");
+    }
+
+
+    this.CheckPassword();
 
   }
 
@@ -170,34 +156,34 @@ export class AddEditComponent implements OnInit {
     });
   }
 
-  GetUserById(userId :any) {
+  GetUserById(userId: any) {
     this.adminService.GetUserById(userId).subscribe({
       next: (data: any) => {
-        
+
         debugger;
         this.usermodel = data;
-        this.usermodel.confirmPassword='';
+        this.usermodel.confirmPassword = '';
 
-        var itm=this.dropdownList;
+        var itm = this.dropdownList;
         var dataToSend: any = [];
-          var batches = this.usermodel.userGroups != null ? this.usermodel.userGroups.split(',') : [];
-          batches.forEach(function (element: any) {
-            var it= itm.filter((x:any)=> x.id==element);
-            //alert(it.itemName);
-            dataToSend.push({ "id": Number(element), "itemName": it[0].itemName});
-          });
+        var batches = this.usermodel.userGroups != null ? this.usermodel.userGroups.split(',') : [];
+        batches.forEach(function (element: any) {
+          var it = itm.filter((x: any) => x.id == element);
+          //alert(it.itemName);
+          dataToSend.push({ "id": Number(element), "itemName": it[0].itemName });
+        });
 
-          this.selectedItems=dataToSend;
-          //this.selectedItems = [{"id":1,"itemName":"Administrators"}];
+        this.selectedItems = dataToSend;
+        //this.selectedItems = [{"id":1,"itemName":"Administrators"}];
 
-          this.EnableDisableAccount();
-          
-          data.userDetails.forEach((element:any) => {
-            let index = this.listJDENumber.indexOf(element.oldVendor_Id);
-            if(index==-1)
-              this.listJDENumber.push(element.oldVendor_Id);
-            
-          });
+        this.EnableDisableAccount();
+
+        data.userDetails.forEach((element: any) => {
+          let index = this.listAccounts.indexOf(element.oldVendor_Id);
+          if (index == -1)
+            this.listAccounts.push(element.oldVendor_Id);
+
+        });
 
 
       },
@@ -207,56 +193,35 @@ export class AddEditComponent implements OnInit {
     });
   }
 
-  onItemSelect(item:any){
-      console.log(item);
-      console.log(this.selectedItems);
-      this.EnableDisableAccount();
+  onItemSelect(item: any) {
+    console.log(item);
+    console.log(this.selectedItems);
+    this.EnableDisableAccount();
   }
-  OnItemDeSelect(item:any){
-      console.log(item);
-      console.log(this.selectedItems);
+  OnItemDeSelect(item: any) {
+    console.log(item);
+    console.log(this.selectedItems);
 
-      this.EnableDisableAccount();
-     
+    this.EnableDisableAccount();
+
   }
-  onSelectAll(items: any){
-      console.log(items);
-      
-      this.EnableDisableAccount();
+  onSelectAll(items: any) {
+    console.log(items);
+
+    this.EnableDisableAccount();
   }
-  onDeSelectAll(items: any){
-      console.log(items);
-      
-      this.EnableDisableAccount();
+  onDeSelectAll(items: any) {
+    console.log(items);
+
+    this.EnableDisableAccount();
   }
-  EnableDisableAccount()
-  {
-    //
-    // const result1 = this.selectedItems.filter((x:any) => x.id === 4);
-    // const result2 = this.selectedItems.filter((x:any) => x.id === 3);
-     
-    // if(result1.length>0)
-    //   this.userForm.controls.AccountNumber.enable();
-    // else
-    // {
-    //   this.userForm.controls.AccountNumber.disable();
-    //   this.usermodel.accountNumber="";
-    // }
-    // if(result2.length>0)
-    // this.userForm.controls.oldVendor_Id.enable();
-    // else{
-    //   this.usermodel.oldVendor_Id="";
-    //   this.userForm.controls.oldVendor_Id.disable();
-    // }
-    
+  EnableDisableAccount() {
+    this.showDehydratorAccountDetails = this.selectedItems.filter((x: any) => x.id === 4).length > 0;
+    this.showGrowerAccountDetails = this.selectedItems.filter((x: any) => x.id === 3).length > 0;
   }
 
-  UserValidation()
-  {
-    if(this.usermodel.password !=this.usermodel.confirmPassword )
-    {
-      //this.userForm.controls['usermodel.password'].setErrors({'incorrect': true});
-
+  UserValidation() {
+    if (this.usermodel.password != this.usermodel.confirmPassword) {
       Swal.fire({
         text: "Password and confirm password not matched.",
         icon: 'error',
@@ -273,10 +238,10 @@ export class AddEditComponent implements OnInit {
     return true;
   }
   saveSettings() {
-    
-    
-    var ctrl= this.userForm.controls;
-    if(!this.UserValidation())
+
+
+    var ctrl = this.userForm.controls;
+    if (!this.UserValidation())
       return;
     ////
     if (this.userForm.invalid) {
@@ -305,30 +270,33 @@ export class AddEditComponent implements OnInit {
     }, 1500);
 
 
-    
+
   }
 
   SaveUser() {
     debugger;
-    var gropupIds ="";
-    
-    this.selectedItems.forEach((element:any) => {
-      if(gropupIds=="")
-          gropupIds=""+element.id
+    var gropupIds = "";
+
+    this.selectedItems.forEach((element: any) => {
+      if (gropupIds == "")
+        gropupIds = "" + element.id
       else
-        gropupIds= gropupIds +"," +element.id 
+        gropupIds = gropupIds + "," + element.id
 
     });
-    this.usermodel.userGroups=gropupIds;
-    //alert(this.listJDENumber.toString());
-    this.usermodel.oldVendor_Id=this.listJDENumber.toString();
-
-
+    this.usermodel.userGroups = gropupIds;
+    var accountIds = '', userTypeIds = '';
+    this.listAccounts.forEach((element: any) => {
+      accountIds = accountIds + element.key + ',';
+      userTypeIds = userTypeIds + element.value + ','
+    });
+    this.usermodel.accountIds = accountIds.length > 0 ? accountIds.substring(0, accountIds.length - 1) : '';
+    this.usermodel.userTypeIds = userTypeIds.length > 0 ? userTypeIds.substring(0, userTypeIds.length - 1) : '';
     this.adminService.SaveUser(this.usermodel).subscribe({
       next: (data: any) => {
         //
-        var insertId= data;
-       
+        var insertId = data;
+
       },
       error: (err: any) => {
         console.log(err);
@@ -340,10 +308,11 @@ export class AddEditComponent implements OnInit {
           customClass: {
             confirmButton: 'btn btn-primary',
           },
-        });
 
+        });
+        this.router.navigateByUrl('/users');
       },
-      complete:()=>{
+      complete: () => {
         Swal.fire({
           text: 'User saved successfully.',
           icon: 'success',
@@ -352,7 +321,11 @@ export class AddEditComponent implements OnInit {
           customClass: {
             confirmButton: 'btn btn-primary',
           },
+        }).then(({ value }) => {
+          this.router.navigate(['/users']);
         });
+
+
       }
     });
   }
@@ -397,31 +370,54 @@ export class AddEditComponent implements OnInit {
     }
   }
 
-  listJDENumber :any=[];
-  jdeAccountList : any;
+  listAccounts: any = [];
+  jdeAccountList: any;
 
-  AddJDENumber()
-  {
-
+  AddSupplierAccounts() {
     debugger;
     this.growerPortalService.GetUserAccountbyJDE(this.supplierId).subscribe({
       next: (data: any) => {
         //
         this.jdeAccountList = data;
-        if(data.length>0)
-        {
-          data.forEach((itm:any) => {
+        if (data.length > 0) {
+          data.forEach((itm: any) => {
+            console.log(this.listAccounts.find((data: { key: any; }) => data.key === itm));
+            if (this.listAccounts.length == 0 || this.listAccounts.find((data: { key: any; }) => data.key === itm) == undefined || this.listAccounts.find((data: { key: any; }) => data.key === itm).length == 0) {
+              this.listAccounts.push({ key: itm, value: 11, type: "Grower" });
+              Swal.fire({
+                text: "Account(s) Added",
+                icon: 'success',
+                buttonsStyling: false,
+                confirmButtonText: 'Ok, got it!',
+                customClass: {
+                  confirmButton: 'btn btn-primary',
+                },
+              });
+            }
+            else {
+              Swal.fire({
+                text: "Already added account number : " + itm,
+                icon: 'error',
+                buttonsStyling: false,
+                confirmButtonText: 'Ok, got it!',
+                customClass: {
+                  confirmButton: 'btn btn-primary',
+                },
+              });
 
-            let index = this.listJDENumber.indexOf(itm);
-          if(index==-1)
-            this.listJDENumber.push(itm);
-          else
-            alert("Already added account number : "+ itm); 
-
+            }
           });
-
-          
-
+        }
+        else {
+          Swal.fire({
+            text: "No Data Found",
+            icon: 'error',
+            buttonsStyling: false,
+            confirmButtonText: 'Ok, got it!',
+            customClass: {
+              confirmButton: 'btn btn-primary',
+            },
+          });
 
         }
       },
@@ -431,78 +427,124 @@ export class AddEditComponent implements OnInit {
     });
   }
 
-  AddAccountNumber()
-  {
-    this.accountNumber= (
+  AddAccountNumber() {
+    this.accountNumber = (
       document.getElementById('AccountNumber') as HTMLInputElement
     ).value
-    let index = this.listJDENumber.indexOf(this.accountNumber);
-    if(index==-1)
-      this.listJDENumber.push(this.accountNumber);
-    else
-      alert("Already added account number");
-  }
-  removeJDENumber(item:any)
-  {
-    let index = this.listJDENumber.indexOf(item);
-    
-    this.listJDENumber.splice(index,1);
+    if (this.listAccounts.length == 0 || this.listAccounts.find((data: { key: any; }) => data.key === this.accountNumber) == undefined || this.listAccounts.find((data: { key: any; }) => data.key === this.accountNumber).length == 0) {
+      this.listAccounts.push({ key: this.accountNumber, value: 11, type: "Grower" });
+      Swal.fire({
+        text: "Account Added : " + this.accountNumber,
+        icon: 'success',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok, got it!',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+        },
+      });
+      (
+        document.getElementById('AccountNumber') as HTMLInputElement
+      ).value = '';
+    }
+    else {
+      Swal.fire({
+        text: "Already added account number : " + this.accountNumber,
+        icon: 'error',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok, got it!',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+        },
+      });
+    }
   }
 
-  CheckPassword()
-  {
+  AddDehyderator() {
+    var accountNumber = (
+      document.getElementById('dehyderatoraccount') as HTMLInputElement
+    ).value
+    if (this.listAccounts.length == 0 || this.listAccounts.find((data: { key: any; }) => data.key === accountNumber) == undefined || this.listAccounts.find((data: { key: any; }) => data.key === this.accountNumber).length == 0) {
+      this.listAccounts.push({ key: accountNumber, value: 10, type: "Dehyderator" });
+      Swal.fire({
+        text: "Account Added : " + accountNumber,
+        icon: 'success',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok, got it!',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+        },
+      });
+      (
+        document.getElementById('dehyderatoraccount') as HTMLInputElement
+      ).value = '';
+    }
+    else {
+      Swal.fire({
+        text: "Already added account number : " + accountNumber,
+        icon: 'error',
+        buttonsStyling: false,
+        confirmButtonText: 'Ok, got it!',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+        },
+      });
+    }
+  }
+  removeJDENumber(item: any) {
+    let index = this.listAccounts.indexOf(item);
+    this.listAccounts.splice(index, 1);
+  }
+
+  CheckPassword() {
     //.setErrors({'incorrect': true});
     //this.userForm.controls['usermodel.password'].setValidators([Validators.required]);
     //this.userForm.controls['Password'].setErrors({'incorrect': true});
   }
 
-  passwordError:any='';
-  ValidatePassword()
-  {
-    
+  passwordError: any = '';
+  ValidatePassword() {
+
     var isValid = true;
     //showPasswordValidation();
-    this.passwordError="";
+    this.passwordError = "";
 
     var password = this.usermodel.password;
     //console.log(password);
 
     if (password.length < 6) {
-     isValid = false;
-     this.setInValidState("At least 6 characters long");
+      isValid = false;
+      this.setInValidState("At least 6 characters long");
     } else
-    this.setValidState("password-length");
+      this.setValidState("password-length");
 
     console.log(password.match(/[0-9]/g));
 
     if (!password.match(/[0-9]/g)) {
-     isValid = false;
-     this.setInValidState("At least one number");
+      isValid = false;
+      this.setInValidState("At least one number");
     } else
-    this.setValidState("password-number");
+      this.setValidState("password-number");
 
     if (!password.match(/[A-Z]/g)) {
-     isValid = false;
-     this.setInValidState("At least one capital letter");
+      isValid = false;
+      this.setInValidState("At least one capital letter");
     } else
-    this.setValidState("password-caps");
+      this.setValidState("password-caps");
 
 
     if (!password.match(/[!@@#$%^&*()_=\[\]{};':"\\|,.<>\/?+-]/g)) {
-     isValid = false;
-     this.setInValidState("At least one special character");
+      isValid = false;
+      this.setInValidState("At least one special character");
     } else
-    this.setValidState("password-special");
+      this.setValidState("password-special");
 
     return isValid;
   }
 
-  setInValidState(msg:any)
-  {
-    this.passwordError=this.passwordError+"<br/>" + msg;
+  setInValidState(msg: any) {
+    this.passwordError = this.passwordError + "<br/>" + msg;
   }
-  setValidState(msg:any)
-  {
+  setValidState(msg: any) {
 
   }
 

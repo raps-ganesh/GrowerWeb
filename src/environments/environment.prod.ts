@@ -166,7 +166,8 @@ export const environment = {
   reportsBaseUrl: 'http://10.12.96.194:3300/reporting/',
   cropyear: new Date().getMonth() > 8 ? new Date().getFullYear() : new Date().getFullYear() - 1,
   growerAccountingApiBaseUrl: 'https://localhost:7020/api/groweraccounting/',
-  statementPath: 'http://ussacgptsapp:5000/assets/contents/GrowerPortalStatements/'
+  statementPath: 'http://ussacgptsapp:5000/assets/contents/GrowerPortalStatements/',
+  masterDataBaseUrl: 'http://10.12.96.194:3400/api/master/',
 };
 
 /*
