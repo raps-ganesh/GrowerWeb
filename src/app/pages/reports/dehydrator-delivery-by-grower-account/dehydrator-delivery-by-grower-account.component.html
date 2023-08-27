@@ -9,7 +9,7 @@
       <h1
         class="page-heading d-flex text-white fw-bold fs-3 flex-column justify-content-center my-0"
       >
-        Dehydrator Deliveries by Manifest
+        Dehydrator Deliveries by Grower Account
       </h1>
       <!--end::Title-->
     </div>
@@ -1200,7 +1200,7 @@
         <div class="table-responsive">
           <!-- begin::Table -->
           <table
-            [hidden]="varieties == null || varieties.length == 0"
+            [hidden]="reportData.length == 0"
             class="table align-middle table-row-dashed fs-8 gy-2 dataTable no-footer"
           >
             <!-- begin::Table head -->
@@ -1217,10 +1217,10 @@
                 <th class="text-center">PD9 #</th>
                 <th class="text-center">Weight Certificate</th>
                 <th class="text-center">Receiving Date</th>
-                <th class="text-center">Grower Account</th>
+                <!-- <th class="text-center">Grower Account</th>
                 <th class="text-center">Grower Name</th>
                 <th class="text-center">Account Description</th>
-                <th class="text-center">Variety</th>
+                <th class="text-center">Variety</th> -->
                 <th class="text-center">Gross Weight</th>
                 <th class="text-center">Tare Weight</th>
                 <th class="text-center">Net Weight</th>
@@ -1230,27 +1230,49 @@
             </thead>
             <!-- end::Table head -->
 
-            <tr *ngFor="let info of dehydratorData">
+            <tr
+              *ngFor="let info of reportData"
+              [class.fw-bold]="
+                info.shippingManifest == 'Grower Account:' ||
+                info.shippingManifest == 'Varierty:' ||
+                info.shippingManifest == 'Varierty Total:' ||
+                info.shippingManifest == 'Account Total:' ||
+                info.shippingManifest == 'Total For Dehydrator:'
+              "
+            >
               <td class="text-center">{{ info.shippingManifest }}</td>
               <td class="text-center">{{ info.weightCertificate }}</td>
               <td class="text-center">{{ info.receivingDate }}</td>
-              <td class="text-center">{{ info.growerAccountNumber }}</td>
+              <!-- <td class="text-center">{{ info.growerAccountNumber }}</td>
               <td class="text-center">{{ info.growerName }}</td>
               <td class="text-center">{{ info.accountDescription }}</td>
-              <td class="text-center">{{ info.variety }}</td>
-              <td class="text-right">{{ info.grossWeight | number }}</td>
-              <td class="text-right">{{ info.tareWeight | number }}</td>
-              <td class="text-right">{{ info.netWeight | number }}</td>
-              <td class="text-right">{{ info.trailer1Moisture | number }}</td>
-              <td class="text-right">{{ info.trailer2Moisture | number }}</td>
-            </tr>
-            <tr [hidden]="varieties == null || varieties.length == 0">
-              <td colspan="12">
-                <hr style="border-top: 2px solid black" />
+              <td class="text-center">{{ info.variety }}</td> -->
+              <td class="text-right">
+                {{ info.grossWeight == 0 ? "" : (info.grossWeight | number) }}
+              </td>
+              <td class="text-right">
+                {{ info.tareWeight == 0 ? "" : (info.tareWeight | number) }}
+              </td>
+              <td class="text-right">
+                {{ info.netWeight == 0 ? "" : (info.netWeight | number) }}
+              </td>
+              <td class="text-right">
+                {{
+                  info.trailer1Moisture == null
+                    ? ""
+                    : (round(info.trailer1Moisture, 1) | number)
+                }}
+              </td>
+              <td class="text-right">
+                {{
+                  info.trailer2Moisture == null
+                    ? ""
+                    : (round(info.trailer2Moisture, 1) | number)
+                }}
               </td>
             </tr>
 
-            <tr
+            <!-- <tr
               class="fw-bold"
               [hidden]="varieties == null || varieties.length == 0"
             >
@@ -1271,10 +1293,7 @@
               <td class="text-right">
                 {{ trailer2Moisture | number }}
               </td>
-            </tr>
-            <!-- begin::Table body -->
-            <tbody></tbody>
-            <!-- end::Table body -->
+            </tr> -->
           </table>
           <!-- end::Table -->
         </div>

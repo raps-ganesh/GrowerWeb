@@ -111,6 +111,21 @@ export class ExportService {
           if (data.row.raw.toString().search('Total') === 0) {
             doc.setFont('Helvetica', 'bold');
           }
+          if (data.row.raw.toString().search('Grower Account:') === 0) {
+            doc.setFont('Helvetica', 'bold');
+          }
+          if (data.row.raw.toString().search('Varierty:') === 0) {
+            doc.setFont('Helvetica', 'bold');
+          }
+          if (data.row.raw.toString().search('Varierty Total:') === 0) {
+            doc.setFont('Helvetica', 'bold');
+          }
+          if (data.row.raw.toString().search('Account Total:') === 0) {
+            doc.setFont('Helvetica', 'bold');
+          }
+          if (data.row.raw.toString().search('Total For Dehydrator:') === 0) {
+            doc.setFont('Helvetica', 'bold');
+          }
           if (data.row.raw.toString().search('Paid') === 0) {
             doc.setFont('Helvetica', 'bold');
           }
@@ -148,7 +163,7 @@ export class ExportService {
       );
       doc.setFontSize(10);
       doc.setFont('Helvetica', '', 'normal');
-      doc.text('Run By : ', 15, 20);
+      //doc.text('Run By : ', 15, 20);
       doc.setFont('Helvetica', '', 'bold');
       doc.text(this.authHttpService.getLoggedInUserName() ?? "", 30, 20);
       let pageCurrent = doc.getCurrentPageInfo().pageNumber; //Current Page
