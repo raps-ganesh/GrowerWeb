@@ -101,7 +101,7 @@ export class ReportsService {
         'DehydratorDeliveries/' +
         data.cropyear +
         '/' +
-        data.accountnumber
+        data.accountnumber + '?isManifest=' + data.isManifest
       )
       .pipe(
         map((response: any) => {

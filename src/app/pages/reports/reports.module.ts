@@ -10,6 +10,7 @@ import { ReceivingWeighMasterCertificateComponent } from './grower-quality-summa
 import { WeighMasterCertificateComponent } from './grower-quality-summary-detailed/weigh-master-certificate/weigh-master-certificate.component';
 import { RouterModule } from '@angular/router';
 import { ReceivingTicketsReportComponent } from './receiving-tickets-report/receiving-tickets-report.component';
+import { DehydratorDeliveriesByManifestReportComponent } from './dehydrator-deliveries-by-manifest-report/dehydrator-deliveries-by-manifest-report.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ReceivingTicketsReportComponent } from './receiving-tickets-report/rece
     GrowerQualitySummaryDetailedComponent,
     ReceivingWeighMasterCertificateComponent,
     WeighMasterCertificateComponent,
-    ReceivingTicketsReportComponent
+    ReceivingTicketsReportComponent,
+    DehydratorDeliveriesByManifestReportComponent
   ],
   imports: [
     CommonModule,
