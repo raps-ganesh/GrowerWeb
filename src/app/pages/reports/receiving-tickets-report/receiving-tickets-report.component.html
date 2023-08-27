@@ -41,6 +41,7 @@
               class="btn btn-light-primary me-3"
               data-bs-toggle="modal"
               data-bs-target="#kt_modal_export_users"
+              (click)="exportToExcel()"
             >
               <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
               <span class="svg-icon svg-icon-2">
@@ -1244,7 +1245,7 @@
               </tr>
               <tr class="fw-bold">
                 <td colspan="2" class="text-left px-8">
-                  Totals For Variety: {{ varietyName }}
+                  Total For Variety: {{ varietyName }}
                 </td>
                 <td colspan="6"></td>
                 <td class="text-right">
@@ -1263,7 +1264,7 @@
               [hidden]="varieties == null || varieties.length == 0"
             >
               <td colspan="2" class="text-left px-8">
-                Totals For Account: {{ accountnumber }}
+                Total For Account: {{ accountnumber }}
               </td>
               <td colspan="6"></td>
               <td class="text-right">

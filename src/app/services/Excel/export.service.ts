@@ -108,7 +108,7 @@ export class ExportService {
           if (data.row.raw.toString().indexOf('Assignee Name') > 0) {
             doc.setFont('Helvetica', 'bold');
           }
-          if (data.row.raw.toString().search('Totals') === 0) {
+          if (data.row.raw.toString().search('Total') === 0) {
             doc.setFont('Helvetica', 'bold');
           }
           if (data.row.raw.toString().search('Paid') === 0) {
