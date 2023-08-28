@@ -104,8 +104,8 @@ export class ExcelService {
       '-0800'
     );
     worksheet.getCell('B3').alignment = { horizontal: 'left' };
-    worksheet.getCell('A4').value = 'Run By';
-    worksheet.getCell('B4').value = this.authHttpService.getLoggedInUserName();
+    // worksheet.getCell('A4').value = 'Run By';
+    // worksheet.getCell('B4').value = this.authHttpService.getLoggedInUserName();
     worksheet.getCell('B4').alignment = { horizontal: 'left' };
 
     if (additionalHeader.length > 0) {
@@ -115,7 +115,7 @@ export class ExcelService {
       worksheet.getCell('A5').font = { size: 11, bold: true }
       //worksheet.getColumn(1).width =additionalHeader[0].length;
 
-      
+
     }
     if (SearchArray.length > 0) {
       worksheet.addRow([]);
@@ -228,7 +228,7 @@ export class ExcelService {
       const eachRow: any = [];
       columnsArray.forEach((column) => {
         eachRow.push(element[column]);
-        if (element[column] == 'Total' || element[column] == 'Grand Total' || element[column] == 'Running Avg') {
+        if (element[column] == 'Total' || element[column] == 'Grand Total' || element[column] == 'Running Avg' || element[column] == 'Total For Variety:' || element[column] == 'Total For Account:') {
           isTotal = true;
         }
         //console.log(column);        
@@ -501,9 +501,9 @@ export class ExcelService {
     mainHeadersArray: any[] = [],
     json2: any[] = [],
     sheetName2: string = '',
-    cropyear : number,    
+    cropyear: number,
     mainHeadersArray2: any[] = [],
-    
+
   ) {
     const header = headersArray;
     const mainHeader = mainHeadersArray;
@@ -679,46 +679,44 @@ export class ExcelService {
         //     isTotal = true;
         //   }
         // });
-        if (cropyear < 2022)
-        {
-        eachRow.push(element['ticketNumber']);
-        eachRow.push(element['varietyName']);
-        eachRow.push(element['receivingDate']);
-        eachRow.push(element['gradingTicketType']);
-        eachRow.push(element['netWeight']);
-        eachRow.push(element['percentJumboSound']);
-        eachRow.push(element['medbaby']);
-        eachRow.push(element['percentEdibleYield']);
-        eachRow.push(element['rli']);
-        eachRow.push(element['percentInsect']);
-        eachRow.push(element['percentBlowable']);
-        eachRow.push(element['percentOffGrade']);
-        eachRow.push(element['predominantOffgradeDamage']);
-        eachRow.push(element['percentExternalDamage']);
-        eachRow.push(element['predominantExternalDamage']);
+        if (cropyear < 2022) {
+          eachRow.push(element['ticketNumber']);
+          eachRow.push(element['varietyName']);
+          eachRow.push(element['receivingDate']);
+          eachRow.push(element['gradingTicketType']);
+          eachRow.push(element['netWeight']);
+          eachRow.push(element['percentJumboSound']);
+          eachRow.push(element['medbaby']);
+          eachRow.push(element['percentEdibleYield']);
+          eachRow.push(element['rli']);
+          eachRow.push(element['percentInsect']);
+          eachRow.push(element['percentBlowable']);
+          eachRow.push(element['percentOffGrade']);
+          eachRow.push(element['predominantOffgradeDamage']);
+          eachRow.push(element['percentExternalDamage']);
+          eachRow.push(element['predominantExternalDamage']);
         }
-        else 
-{
-  eachRow.push(element['ticketNumber']);
-  eachRow.push(element['varietyName']);
-  eachRow.push(element['receivingDate']);
-  eachRow.push(element['gradingTicketType']);
-  eachRow.push(element['netWeight']);
-  eachRow.push(element['percentJumboSound']);
-  eachRow.push(element['medbaby']);
-  eachRow.push(element['percentEdibleYield']);
-  eachRow.push(element['percentExtraLightKernel']);
-  eachRow.push(element['percentLightKernel']);
-  eachRow.push(element['percentLightAmberKernel']);
-  eachRow.push(element['percentAmberKernel']);
-  eachRow.push(element['percentDarkKernel']);
-  eachRow.push(element['percentInsect']);
-  eachRow.push(element['percentBlowable']);
-  eachRow.push(element['percentOffGrade']);
-  eachRow.push(element['predominantOffgradeDamage']);
-  eachRow.push(element['percentExternalDamage']);
-  eachRow.push(element['predominantExternalDamage']);
-}
+        else {
+          eachRow.push(element['ticketNumber']);
+          eachRow.push(element['varietyName']);
+          eachRow.push(element['receivingDate']);
+          eachRow.push(element['gradingTicketType']);
+          eachRow.push(element['netWeight']);
+          eachRow.push(element['percentJumboSound']);
+          eachRow.push(element['medbaby']);
+          eachRow.push(element['percentEdibleYield']);
+          eachRow.push(element['percentExtraLightKernel']);
+          eachRow.push(element['percentLightKernel']);
+          eachRow.push(element['percentLightAmberKernel']);
+          eachRow.push(element['percentAmberKernel']);
+          eachRow.push(element['percentDarkKernel']);
+          eachRow.push(element['percentInsect']);
+          eachRow.push(element['percentBlowable']);
+          eachRow.push(element['percentOffGrade']);
+          eachRow.push(element['predominantOffgradeDamage']);
+          eachRow.push(element['percentExternalDamage']);
+          eachRow.push(element['predominantExternalDamage']);
+        }
 
         totalNet_count =
           parseInt(totalNet_count.toString()) +

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { formatDate, formatNumber } from '@angular/common';
+import { Component, LOCALE_ID } from '@angular/core';
 import { ExcelService } from 'src/app/services/Excel/excel.service';
+import { ExportService } from 'src/app/services/Excel/export.service';
 import { ReportsService } from 'src/app/services/Reports/reports.service';
 import { AppSettingsService } from 'src/app/shared/app-settings.service';
 import { environment } from 'src/environments/environment';
@@ -21,10 +23,15 @@ export class ReceivingTicketsReportComponent {
   varietyName: any
   varietyTotal: any;
   finalTotal: any;
+  reportHeaders: any = [];
+  reportData: any = [];
 
   constructor(private reportService: ReportsService,
     public appSettingService: AppSettingsService,
-    public excelService: ExcelService,) { }
+    public excelService: ExcelService, private exportService: ExportService
+    ,) {
+
+  }
 
   GenerateReport() {
     if (this.accountnumber == '') {
@@ -45,6 +52,7 @@ export class ReceivingTicketsReportComponent {
         debugger;
         this.growerName = data.growerName;
         this.receivingTickets = data.receivingTicketsDetails;
+        this.reportData = data.receivingTicketsDetailsForPrint;
         const map = new Map();
         data.receivingTicketsDetails.map((s: any) => map.set(s.varietyId, s.varietyId));
         this.varieties = Array.from(map.values());
@@ -63,4 +71,77 @@ export class ReceivingTicketsReportComponent {
     return data;
 
   }
+
+  exportToPDF() {
+    debugger;
+    let head = this.reportHeaders;
+    head = ['Account Number', 'Account Description', 'Weigh Certificate	', 'PD9 #', 'Receiving Date', 'Variety', 'Gross Weight', 'Tare Weight', 'Net Weight'];
+    let SearchColumns: any[][] = [];
+    SearchColumns.push(['Grower Name - ' + this.growerName]);
+    SearchColumns.push(['Account Number - ' + this.accountnumber]);
+    SearchColumns.push(['Crop Year - ' + this.cropyear]);
+    var arr: any[][] = [];
+    for (var i: number = 0; i < this.reportData.length; i++) {
+      debugger;
+      arr[i] = [];
+      arr[i][0] = this.reportData[i].accountNumber == 'Total For Variety:' || this.reportData[i].accountNumber == 'Total For Account:' ? this.reportData[i].accountNumber : this.reportData[i].accountNumber + ' Paid';
+      arr[i][1] = this.reportData[i].accountDescription;
+      arr[i][2] = this.reportData[i].weightCertificate;
+      arr[i][3] = this.reportData[i].shippingManifest;
+      arr[i][4] = this.reportData[i].receivingDate;
+      arr[i][5] = this.reportData[i].variety;
+      arr[i][6] = this.reportData[i].grossWeight == 0 ? '' : this.reportData[i].grossWeight;
+      arr[i][7] = this.reportData[i].tareWeight == 0 ? '' : this.reportData[i].tareWeight;
+      arr[i][8] = this.reportData[i].netWeight == 0 ? '' : this.reportData[i].netWeight;
+    }
+    var columnStyle: any = {
+      1: { halign: 'center' },
+      6: { halign: 'right' },
+      7: { halign: 'right' },
+      8: { halign: 'right' },
+    };
+    this.exportService.expoertToPdf(
+      arr,
+      'Receiving_Tickets_' +
+      formatDate(new Date(), 'dd-MM-yyyy hh:mm:ss a', 'en-US', '-0800'),
+      head,
+      'Receiving Tickets',
+      'l',
+      SearchColumns,
+      ['', ''],
+      [], 'a4', columnStyle
+    );
+  }
+
+  exportToExcel() {
+    debugger;
+    let head = this.reportHeaders;
+    head = ['Account Number', 'Account Description', 'Weigh Certificate	', 'PD9 #', 'Receiving Date', 'Variety', 'Gross Weight', 'Tare Weight', 'Net Weight'];
+    let SearchColumns: any[][] = [];
+    SearchColumns.push(['Grower Name - ' + this.growerName]);
+    SearchColumns.push(['Account Number - ' + this.accountnumber]);
+    SearchColumns.push(['Crop Year - ' + this.cropyear]);
+    var arr: any[][] = [];
+    for (var i: number = 0; i < this.reportData.length; i++) {
+      debugger;
+      arr[i] = [];
+      arr[i][0] = this.reportData[i].accountNumber == 'Total For Variety:' || this.reportData[i].accountNumber == 'Total For Account:' ? this.reportData[i].accountNumber : this.reportData[i].accountNumber + ' Paid';
+      arr[i][1] = this.reportData[i].accountDescription;
+      arr[i][2] = this.reportData[i].weightCertificate;
+      arr[i][3] = this.reportData[i].shippingManifest;
+      arr[i][4] = this.reportData[i].receivingDate;
+      arr[i][5] = this.reportData[i].variety;
+      arr[i][6] = this.reportData[i].grossWeight == 0 ? '' : this.reportData[i].grossWeight;
+      arr[i][7] = this.reportData[i].tareWeight == 0 ? '' : this.reportData[i].tareWeight;
+      arr[i][8] = this.reportData[i].netWeight == 0 ? '' : this.reportData[i].netWeight;
+    }
+
+    this.excelService.exportAsExcelFile('Receiving Tickets', '',
+      head, arr, [],
+      'Receiving_Tickets_' +
+      formatDate(new Date(), 'dd-MM-yyyy hh:mm:ss a', 'en-US', '-0800'),
+      'Receiving Tickets', SearchColumns, [], [], '', [], [], [], []
+    );
+  }
 }
+

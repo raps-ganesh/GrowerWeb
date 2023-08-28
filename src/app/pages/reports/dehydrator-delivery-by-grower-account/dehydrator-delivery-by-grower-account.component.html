@@ -9,7 +9,7 @@
       <h1
         class="page-heading d-flex text-white fw-bold fs-3 flex-column justify-content-center my-0"
       >
-        Receiving Ticket
+        Dehydrator Deliveries by Grower Account
       </h1>
       <!--end::Title-->
     </div>
@@ -1144,7 +1144,7 @@
                 id="accountnumber"
                 name="accountnumber"
                 placeholder="Account Number"
-                [(ngModel)]="accountnumber"
+                [(ngModel)]="dehydratorAccountNo"
                 class="form-control form-control-solid me-3"
               />
             </div>
@@ -1200,80 +1200,100 @@
         <div class="table-responsive">
           <!-- begin::Table -->
           <table
-            [hidden]="varieties == null || varieties.length == 0"
+            [hidden]="reportData.length == 0"
             class="table align-middle table-row-dashed fs-8 gy-2 dataTable no-footer"
           >
             <!-- begin::Table head -->
             <thead>
               <tr class="text-start fw-bold fs-7 gs-00">
                 <th class="text-left" colspan="3">
-                  Grower Name : {{ growerName }}
+                  Dehydrator : {{ dehydratorAccountNo }}
                 </th>
                 <th colspan="3" class="text-left">
-                  Account No : {{ accountnumber }}
+                  {{ dehydrator }}
                 </th>
               </tr>
               <tr class="text-start fw-bold fs-7 gs-00">
-                <th class="text-center">Account Number</th>
-                <th class="text-center">Account Description</th>
-                <th class="text-center">Weight Certificate</th>
                 <th class="text-center">PD9 #</th>
+                <th class="text-center">Weight Certificate</th>
                 <th class="text-center">Receiving Date</th>
-                <th class="text-center">Variety</th>
+                <!-- <th class="text-center">Grower Account</th>
+                <th class="text-center">Grower Name</th>
+                <th class="text-center">Account Description</th>
+                <th class="text-center">Variety</th> -->
                 <th class="text-center">Gross Weight</th>
                 <th class="text-center">Tare Weight</th>
                 <th class="text-center">Net Weight</th>
+                <th class="text-center">Trailer 1 Moisture</th>
+                <th class="text-center">Trailer 2 Moisture</th>
               </tr>
             </thead>
             <!-- end::Table head -->
-            <tbody *ngFor="let variety of varieties" style="width: 100%">
-              <tr *ngFor="let info of filterByVariety(variety)">
-                <td class="text-center">
-                  {{ accountnumber }}
-                  <span class="badge py-2 px-3 mx-2 fs-7 badge-light-success">
-                    Paid
-                  </span>
-                </td>
-                <td class="text-center">{{ info.accountDescription }}</td>
-                <td class="text-center">{{ info.weightCertificate }}</td>
-                <td class="text-center">{{ info.shippingManifest }}</td>
-                <td class="text-center">{{ info.receivingDate }}</td>
-                <td class="text-center">{{ info.variety }}</td>
-                <td class="text-right">{{ info.grossWeight | number }}</td>
-                <td class="text-right">{{ info.tareWeight | number }}</td>
-                <td class="text-right">{{ info.netWeight | number }}</td>
-              </tr>
-              <tr class="fw-bold">
-                <td colspan="2" class="text-left px-8">
-                  Total For Variety: {{ varietyName }}
-                </td>
-                <td colspan="6"></td>
-                <td class="text-right">
-                  {{ varietyTotal | number }}
-                </td>
-              </tr>
-            </tbody>
-            <tr [hidden]="varieties == null || varieties.length == 0">
-              <td colspan="9">
-                <hr style="border-top: 2px solid black" />
+
+            <tr
+              *ngFor="let info of reportData"
+              [class.fw-bold]="
+                info.shippingManifest == 'Grower Account:' ||
+                info.shippingManifest == 'Varierty:' ||
+                info.shippingManifest == 'Varierty Total:' ||
+                info.shippingManifest == 'Account Total:' ||
+                info.shippingManifest == 'Total For Dehydrator:'
+              "
+            >
+              <td class="text-center">{{ info.shippingManifest }}</td>
+              <td class="text-center">{{ info.weightCertificate }}</td>
+              <td class="text-center">{{ info.receivingDate }}</td>
+              <!-- <td class="text-center">{{ info.growerAccountNumber }}</td>
+              <td class="text-center">{{ info.growerName }}</td>
+              <td class="text-center">{{ info.accountDescription }}</td>
+              <td class="text-center">{{ info.variety }}</td> -->
+              <td class="text-right">
+                {{ info.grossWeight == 0 ? "" : (info.grossWeight | number) }}
+              </td>
+              <td class="text-right">
+                {{ info.tareWeight == 0 ? "" : (info.tareWeight | number) }}
+              </td>
+              <td class="text-right">
+                {{ info.netWeight == 0 ? "" : (info.netWeight | number) }}
+              </td>
+              <td class="text-right">
+                {{
+                  info.trailer1Moisture == null
+                    ? ""
+                    : (round(info.trailer1Moisture, 1) | number)
+                }}
+              </td>
+              <td class="text-right">
+                {{
+                  info.trailer2Moisture == null
+                    ? ""
+                    : (round(info.trailer2Moisture, 1) | number)
+                }}
               </td>
             </tr>
 
-            <tr
+            <!-- <tr
               class="fw-bold"
               [hidden]="varieties == null || varieties.length == 0"
             >
-              <td colspan="2" class="text-left px-8">
-                Total For Account: {{ accountnumber }}
+              <td colspan="3" class="text-left px-8">Total For Dehydrator:</td>
+              <td>
+                {{ dehydratorAccountNo }}
               </td>
-              <td colspan="6"></td>
+              <td colspan="1">
+                {{ dehydrator }}
+              </td>
+              <td colspan="4"></td>
               <td class="text-right">
                 {{ finalTotal | number }}
               </td>
-            </tr>
-            <!-- begin::Table body -->
-            <tbody></tbody>
-            <!-- end::Table body -->
+              <td class="text-right">
+                {{ trailer1Moisture | number }}
+              </td>
+              <td class="text-right">
+                {{ trailer2Moisture | number }}
+              </td>
+            </tr> -->
           </table>
           <!-- end::Table -->
         </div>

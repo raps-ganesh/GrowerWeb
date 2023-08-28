@@ -9,6 +9,8 @@ import { GrowerQualitySummaryDetailedComponent } from './reports/grower-quality-
 import { WeighMasterCertificateComponent } from './reports/grower-quality-summary-detailed/weigh-master-certificate/weigh-master-certificate.component';
 import { PaymentCalculationReportComponent } from './reports/payment-calculation-report/payment-calculation-report.component';
 import { ReceivingTicketsReportComponent } from './reports/receiving-tickets-report/receiving-tickets-report.component';
+import { DehydratorDeliveriesByManifestReportComponent } from './reports/dehydrator-deliveries-by-manifest-report/dehydrator-deliveries-by-manifest-report.component';
+import { DehydratorDeliveryByGrowerAccountComponent } from './reports/dehydrator-delivery-by-grower-account/dehydrator-delivery-by-grower-account.component';
 
 const Routing: Routes = [
   {
@@ -119,7 +121,23 @@ const Routing: Routes = [
     },
     component: GrowerQualitySummaryDetailedComponent,
   },
-
+  {
+    path: 'reports/dehydratordeliverybymanifest',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['Administrators', '']
+    },
+    component: DehydratorDeliveriesByManifestReportComponent,
+  }
+  ,
+  {
+    path: 'reports/dehydratordeliverybygroweraccount',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['Administrators', '']
+    },
+    component: DehydratorDeliveryByGrowerAccountComponent,
+  },
 
 
 
