@@ -11,11 +11,14 @@ export class ModalComponent {
   @ViewChild('modal') private modalContent: TemplateRef<ModalComponent>;
   private modalRef: NgbModalRef;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal) { }
 
   open(): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
-      this.modalRef = this.modalService.open(this.modalContent);
+      this.modalRef = this.modalService.open(this.modalContent, {
+        size: this.modalConfig.size,
+        windowClass: 'modal-xl',
+      });
       this.modalRef.result.then(resolve, resolve);
     });
   }

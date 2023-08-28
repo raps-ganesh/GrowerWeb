@@ -123,8 +123,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       next: (data: any) => {
         debugger;
         var insertId = data;
-        if (data == 'Invalid OTP') {
-          this.OTPError = 'Invalid OTP';
+        if (data == 'Invalid One Time Password') {
+          this.OTPError = 'Invalid One Time Password';
           Swal.fire({
             text: this.OTPError,
             icon: 'error',
@@ -137,29 +137,29 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
         else {
           Swal.fire({
-            text: 'OTP validate successfully.',
+            text: 'One Time Password validated successfully.',
             icon: 'success',
             buttonsStyling: false,
             confirmButtonText: 'Ok, got it!',
             customClass: {
               confirmButton: 'btn btn-primary',
             },
-          }).then(({value}) => {
+          }).then(({ value }) => {
             const loginSubscr = this.authService
-            .login(this.f.email.value, this.f.password.value)
-            .pipe(first())
-            .subscribe((user: UserModel | undefined) => {
-              if (user) {
-                this.router.navigate([this.returnUrl]);
+              .login(this.f.email.value, this.f.password.value)
+              .pipe(first())
+              .subscribe((user: UserModel | undefined) => {
+                if (user) {
+                  this.router.navigate([this.returnUrl]);
 
-              } else {
-                this.hasError = true;
-              }
-            });
-          this.unsubscribe.push(loginSubscr);
+                } else {
+                  this.hasError = true;
+                }
+              });
+            this.unsubscribe.push(loginSubscr);
           });
 
-     
+
         }
 
 
