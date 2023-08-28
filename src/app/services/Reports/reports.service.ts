@@ -101,7 +101,7 @@ export class ReportsService {
         'DehydratorDeliveries/' +
         data.cropyear +
         '/' +
-        data.accountnumber + '?isManifest=' + data.isManifest
+        data.dehyderatorId + '?isManifest=' + data.isManifest
       )
       .pipe(
         map((response: any) => {
@@ -109,6 +109,8 @@ export class ReportsService {
         })
       );
   }
+
+
 
   public YearEndStatement(data: any): Observable<any> {
     return this.http

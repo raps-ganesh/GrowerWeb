@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { AdminService } from 'src/app/services/Admin/admin.service';
 import { ExcelService } from 'src/app/services/Excel/excel.service';
 import { ExportService } from 'src/app/services/Excel/export.service';
 import { ReportsService } from 'src/app/services/Reports/reports.service';
@@ -16,7 +17,8 @@ export class DehydratorDeliveryByGrowerAccountComponent {
   cropyear: number =
     environment.cropyear != undefined ? environment.cropyear : 2022;
   cropYears = this.appSettingService.GetYears();
-  dehydratorAccountNo: any;
+  @Input() dehyderatorId: string;
+  @Input() dehyderatoraccount: string;
   dehydrator: any;
   finalTotal: any;
   trailer1Moisture: any;
@@ -29,18 +31,29 @@ export class DehydratorDeliveryByGrowerAccountComponent {
   varietyTotal: any;
   accountTotal: any;
   accounts: any;
+  dehydratortypeaheadUrl: any;
   constructor(private reportService: ReportsService,
     public appSettingService: AppSettingsService,
-    public excelService: ExcelService, private exportService: ExportService
+    public excelService: ExcelService, private exportService: ExportService, private adminService: AdminService
     ,) {
 
   }
 
+  ngOnInit(): void {
+    this.adminService.GetDehydratorsForUser({ userid: localStorage.getItem('UserId') }).subscribe({
+      next: (data: any) => {
+        this.dehydratortypeaheadUrl = environment.reportsBaseUrl + 'DehydratorTypeAhead/true/' + data;
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
 
+  }
   GenerateReport() {
-    if (this.dehydratorAccountNo == '') {
+    if (this.dehyderatoraccount == '') {
       Swal.fire({
-        html: 'Please enter valid account number',
+        html: 'Please enter valid Grower',
         icon: 'error',
         buttonsStyling: false,
         confirmButtonText: 'Ok, got it!',
@@ -50,25 +63,23 @@ export class DehydratorDeliveryByGrowerAccountComponent {
       });
       return;
     }
-    debugger;
-    this.reportService.GetDehydratorDeliveries({ accountnumber: this.dehydratorAccountNo, cropyear: this.cropyear, isManifest: false }).subscribe({
+    this.reportService.GetDehydratorDeliveries({ dehyderatorId: this.dehyderatoraccount, cropyear: this.cropyear, isManifest: false }).subscribe({
       next: (data: any) => {
-        debugger;
         this.dehydrator = data.dehydratorDetails.dehydrator;
-        this.dehydratorAccountNo = data.dehydratorDetails.dehydratorAccountNo
+        this.dehyderatorId = data.dehydratorDetails.dehydratorAccountNo
         this.dehydratorData = data.dehydratorDeliveries;
         this.reportData = data.dehydratorDeliveriesForPrint;
-        // const map = new Map();
-        // data.dehydratorDeliveries.map((s: any) => map.set(s.growerAccountNumber, s.growerAccountNumber));
-        // this.accounts = Array.from(map.values());
-        // this.finalTotal = data.dehydratorDeliveries.reduce((sum: any, current: { netWeight: any; }) => sum + current.netWeight, 0);
-        // var sumtrailer1Moisture = data.dehydratorDeliveries.reduce((sum: any, current: { trailer1Moisture: any; }) => sum + current.trailer1Moisture, 0);
-        // this.trailer1Moisture = this.round((sumtrailer1Moisture / data.dehydratorDeliveries.filter((x: any) => x.trailer1Moisture != '' && x.trailer1Moisture > 0).length || 0), 1);
-        // var sumtrailer2Moisture = data.dehydratorDeliveries.reduce((sum: any, current: { trailer2Moisture: any; }) => sum + current.trailer2Moisture, 0);
-        // this.trailer2Moisture = this.round((sumtrailer2Moisture / data.dehydratorDeliveries.filter((x: any) => x.trailer2Moisture != '' && x.trailer2Moisture > 0).length || 0), 1);
       },
       error: (err: any) => {
-        console.log(err);
+        Swal.fire({
+          html: 'No Data Found',
+          icon: 'error',
+          buttonsStyling: false,
+          confirmButtonText: 'Ok, got it!',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+        });
       },
     });
   }
@@ -81,7 +92,7 @@ export class DehydratorDeliveryByGrowerAccountComponent {
     let head = this.reportHeaders;
     head = ['PD9 #', 'Weight\r\n Certificate', 'Receiving\r\n Date', 'Gross\r\n Weight', 'Tare \r\nWeight', 'Net\r\n Weight', 'Trailer 1\r\n Moisture', 'Trailer 2 \r\nMoisture'];
     let SearchColumns: any[][] = [];
-    SearchColumns.push(['Dehydrator - ' + this.dehydratorAccountNo + '              ' + this.dehydrator]);
+    SearchColumns.push(['Dehydrator - ' + this.dehyderatorId + '              ' + this.dehydrator]);
     SearchColumns.push(['Crop Year - ' + this.cropyear]);
     var arr: any[][] = [];
     for (var i: number = 0; i < this.reportData.length; i++) {
@@ -122,7 +133,7 @@ export class DehydratorDeliveryByGrowerAccountComponent {
     let head = this.reportHeaders;
     head = ['PD9 #', 'Weight\r\n Certificate', 'Receiving\r\n Date', 'Gross\r\n Weight', 'Tare \r\nWeight', 'Net\r\n Weight', 'Trailer 1\r\n Moisture', 'Trailer 2 \r\nMoisture'];
     let SearchColumns: any[][] = [];
-    SearchColumns.push(['Dehydrator - ' + this.dehydratorAccountNo + '              ' + this.dehydrator]);
+    SearchColumns.push(['Dehydrator - ' + this.dehyderatorId + '              ' + this.dehydrator]);
     SearchColumns.push(['Crop Year - ' + this.cropyear]);
     var arr: any[][] = [];
     for (var i: number = 0; i < this.reportData.length; i++) {
@@ -144,5 +155,7 @@ export class DehydratorDeliveryByGrowerAccountComponent {
       'Dehydrator Deliveries by Grower Account', SearchColumns, [], [], '', [], [], [], []
     );
   }
-
+  populateDehyderatorInfo(event: any) {
+    this.dehyderatoraccount = event;
+  }
 }

@@ -1138,15 +1138,24 @@
             </div>
 
             <div class="d-flex align-items-center position-relative me-3">
-              <input
+              <!-- <input
                 required
                 ngModel
                 id="accountnumber"
                 name="accountnumber"
-                placeholder="Account Number"
+                placeholder="Dehydrator"
                 [(ngModel)]="dehydratorAccountNo"
                 class="form-control form-control-solid me-3"
-              />
+              /> -->
+              <app-report-type-ahead
+                [urlToSearch]="dehydratortypeaheadUrl"
+                [inputClass]="'form-control form-control-solid min-w-200px'"
+                [placeholder]="'Grower'"
+                [inputid]="'dehyderatoraccount'"
+                (onSelect)="populateDehyderatorInfo($event)"
+                [maxResultCount]="5"
+              >
+              </app-report-type-ahead>
             </div>
 
             <!--begin::Add user-->
@@ -1207,7 +1216,7 @@
             <thead>
               <tr class="text-start fw-bold fs-7 gs-00">
                 <th class="text-left" colspan="3">
-                  Dehydrator : {{ dehydratorAccountNo }}
+                  Dehydrator : {{ dehyderatorId }}
                 </th>
                 <th colspan="3" class="text-left">
                   {{ dehydrator }}

@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { AdminService } from 'src/app/services/Admin/admin.service';
 import { ExcelService } from 'src/app/services/Excel/excel.service';
 import { ExportService } from 'src/app/services/Excel/export.service';
 import { ReportsService } from 'src/app/services/Reports/reports.service';
@@ -16,7 +17,8 @@ export class DehydratorDeliveriesByManifestReportComponent {
   cropyear: number =
     environment.cropyear != undefined ? environment.cropyear : 2022;
   cropYears = this.appSettingService.GetYears();
-  dehydratorAccountNo: any;
+  @Input() dehyderatorId: string;
+  @Input() dehyderatoraccount: string;
   dehydrator: any;
   finalTotal: any;
   trailer1Moisture: any;
@@ -25,18 +27,29 @@ export class DehydratorDeliveriesByManifestReportComponent {
   reportHeaders: any = [];
   reportData: any = [];
   varieties: any;
+  dehydratortypeaheadUrl: any;
   constructor(private reportService: ReportsService,
     public appSettingService: AppSettingsService,
     public excelService: ExcelService, private exportService: ExportService
-    ,) {
+    , private adminService: AdminService) {
+
+  }
+  ngOnInit(): void {
+    this.adminService.GetDehydratorsForUser({ userid: localStorage.getItem('UserId') }).subscribe({
+      next: (data: any) => {
+        this.dehydratortypeaheadUrl = environment.reportsBaseUrl + 'DehydratorTypeAhead/true/' + data;
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
 
   }
 
-
   GenerateReport() {
-    if (this.dehydratorAccountNo == '') {
+    if (this.dehyderatoraccount == '') {
       Swal.fire({
-        html: 'Please enter valid account number',
+        html: 'Please enter valid Grower',
         icon: 'error',
         buttonsStyling: false,
         confirmButtonText: 'Ok, got it!',
@@ -47,11 +60,11 @@ export class DehydratorDeliveriesByManifestReportComponent {
       return;
     }
     debugger;
-    this.reportService.GetDehydratorDeliveries({ accountnumber: this.dehydratorAccountNo, cropyear: this.cropyear, isManifest: true }).subscribe({
+    this.reportService.GetDehydratorDeliveries({ dehyderatorId: this.dehyderatoraccount, cropyear: this.cropyear, isManifest: true }).subscribe({
       next: (data: any) => {
         debugger;
         this.dehydrator = data.dehydratorDetails.dehydrator;
-        this.dehydratorAccountNo = data.dehydratorDetails.dehydratorAccountNo
+        this.dehyderatorId = data.dehydratorDetails.dehydratorAccountNo
         this.dehydratorData = data.dehydratorDeliveries;
         this.reportData = data.dehydratorDeliveriesForPrint;
         const map = new Map();
@@ -78,7 +91,7 @@ export class DehydratorDeliveriesByManifestReportComponent {
     let head = this.reportHeaders;
     head = ['PD9 #', 'Weight\r\n Certificate', 'Receiving\r\n Date', 'Grower Account', 'Grower Name', 'Account\r\n Description', 'Variety', 'Gross\r\n Weight', 'Tare \r\nWeight', 'Net\r\n Weight', 'Trailer 1\r\n Moisture', 'Trailer 2 \r\nMoisture'];
     let SearchColumns: any[][] = [];
-    SearchColumns.push(['Dehydrator - ' + this.dehydratorAccountNo + '              ' + this.dehydrator]);
+    SearchColumns.push(['Dehydrator - ' + this.dehyderatorId + '              ' + this.dehydrator]);
     SearchColumns.push(['Crop Year - ' + this.cropyear]);
     var arr: any[][] = [];
     for (var i: number = 0; i < this.reportData.length; i++) {
@@ -124,7 +137,7 @@ export class DehydratorDeliveriesByManifestReportComponent {
     let head = this.reportHeaders;
     head = ['PD9 #', 'Weight Certificate', 'Receiving Date', 'Grower Account', 'Grower Name', 'Account Description', 'Variety', 'Gross Weight', 'Tare Weight', 'Net Weight', 'Trailer 1 Moisture', 'Trailer 2 Moisture'];
     let SearchColumns: any[][] = [];
-    SearchColumns.push(['Dehydrator - ' + this.dehydratorAccountNo + '              ' + this.dehydrator]);
+    SearchColumns.push(['Dehydrator - ' + this.dehyderatorId + '              ' + this.dehydrator]);
     SearchColumns.push(['Crop Year - ' + this.cropyear]);
     var arr: any[][] = [];
     for (var i: number = 0; i < this.reportData.length; i++) {
@@ -149,5 +162,8 @@ export class DehydratorDeliveriesByManifestReportComponent {
       formatDate(new Date(), 'dd-MM-yyyy hh:mm:ss a', 'en-US', '-0800'),
       'Dehydrator Deliveries by Manifest', SearchColumns, [], [], '', [], [], [], []
     );
+  }
+  populateDehyderatorInfo(event: any) {
+    this.dehyderatoraccount = event;
   }
 }

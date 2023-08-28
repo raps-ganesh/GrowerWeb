@@ -122,7 +122,7 @@ const Routing: Routes = [
     component: GrowerQualitySummaryDetailedComponent,
   },
   {
-    path: 'reports/dehydratordeliverybymanifest',
+    path: 'reports/dehehydratordeliverybymanifest',
     //canActivate: [RoleGuard],
     data: {
       expectedRole: ['Administrators', '']

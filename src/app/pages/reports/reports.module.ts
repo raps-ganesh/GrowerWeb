@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { ReceivingTicketsReportComponent } from './receiving-tickets-report/receiving-tickets-report.component';
 import { DehydratorDeliveriesByManifestReportComponent } from './dehydrator-deliveries-by-manifest-report/dehydrator-deliveries-by-manifest-report.component';
 import { DehydratorDeliveryByGrowerAccountComponent } from './dehydrator-delivery-by-grower-account/dehydrator-delivery-by-grower-account.component';
+import { ReportTypeAheadComponent } from './report-type-ahead/report-type-ahead.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { DehydratorDeliveryByGrowerAccountComponent } from './dehydrator-deliver
     WeighMasterCertificateComponent,
     ReceivingTicketsReportComponent,
     DehydratorDeliveriesByManifestReportComponent,
-    DehydratorDeliveryByGrowerAccountComponent
+    DehydratorDeliveryByGrowerAccountComponent,
+    ReportTypeAheadComponent
   ],
   imports: [
     CommonModule,

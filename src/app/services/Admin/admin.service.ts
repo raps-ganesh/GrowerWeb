@@ -8,9 +8,9 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AdminService {
- 
 
-  constructor(private http: HttpClient, private authService: AuthHTTPService) {}
+
+  constructor(private http: HttpClient, private authService: AuthHTTPService) { }
   baseAdminURL: string = environment.adminApiBaseUrl;
 
 
@@ -19,17 +19,17 @@ export class AdminService {
     return this.http
       .get<any>(
         this.baseAdminURL +
-          'GetUsers/' +
-          '?sortcolumn=' +
-          data.sortcolumn +
-          '&sortDirection=' +
-          data.sortdirection +
-          '&searchByValue=' +
-          data.searchstring +
-          '&pagenumber=' +
-          data.pagenumber +
-          '&pagesize=' +
-          data.pagesize
+        'GetUsers/' +
+        '?sortcolumn=' +
+        data.sortcolumn +
+        '&sortDirection=' +
+        data.sortdirection +
+        '&searchByValue=' +
+        data.searchstring +
+        '&pagenumber=' +
+        data.pagenumber +
+        '&pagesize=' +
+        data.pagesize
       )
       .pipe(
         map((response: any) => {
@@ -39,7 +39,7 @@ export class AdminService {
   }
 
 
-  
+
   public GetAccountTypes(): Observable<any> {
     return this.http
       .get<any>(this.baseAdminURL + 'getaccounttypes')
@@ -58,7 +58,7 @@ export class AdminService {
           return response;
         })
       );
-  }   
+  }
 
   public GetGroup(): Observable<any> {
     return this.http
@@ -70,9 +70,9 @@ export class AdminService {
       );
   }
 
-  public GetUserById(userId :any): Observable<any> {
+  public GetUserById(userId: any): Observable<any> {
     return this.http
-      .get<any>(this.baseAdminURL + 'GetUserById/'+userId)
+      .get<any>(this.baseAdminURL + 'GetUserById/' + userId)
       .pipe(
         map((response: any) => {
           return response;
@@ -80,11 +80,11 @@ export class AdminService {
       );
   }
 
-  public SaveUser(user:any): Observable<any> {
+  public SaveUser(user: any): Observable<any> {
     //
     return this.http
       .post<any>(
-        this.baseAdminURL +'SaveUser/' + user.id,
+        this.baseAdminURL + 'SaveUser/' + user.id,
         user
       )
       .pipe(
@@ -97,22 +97,22 @@ export class AdminService {
 
   ResetPassword(UserId: any, password: any): Observable<any> {
     return this.http
-    .post<any>(
-      this.baseAdminURL +'UpdatePassword/' + UserId+'?password='+password, password
-    )
-    .pipe(
-      map((response: any) => {
-        //
-        return response;
-      })
-    );
+      .post<any>(
+        this.baseAdminURL + 'UpdatePassword/' + UserId + '?password=' + password, password
+      )
+      .pipe(
+        map((response: any) => {
+          //
+          return response;
+        })
+      );
   }
 
-  public DeleteUser(userid:any): Observable<any> {
+  public DeleteUser(userid: any): Observable<any> {
     //
     return this.http
       .post<any>(
-        this.baseAdminURL +'DeleteUser/'+userid,userid
+        this.baseAdminURL + 'DeleteUser/' + userid, userid
       )
       .pipe(
         map((response: any) => {
@@ -122,11 +122,11 @@ export class AdminService {
       );
   }
 
-  public SaveGroup(userid:any,groupids:any): Observable<any> {
-    
+  public SaveGroup(userid: any, groupids: any): Observable<any> {
+
     return this.http
       .post<any>(
-        this.baseAdminURL +'SaveUserGroup/' + userid ,groupids
+        this.baseAdminURL + 'SaveUserGroup/' + userid, groupids
       )
       .pipe(
         map((response: any) => {
@@ -135,6 +135,18 @@ export class AdminService {
         })
       );
   }
-
+  public GetDehydratorsForUser(data: any): Observable<any> {
+    return this.http
+      .get<any>(
+        this.baseAdminURL +
+        'GetDehydratorsForUser/' +
+        data.userid
+      )
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
 
 }
