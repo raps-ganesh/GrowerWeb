@@ -300,6 +300,7 @@
                 name="calculationbatchid"
                 [(ngModel)]="calculationbatchid"
                 class="form-select form-select-solid select2-selection select2-selection--single form-select mb-2 min-w-250px"
+                [hidden]="hideCalculationBatches"
               >
                 <option selected value="0">Select Calculation Batch</option>
                 <option
@@ -317,7 +318,26 @@
                     </p>
                   </div> -->
             </div>
-
+            <div
+              class="d-flex align-items-center position-relative me-3"
+              [hidden]="hideDeferralDate"
+            >
+              <input
+                [(ngModel)]="deferralDate"
+                bsDatepicker
+                [bsConfig]="{
+                  adaptivePosition: true,
+                  isAnimated: true,
+                  dateInputFormat: 'YYYY-MM-DD'
+                }"
+                type="text"
+                class="form-control form-control-lg form-control-solid"
+                placeholder="Deferral Date"
+                name="DeferralDate"
+                value=""
+                placement="bottom"
+              />
+            </div>
             <!--end::Search-->
 
             <!--begin::Add user-->

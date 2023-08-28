@@ -106,6 +106,30 @@ const Routing: Routes = [
     component: PaymentCalculationReportComponent,
   },
   {
+    path: 'reports/spot',
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['Administrators', '']
+    },
+    component: PaymentCalculationReportComponent,
+  },
+  {
+    path: 'reports/deferred',
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['Administrators', '']
+    },
+    component: PaymentCalculationReportComponent,
+  },
+  {
+    path: 'reports/yearend',
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['Administrators', '']
+    },
+    component: PaymentCalculationReportComponent,
+  },
+  {
     path: 'reports/receivingticket',
     //canActivate: [RoleGuard],
     data: {

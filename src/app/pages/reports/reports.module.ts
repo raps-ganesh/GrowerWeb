@@ -13,7 +13,7 @@ import { ReceivingTicketsReportComponent } from './receiving-tickets-report/rece
 import { DehydratorDeliveriesByManifestReportComponent } from './dehydrator-deliveries-by-manifest-report/dehydrator-deliveries-by-manifest-report.component';
 import { DehydratorDeliveryByGrowerAccountComponent } from './dehydrator-delivery-by-grower-account/dehydrator-delivery-by-grower-account.component';
 import { ReportTypeAheadComponent } from './report-type-ahead/report-type-ahead.component';
-
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -38,6 +38,7 @@ import { ReportTypeAheadComponent } from './report-type-ahead/report-type-ahead.
         component: GrowerQualitySummaryDetailedComponent,
       },
     ]),
+    BsDatepickerModule.forRoot(),
   ]
 })
 export class ReportsModule { }

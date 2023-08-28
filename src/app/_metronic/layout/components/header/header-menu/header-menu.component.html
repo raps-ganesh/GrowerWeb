@@ -85,7 +85,7 @@
     class="menu-link py-3"
     [ngClass]="calculateMenuItemCssClass('/crafted')"
   >
-    <span class="menu-title">Reports</span>
+    <span class="menu-title">Statements</span>
     <span class="menu-arrow d-lg-none"></span>
   </span>
   <div
@@ -129,64 +129,23 @@
       </a>
     </div>
     <div class="menu-item me-lg-1">
-      <a class="menu-link py-3" href="/reports/Spotemf">
+      <a class="menu-link py-3" href="/reports/spot">
         <span class="menu-icon"><i class="bi fs-3 bi-box-arrow-up"></i></span>
         <span class="menu-title">Spot Payment</span>
       </a>
     </div>
     <div class="menu-item me-lg-1">
-      <a class="menu-link py-3" href="#">
+      <a class="menu-link py-3" href="/reports/yearend">
         <span class="menu-icon"><i class="bi fs-3 bi-box-arrow-up"></i></span>
         <span class="menu-title">Year End Statement</span>
       </a>
     </div>
     <div class="menu-item me-lg-1">
-      <a class="menu-link py-3" href="#">
+      <a class="menu-link py-3" href="/reports/deferred">
         <span class="menu-icon"><i class="bi fs-3 bi-box-arrow-up"></i></span>
         <span class="menu-title">Deferred Statement</span>
       </a>
     </div>
-
-    <!-- <div
-      class="menu-item menu-lg-down-accordion me-lg-1"
-      data-kt-menu-trigger="{default:'click', lg: 'hover'}"
-      data-kt-menu-placement="right-start"
-    >
-      <span
-        class="menu-link py-3"
-        [ngClass]="calculateMenuItemCssClass('/apps/chat')"
-      ><span class="menu-icon"
-      ><span
-        class="svg-icon svg-icon-2"
-        [inlineSVG]="'./assets/media/icons/duotune/general/gen022.svg'"
-      ></span></span
-      ><span class="menu-title" data-link="/apps/chat">Grower Account</span
-      ><span class="menu-arrow"></span
-      ></span>
-      <div
-        class="
-          menu-sub
-          menu-sub-lg-down-accordion
-          menu-sub-lg-dropdown
-          menu-rounded-0
-          py-lg-4
-          w-lg-225px
-        "
-        data-kt-menu-dismiss="true"
-      >
-        <div class="menu-item me-lg-1">
-          <a
-            class="menu-link py-3"
-            routerLinkActive="active"
-            routerLink="/apps/chat/private-chat"
-          ><span class="menu-bullet"
-          ><span class="bullet bullet-dot"></span></span
-          ><span class="menu-title">Dehydrator Deliveries by Manifest</span></a
-          >
-        </div>
-        
-      </div>
-    </div> -->
   </div>
 </div>
 

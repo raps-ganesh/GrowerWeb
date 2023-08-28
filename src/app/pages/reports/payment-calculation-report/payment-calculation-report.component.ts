@@ -39,6 +39,9 @@ export class PaymentCalculationReportComponent implements OnInit {
   @Input() childProperty: string;
   pdfpath: any;
   jdeAddressBookNumber: any;
+  hideCalculationBatches: any = false;
+  deferralDate: any;
+  hideDeferralDate: any = true;
   constructor(
 
     private reportService: ReportsService,
@@ -57,14 +60,16 @@ export class PaymentCalculationReportComponent implements OnInit {
         ? this.router.url.split('/')[2]
         : 'Delivery';
     //
+    this.hideCalculationBatches = false;
     switch (calcBatchType.toLowerCase()) {
+
       case 'Delivery'.toLowerCase():
         this.calculationBatchType = CalculationBatchTypes.Delivery;
         this.title = 'Delivery';
         break;
-      case 'Spotemf'.toLowerCase():
+      case 'Spot'.toLowerCase():
         this.calculationBatchType = CalculationBatchTypes.SpotEMF;
-        this.title = 'Spot EMF';
+        this.title = 'Spot';
         break;
       case 'February'.toLowerCase():
         this.calculationBatchType = CalculationBatchTypes.FebProgress;
@@ -79,8 +84,19 @@ export class PaymentCalculationReportComponent implements OnInit {
         this.title = 'Final';
         break;
       case 'TrueUp'.toLowerCase():
-        this.calculationBatchType = CalculationBatchTypes.FinalPayment;
+        this.calculationBatchType = CalculationBatchTypes.TrueUp;
         this.title = 'TrueUp';
+        break;
+      case 'Deferred'.toLowerCase():
+        this.calculationBatchType = CalculationBatchTypes.Deferral;
+        this.hideCalculationBatches = true;
+        this.hideDeferralDate = false;
+        this.title = 'Deferred';
+        break;
+      case 'Yearend'.toLowerCase():
+        this.calculationBatchType = CalculationBatchTypes.YearEnd;
+        this.hideCalculationBatches = true;
+        this.title = 'YearEnd';
         break;
     }
   }
@@ -104,7 +120,6 @@ export class PaymentCalculationReportComponent implements OnInit {
     }
   }
   GenerateReport() {
-    debugger;
     if (this.accountnumber == '') {
       Swal.fire({
         html: 'Please enter valid account number',
@@ -117,37 +132,81 @@ export class PaymentCalculationReportComponent implements OnInit {
       });
       return;
     }
-    if (this.calculationbatchid == '') {
-      Swal.fire({
-        html: 'Please enter valid calculation batch',
-        icon: 'error',
-        buttonsStyling: false,
-        confirmButtonText: 'Ok, got it!',
-        customClass: {
-          confirmButton: 'btn btn-primary',
-        },
-      });
-      return;
+    if (this.calculationBatchType != CalculationBatchTypes.Deferral) {
+
+      if (this.deferralDate == '') {
+        Swal.fire({
+          html: 'Please enter valid Deferral Date',
+          icon: 'error',
+          buttonsStyling: false,
+          confirmButtonText: 'Ok, got it!',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+        });
+        return;
+      }
+    }
+    if (this.calculationBatchType != CalculationBatchTypes.Deferral && this.calculationBatchType != CalculationBatchTypes.YearEnd) {
+      if (this.calculationbatchid == '') {
+        Swal.fire({
+          html: 'Please enter valid calculation batch',
+          icon: 'error',
+          buttonsStyling: false,
+          confirmButtonText: 'Ok, got it!',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+        });
+        return;
+      }
     }
 
-    this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
-      next: (data: any) => {
-        debugger;
-        this.jdeAddressBookNumber = data;
-        this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.calculationbatchid + '_' + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
+    switch (this.calculationBatchType) {
+      case CalculationBatchTypes.Delivery:
+      case CalculationBatchTypes.FebProgress:
+      case CalculationBatchTypes.MayProgress:
+      case CalculationBatchTypes.FinalPayment:
+      case CalculationBatchTypes.TrueUp:
+      case CalculationBatchTypes.SpotEMF:
+        this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
+          next: (data: any) => {
+            this.jdeAddressBookNumber = data;
+            this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.calculationbatchid + '_' + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
+            var pdfViewer = document.getElementById('pdf');
+            pdfViewer?.setAttribute("src", this.pdfpath);
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+        });
+        break;
+      case CalculationBatchTypes.YearEnd:
+        this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.accountnumber + '.pdf';
         var pdfViewer = document.getElementById('pdf');
         pdfViewer?.setAttribute("src", this.pdfpath);
+        break;
+      case CalculationBatchTypes.Deferral:
+        debugger;
+        var month = new Date(this.deferralDate).getMonth().toString();
+        var year = new Date(this.deferralDate).getFullYear().toString();
+        var monthNames = ["January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+        ];
 
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-    });
+
+        ;
+        this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + monthNames[parseInt(month)] + year + "/" + this.accountnumber + '.pdf';
+        var pdfViewer = document.getElementById('pdf');
+        pdfViewer?.setAttribute("src", this.pdfpath);
+        break;
+    }
+
   }
 
 
   GetBatches() {
-    if (this.accountnumber.trim() != '')
+    if (this.accountnumber.trim() != '' && this.calculationBatchType != CalculationBatchTypes.Deferral && this.calculationBatchType != CalculationBatchTypes.YearEnd)
       this.reportService
         .GetBatches({
           cropyear: this.cropyear,
