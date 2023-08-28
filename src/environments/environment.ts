@@ -163,7 +163,7 @@ export const environment = {
   growerPortalApiBaseUrl: 'https://localhost:7050/api/authenticate/',
   adminApiBaseUrl: 'https://localhost:7061/api/admin/',
   documentApiBaseUrl: 'https://localhost:7073/api/Document/',
-  imagePathUrl: 'https://localhost:7073/',
+  imagePathUrl: 'https://groweronline.diamondfoods.com/contents/colorImages/',
   reportsBaseUrl: 'https://localhost:7282/reporting/',
   cropyear: new Date().getMonth() > 8 ? new Date().getFullYear() : new Date().getFullYear() - 1,
   growerAccountingApiBaseUrl: 'https://localhost:7020/api/groweraccounting/',

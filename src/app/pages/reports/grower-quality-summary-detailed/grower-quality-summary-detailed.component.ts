@@ -170,11 +170,11 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
 
 
 
-  ShowImage(imagepath:any)
+  ShowImage(imagepath:any, classpath:any)
   {
-    //environment.imagePathUrl+`${imagepath}`
-    this.colorImagePath='./assets/media/logos/demo2.png';
-    this.classImagePath='./assets/media/logos/demo2.png';
+    
+    this.colorImagePath= environment.imagePathUrl+`${imagepath}`;
+    this.classImagePath= environment.imagePathUrl+`${classpath}`;
 
     this.modalImageComponent.open();
   }

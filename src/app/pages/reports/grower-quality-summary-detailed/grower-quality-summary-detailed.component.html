@@ -1262,7 +1262,7 @@
                     <td class="text-right" [hidden]="cropyear > 2021">{{ info.rli }}</td>
                     <td class="text-right" [hidden]="cropyear < 2022">{{ info.percentExtraLightKernel }}</td>
                     <td class="text-right" [hidden]="cropyear < 2022">
-                      <a style="cursor: pointer; text-decoration: underline;" (click)="ShowImage(info.ticketNumber) ">{{ info.percentLightKernel }}</a>
+                      <a style="cursor: pointer; text-decoration: underline;" (click)="ShowImage(info.percentAmberKernel, info.percentDarkKernel) ">{{ info.percentLightKernel }}</a>
                       
                     </td>
                     <td class="text-right" [hidden]="cropyear < 2022">{{ info.percentLightAmberKernel }}</td>
