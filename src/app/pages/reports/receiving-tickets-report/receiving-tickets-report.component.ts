@@ -6,6 +6,7 @@ import { ReportsService } from 'src/app/services/Reports/reports.service';
 import { AppSettingsService } from 'src/app/shared/app-settings.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { EventEmitterService } from '../../event-emitter.service';
 
 @Component({
   selector: 'app-receiving-tickets-report',
@@ -28,11 +29,26 @@ export class ReceivingTicketsReportComponent {
 
   constructor(private reportService: ReportsService,
     public appSettingService: AppSettingsService,
-    public excelService: ExcelService, private exportService: ExportService
-    ,) {
+    public excelService: ExcelService, private exportService: ExportService,
+    private eventEmitterService: EventEmitterService,
+  ) {
+
 
   }
-
+  ngOnInit(): void {
+    if (localStorage.getItem('SelectedAccount') != undefined) {
+      this.accountnumber = localStorage.getItem('SelectedAccount');
+    }
+    if (this.eventEmitterService.subsVar == undefined) {
+      this.eventEmitterService.subsVar = this.eventEmitterService.
+        invokeFirstComponentFunction.subscribe((name: string) => {
+          this.loadDataFromMasterMenu(name);
+        });
+    }
+  }
+  loadDataFromMasterMenu(_accountnumber: any) {
+    this.accountnumber = _accountnumber;
+  }
   GenerateReport() {
     if (this.accountnumber == '') {
       Swal.fire({

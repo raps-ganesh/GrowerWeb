@@ -27,7 +27,7 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
   cropyear: number =
     environment.cropyear != undefined ? environment.cropyear : 2022;
   cropYears = this.appSettingService.GetYears();
-  @Input() accountnumber: any = '';
+  @Input() accountNumber: any = '';
   calculationbatchid: any = 0;
   calculationbatches: any = [];
   reportHeaders: any = [];
@@ -42,7 +42,7 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
   totalNet_count: number = 0;
   allTotal: number = 0;
   allNetWeight: number = 0;
-  accountNumber: any = '';
+  //accountNumber: any = '';
   reportData2: any;
   sortcolumn: string = 'Id';
   sortdirection: string = 'ASC';
@@ -87,11 +87,12 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
 
   loadDataFromMasterMenu(_accountnumber: any) {
     this.isEnabled = true;
-    this.accountnumber = _accountnumber;
+    this.accountNumber = _accountnumber;
 
   }
 
   ngOnInit(): void {
+    debugger;
     if (this.eventEmitterService.subsVar == undefined) {
       this.eventEmitterService.subsVar = this.eventEmitterService.
         invokeFirstComponentFunction.subscribe((name: string) => {
