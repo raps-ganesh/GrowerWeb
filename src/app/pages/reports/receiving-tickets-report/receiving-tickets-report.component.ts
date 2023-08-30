@@ -75,17 +75,31 @@ export class ReceivingTicketsReportComponent {
         this.finalTotal = this.varietyTotal = data.receivingTicketsDetails.reduce((sum: any, current: { netWeight: any; }) => sum + current.netWeight, 0);
       },
       error: (err: any) => {
-        console.log(err);
+        Swal.fire({
+          html: 'Data not found for account number' + this.accountnumber,
+          icon: 'error',
+          buttonsStyling: false,
+          confirmButtonText: 'Ok, got it!',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+        });
+        this.reportData = null;
+        this.receivingTickets = null;
+        this.varieties = null;
+        this.finalTotal = '';
       },
     });
   }
 
   filterByVariety(varierId: any) {
-    var data = this.receivingTickets.filter((x: any) => x.varietyId == varierId);
-    this.varietyName = data[0].variety;
-    this.varietyTotal = data.reduce((sum: any, current: { netWeight: any; }) => sum + current.netWeight, 0);
-    return data;
-
+    if (this.receivingTickets != null) {
+      var data = this.receivingTickets.filter((x: any) => x.varietyId == varierId);
+      this.varietyName = data[0].variety;
+      this.varietyTotal = data.reduce((sum: any, current: { netWeight: any; }) => sum + current.netWeight, 0);
+      return data;
+    }
+    return null;
   }
 
   exportToPDF() {
