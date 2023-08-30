@@ -27,17 +27,28 @@ export class DehydratorDeliveriesByManifestReportComponent {
   reportHeaders: any = [];
   reportData: any = [];
   varieties: any;
-  dehydratortypeaheadUrl: any;
+  dehydratortypeaheadUrl: any = environment.reportsBaseUrl + 'DehydratorTypeAhead/false/null';
   constructor(private reportService: ReportsService,
     public appSettingService: AppSettingsService,
     public excelService: ExcelService, private exportService: ExportService
     , private adminService: AdminService) {
-
+    // this.adminService.GetDehydratorsForUser({ userid: localStorage.getItem('UserId') }).subscribe({
+    //   next: (data: any) => {
+    //     debugger;
+    //     var user = data;
+    //     this.dehydratortypeaheadUrl = environment.reportsBaseUrl + 'DehydratorTypeAhead/true/' + data.account;
+    //   },
+    //   error: (err: any) => {
+    //     console.log(err);
+    //   },
+    // });
   }
   ngOnInit(): void {
+    debugger;
     this.adminService.GetDehydratorsForUser({ userid: localStorage.getItem('UserId') }).subscribe({
       next: (data: any) => {
-        this.dehydratortypeaheadUrl = environment.reportsBaseUrl + 'DehydratorTypeAhead/true/' + data;
+        var isadmin = data == undefined;
+        this.dehydratortypeaheadUrl = environment.reportsBaseUrl + 'DehydratorTypeAhead/' + isadmin + '/' + data.account;
       },
       error: (err: any) => {
         console.log(err);
