@@ -318,10 +318,7 @@
                     </p>
                   </div> -->
             </div>
-            <div
-              class="d-flex align-items-center position-relative me-3"
-              [hidden]="hideDeferralDate"
-            >
+            <div class="d-flex align-items-center position-relative me-3">
               <input
                 [(ngModel)]="deferralDate"
                 bsDatepicker
@@ -336,6 +333,7 @@
                 name="DeferralDate"
                 value=""
                 placement="bottom"
+                [hidden]="!showDeferralDate"
               />
             </div>
             <!--end::Search-->

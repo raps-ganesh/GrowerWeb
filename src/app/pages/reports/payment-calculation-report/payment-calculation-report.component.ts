@@ -41,7 +41,7 @@ export class PaymentCalculationReportComponent implements OnInit {
   jdeAddressBookNumber: any;
   hideCalculationBatches: any = false;
   deferralDate: any;
-  hideDeferralDate: any = true;
+  showDeferralDate: any = false;
   constructor(
 
     private reportService: ReportsService,
@@ -60,7 +60,9 @@ export class PaymentCalculationReportComponent implements OnInit {
         ? this.router.url.split('/')[2]
         : 'Delivery';
     //
+    debugger;
     this.hideCalculationBatches = false;
+    this.showDeferralDate = false;
     switch (calcBatchType.toLowerCase()) {
 
       case 'Delivery'.toLowerCase():
@@ -90,7 +92,7 @@ export class PaymentCalculationReportComponent implements OnInit {
       case 'Deferred'.toLowerCase():
         this.calculationBatchType = CalculationBatchTypes.Deferral;
         this.hideCalculationBatches = true;
-        this.hideDeferralDate = false;
+        this.showDeferralDate = true;
         this.title = 'Deferred';
         break;
       case 'Yearend'.toLowerCase():
@@ -99,6 +101,7 @@ export class PaymentCalculationReportComponent implements OnInit {
         this.title = 'YearEnd';
         break;
     }
+    alert(this.showDeferralDate);
   }
 
   public getSanitizeUrl(url: string): SafeUrl {
@@ -118,6 +121,17 @@ export class PaymentCalculationReportComponent implements OnInit {
           this.loadDataFromMasterMenu(name);
         });
     }
+
+    this.showDeferralDate = true;
+    switch (this.calculationBatchType) {
+      case CalculationBatchTypes.Deferral:
+        this.showDeferralDate = true;
+        break;
+      default:
+        this.showDeferralDate = false;
+        break;
+    }
+
   }
   GenerateReport() {
     if (this.accountnumber == '') {

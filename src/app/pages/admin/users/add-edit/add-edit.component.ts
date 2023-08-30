@@ -56,7 +56,7 @@ export class AddEditComponent implements OnInit {
 
   receipienttypeaheadUrl: string = environment.growerAccountingApiBaseUrl + 'ReceipientTypeAhead';
   accounttypeaheadUrl: string = environment.growerAccountingApiBaseUrl + 'AccountsTypeAhead';
-  dehydratortypeaheadUrl: string = environment.masterDataBaseUrl + 'DehydratorTypeAhead';
+  dehydratortypeaheadUrl: string = environment.reportsBaseUrl + 'DehydratorTypeAhead';
 
   @Input() receipient: string;
   @Input() receipient1: string;
