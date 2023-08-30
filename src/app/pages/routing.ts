@@ -73,35 +73,35 @@ const Routing: Routes = [
     path: 'reports/delivery',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', '']
+      expectedRole: ['', '']
     }, component: PaymentCalculationReportComponent
   },
   {
     path: 'reports/february',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', '']
+      expectedRole: ['', '']
     }, component: PaymentCalculationReportComponent
   },
   {
     path: 'reports/may',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', '']
+      expectedRole: ['', '']
     }, component: PaymentCalculationReportComponent
   },
   {
     path: 'reports/final',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', '']
+      expectedRole: ['', '']
     }, component: PaymentCalculationReportComponent
   },
   {
     path: 'reports/trueup',
     canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', '']
+      expectedRole: ['', '']
     },
     component: PaymentCalculationReportComponent,
   },
@@ -109,7 +109,7 @@ const Routing: Routes = [
     path: 'reports/spot',
     canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', '']
+      expectedRole: ['', '']
     },
     component: PaymentCalculationReportComponent,
   },
@@ -117,7 +117,7 @@ const Routing: Routes = [
     path: 'reports/deferred',
     canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', '']
+      expectedRole: ['', '']
     },
     component: PaymentCalculationReportComponent,
   },
@@ -125,7 +125,7 @@ const Routing: Routes = [
     path: 'reports/yearend',
     canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', '']
+      expectedRole: ['', '']
     },
     component: PaymentCalculationReportComponent,
   },
@@ -133,7 +133,7 @@ const Routing: Routes = [
     path: 'reports/receivingticket',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', '']
+      expectedRole: ['', '']
     },
     component: ReceivingTicketsReportComponent,
   },
@@ -141,7 +141,7 @@ const Routing: Routes = [
     path: 'reports/gradingdatareport',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', '']
+      expectedRole: ['', '']
     },
     component: GrowerQualitySummaryDetailedComponent,
   },
@@ -149,7 +149,7 @@ const Routing: Routes = [
     path: 'reports/dehehydratordeliverybymanifest',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', '']
+      expectedRole: ['', '']
     },
     component: DehydratorDeliveriesByManifestReportComponent,
   }
@@ -158,7 +158,7 @@ const Routing: Routes = [
     path: 'reports/dehydratordeliverybygroweraccount',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', '']
+      expectedRole: ['', '']
     },
     component: DehydratorDeliveryByGrowerAccountComponent,
   },
