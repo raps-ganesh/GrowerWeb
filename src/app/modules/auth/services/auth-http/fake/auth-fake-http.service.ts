@@ -60,7 +60,7 @@ export class AuthHTTPService {
       ).pipe(
         map((result: any) => {
           debugger;
-          if (result.username == undefined) {
+          if (result == undefined) {
             return notFoundError;
           }
           localStorage.setItem('AuthenticationType', result.authenticationType);

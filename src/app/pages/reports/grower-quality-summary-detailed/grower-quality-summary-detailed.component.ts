@@ -27,7 +27,7 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
   cropyear: number =
     environment.cropyear != undefined ? environment.cropyear : 2022;
   cropYears = this.appSettingService.GetYears();
-  @Input() accountNumber: any = '';
+  accountnumber: any = '';
   calculationbatchid: any = 0;
   calculationbatches: any = [];
   reportHeaders: any = [];
@@ -87,17 +87,25 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
 
   loadDataFromMasterMenu(_accountnumber: any) {
     this.isEnabled = true;
-    this.accountNumber = _accountnumber;
-
+    this.accountnumber = _accountnumber;
   }
 
   ngOnInit(): void {
+
+    // if (localStorage.getItem('SelectedAccount') != undefined) {
+    //   this.accountNumber = localStorage.getItem('SelectedAccount');
+    // }
     debugger;
     if (this.eventEmitterService.subsVar == undefined) {
       this.eventEmitterService.subsVar = this.eventEmitterService.
         invokeFirstComponentFunction.subscribe((name: string) => {
           this.loadDataFromMasterMenu(name);
         });
+    }
+    else {
+      if (localStorage.getItem('SelectedAccount') != undefined) {
+        this.accountnumber = localStorage.getItem('SelectedAccount');
+      }
     }
   }
   GenerateReport() {
@@ -173,7 +181,7 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
         searchstring: searchstring,
         pagesize: pagesize,
         cropyear: this.cropyear,
-        accountNo: this.accountNumber
+        accountNo: this.accountnumber
       })
       .subscribe({
         next: (data: any) => {
@@ -234,7 +242,7 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
     let columns: any[];
     let mainHeaderColumn: any = [];
     let SearchColumns: any[][] = [];
-    SearchColumns.push(['Account No: ', this.accountNumber]);
+    SearchColumns.push(['Account No: ', this.accountnumber]);
     SearchColumns.push(['Crop Year: ', this.cropyear]);
     SearchColumns.push(['Grower Name: ' + this.reportData[0].name]);
     columns = reportHeaders;
@@ -340,7 +348,7 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
         , 'Ext Dam'
       ];
     let SearchColumns: any[][] = [];
-    SearchColumns.push(['Account Number: ' + this.accountNumber]);
+    SearchColumns.push(['Account Number: ' + this.accountnumber]);
     SearchColumns.push(['Crop Year: ' + this.cropyear]);
     SearchColumns.push(['Grower Name: ' + this.reportData[0].name]);
     debugger;
