@@ -24,10 +24,10 @@ export class GrowerPortalService {
       );
   }
 
-  public GetUserAccounts(jdenumber: any): Observable<any> {
+  public GetUserAccounts(userId: any): Observable<any> {
     return this.http
       .get<any>(
-        this.baseUrl + 'GetUserAccounts?JDELongAddressBookNumber=' + jdenumber
+        this.baseUrl + 'GetUserAccounts/'+ userId
       )
       .pipe(
         map((response: any) => {
