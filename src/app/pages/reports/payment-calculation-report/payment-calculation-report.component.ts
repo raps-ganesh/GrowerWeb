@@ -87,6 +87,7 @@ export class PaymentCalculationReportComponent implements OnInit {
         break;
       case 'TrueUp'.toLowerCase():
         this.calculationBatchType = CalculationBatchTypes.TrueUp;
+        this.hideCalculationBatches = true;
         this.title = 'TrueUp';
         break;
       case 'Deferred'.toLowerCase():
@@ -161,7 +162,7 @@ export class PaymentCalculationReportComponent implements OnInit {
         return;
       }
     }
-    if (this.calculationBatchType != CalculationBatchTypes.Deferral && this.calculationBatchType != CalculationBatchTypes.YearEnd) {
+    if (this.calculationBatchType != CalculationBatchTypes.Deferral && this.calculationBatchType != CalculationBatchTypes.YearEnd && this.calculationBatchType != CalculationBatchTypes.TrueUp) {
       if (this.calculationbatchid == '') {
         Swal.fire({
           html: 'Please enter valid calculation batch',
@@ -181,7 +182,6 @@ export class PaymentCalculationReportComponent implements OnInit {
       case CalculationBatchTypes.FebProgress:
       case CalculationBatchTypes.MayProgress:
       case CalculationBatchTypes.FinalPayment:
-      case CalculationBatchTypes.TrueUp:
       case CalculationBatchTypes.SpotEMF:
         this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
           next: (data: any) => {
@@ -195,7 +195,20 @@ export class PaymentCalculationReportComponent implements OnInit {
           },
         });
         break;
-      case CalculationBatchTypes.YearEnd:
+        case CalculationBatchTypes.TrueUp:
+          this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
+            next: (data: any) => {
+              this.jdeAddressBookNumber = data;
+              this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
+              var pdfViewer = document.getElementById('pdf');
+              pdfViewer?.setAttribute("src", this.pdfpath);
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+          });
+         break; 
+        case CalculationBatchTypes.YearEnd:
         this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.accountnumber + '.pdf';
         var pdfViewer = document.getElementById('pdf');
         pdfViewer?.setAttribute("src", this.pdfpath);

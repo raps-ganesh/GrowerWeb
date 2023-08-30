@@ -99,7 +99,7 @@ const Routing: Routes = [
   },
   {
     path: 'reports/trueup',
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: {
       expectedRole: ['', '']
     },
@@ -107,7 +107,7 @@ const Routing: Routes = [
   },
   {
     path: 'reports/spot',
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: {
       expectedRole: ['', '']
     },
@@ -115,7 +115,7 @@ const Routing: Routes = [
   },
   {
     path: 'reports/deferred',
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: {
       expectedRole: ['', '']
     },
@@ -123,7 +123,7 @@ const Routing: Routes = [
   },
   {
     path: 'reports/yearend',
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: {
       expectedRole: ['', '']
     },

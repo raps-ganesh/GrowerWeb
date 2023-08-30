@@ -162,10 +162,10 @@ export const environment = {
   growerPortalApiBaseUrl: 'http://10.12.96.192:4200/api/authenticate/',
   adminApiBaseUrl: 'http://10.12.96.192:4100/api/admin/',
   documentApiBaseUrl: 'http://10.12.96.192:4300/api/Document/',
-  imagePathUrl: 'http://10.12.96.192:4300/',
+  imagePathUrl: 'http://ussacgptsapp:5000/assets/contents/analyzer_Images/',
   reportsBaseUrl: 'http://10.12.96.194:3300/reporting/',
   cropyear: new Date().getMonth() > 8 ? new Date().getFullYear() : new Date().getFullYear() - 1,
-  growerAccountingApiBaseUrl: 'https://localhost:7020/api/groweraccounting/',
+  growerAccountingApiBaseUrl: 'http://10.12.96.194:3200/api/groweraccounting/',
   statementPath: 'http://ussacgptsapp:5000/assets/contents/GrowerPortalStatements/',
   masterDataBaseUrl: 'http://10.12.96.194:3400/api/master/',
 };
