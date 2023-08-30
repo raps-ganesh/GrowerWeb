@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
         localStorage.removeItem('loggedinData');
         localStorage.removeItem('apitkn');
         localStorage.removeItem('AuthenticationType');
+        localStorage.removeItem('SelectedAccount');
       }, 1200000);
   }
   @HostListener('window:keydown')

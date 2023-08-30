@@ -13,46 +13,50 @@ export class JdeListComponent {
   // @ViewChild(PaymentCalculationReportComponent)
   // private paymentCalculationReportComponent: PaymentCalculationReportComponent;
 
-  @ViewChild(PaymentCalculationReportComponent , {static : true}) paymentCalculationReportComponent!:PaymentCalculationReportComponent ;
-  
-  jdeAccountNumber:any;
+  @ViewChild(PaymentCalculationReportComponent, { static: true }) paymentCalculationReportComponent!: PaymentCalculationReportComponent;
+
+  jdeAccountNumber: any;
   constructor(
-    private growerPortalService : GrowerPortalService,
+    private growerPortalService: GrowerPortalService,
     private eventEmitterService: EventEmitterService
   ) { }
 
   ngOnInit(): void {
-   this.GetUserAccountbyJDE();
-   //alert(this.jdeAccountNumber);
+    this.GetUserAccountbyJDE();
+    //alert(this.jdeAccountNumber);
   }
-  jdeAccountList : any;
-  LoadData(accNo:any)
-  {
+  jdeAccountList: any;
+  LoadData(accNo: any) {
 
-    this.jdeAccountNumber=accNo;
+    this.jdeAccountNumber = accNo;
+    localStorage.setItem('SelectedAccount', accNo);
     // setTimeout(() => { }, 200);
     this.eventEmitterService.onFirstComponentButtonClick(accNo);
-   
+
   }
   GetUserAccountbyJDE() {
     //
-    var localNumber  = localStorage.getItem("UserId");
+    var localNumber = localStorage.getItem("UserId");
     this.growerPortalService.GetUserAccounts(localNumber).subscribe({
       next: (data: any) => {
         //
         this.jdeAccountList = data;
-        if(data.length>0)
-        {
-          this.jdeAccountNumber=data[0];
-          this.LoadData(this.jdeAccountNumber);
-          //alert(this.jdeAccountNumber);
+        if (data.length > 0) {
+          this.jdeAccountNumber = data[0];
+          if (localStorage.getItem('SelectedAccount') != undefined) {
+            this.LoadData(localStorage.getItem('SelectedAccount'));
+          }
+          else {
+            this.LoadData(this.jdeAccountNumber);
+          }
+
         }
       },
       error: (err: any) => {
         console.log(err);
       },
     });
-    
+
   }
 
   canShow() {
@@ -60,8 +64,8 @@ export class JdeListComponent {
       new RoleGuard().canShow([
         // 'Administrators',
         // 'Internal Users',
-         'Growers',
-         'Dehydrators'
+        'Growers',
+        'Dehydrators'
       ])
     );
   }

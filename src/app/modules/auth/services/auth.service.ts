@@ -48,7 +48,7 @@ export class AuthService implements OnDestroy {
       map((auth: any) => {
         //debugger;
         //if (auth == 'Invalide OTP') {
-          return auth;
+        return auth;
         //}
         // const result = this.setAuthFromLocalStorage(auth);
         // return result;
@@ -91,7 +91,7 @@ export class AuthService implements OnDestroy {
     localStorage.removeItem('loggedinUserRoles');
     localStorage.removeItem('loggedinData');
     localStorage.removeItem('AuthenticationType');
-
+    localStorage.removeItem('SelectedAccount');
     localStorage.removeItem(this.authLocalStorageToken);
     this.router.navigate(['/auth/login'], {
       queryParams: {},
