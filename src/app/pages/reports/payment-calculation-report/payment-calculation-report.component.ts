@@ -101,7 +101,7 @@ export class PaymentCalculationReportComponent implements OnInit {
         this.title = 'YearEnd';
         break;
     }
-    alert(this.showDeferralDate);
+
   }
 
   public getSanitizeUrl(url: string): SafeUrl {
