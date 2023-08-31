@@ -41,7 +41,7 @@ export class JdeListComponent {
       next: (data: any) => {
         //
         this.jdeAccountList = data;
-        if (data.length > 0) {
+        if (data != null && data.length > 0) {
           this.jdeAccountNumber = data[0];
           if (localStorage.getItem('SelectedAccount') != undefined) {
             this.LoadData(localStorage.getItem('SelectedAccount'));
