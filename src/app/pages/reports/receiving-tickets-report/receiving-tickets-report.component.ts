@@ -76,7 +76,7 @@ export class ReceivingTicketsReportComponent {
       },
       error: (err: any) => {
         Swal.fire({
-          html: 'Data not found for account number' + this.accountnumber,
+          html: 'Data not found for account number : ' + this.accountnumber,
           icon: 'error',
           buttonsStyling: false,
           confirmButtonText: 'Ok, got it!',
