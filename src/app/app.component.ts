@@ -42,6 +42,7 @@ export class AppComponent implements OnInit {
     );
     this.checkTimeOut();
     this.userInactive.subscribe((message: any) => {
+      var closeInSeconds = 10;
       Swal.fire({
         html: message,
         icon: 'warning',
@@ -52,10 +53,11 @@ export class AppComponent implements OnInit {
           cancelButton: 'btn btn-success'
         },
         showCancelButton: true,
-        cancelButtonText: 'Am here'
+        cancelButtonText: 'Stay Signed In'
       }).then(function (result) {
         if (result.dismiss === Swal.DismissReason.cancel) {
           Swal.fire("Activated!", "Session Reactivated", "success");
+          closeInSeconds = 10;
         } else {
           localStorage.removeItem('loggedinUser');
           localStorage.removeItem('UserId');
@@ -67,7 +69,7 @@ export class AppComponent implements OnInit {
           localStorage.removeItem('SelectedAccount');
         }
       });
-      var closeInSeconds = 10;
+
       (document.getElementById("timer") as HTMLInputElement).value = closeInSeconds.toString();
       setInterval(function () {
         (document.getElementById("timer") as HTMLInputElement).value = closeInSeconds.toString();
@@ -94,7 +96,7 @@ export class AppComponent implements OnInit {
   checkTimeOut() {
     this.timeoutId = setTimeout(
       () => {
-        this.router.url != "/auth/login" ? this.userInactive.next("<div class='alert alert-danger'>You\'re being timed out due to inactivity. Please choose to stay signed in or to logoff. <br><br>You will logged off automatically in <input type='text' readonly id='timer' class='alert-danger fw-bold' style='border: none!important;width: 20px;text-align:right;'/> seconds.<div>") : null;
+        this.router.url != "/auth/login" ? this.userInactive.next("<div class='alert alert-warning' style='border: 0px !important;'>You\'re being timed out due to inactivity. Please choose to stay signed in or to logoff. </div> <div class='alert alert-danger' style='border: 0px !important;'>You will logged off automatically in<input type='text' readonly id='timer' class='alert-danger fw-bold' style='border: none!important;width: 20px;text-align:right;'/>seconds.<div>") : null;
       }, 1200000);
   }
   @HostListener('window:keydown')
