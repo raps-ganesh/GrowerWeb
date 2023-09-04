@@ -14,6 +14,7 @@ import { EventEmitterService } from '../../event-emitter.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { GrowerPortalService } from 'src/app/services/Grower/grower-portal.service';
 import { HttpClient } from '@angular/common/http';
+import { debug } from 'console';
 @Component({
   selector: 'app-payment-calculation-report',
   templateUrl: './payment-calculation-report.component.html',
@@ -187,31 +188,28 @@ export class PaymentCalculationReportComponent implements OnInit {
           next: (data: any) => {
             this.jdeAddressBookNumber = data;
             this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.calculationbatchid + '_' + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
-            var pdfViewer = document.getElementById('pdf');
-            pdfViewer?.setAttribute("src", this.pdfpath);
+            this.checkForExistance(this.pdfpath)
           },
           error: (err: any) => {
             console.log(err);
           },
         });
         break;
-        case CalculationBatchTypes.TrueUp:
-          this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
-            next: (data: any) => {
-              this.jdeAddressBookNumber = data;
-              this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
-              var pdfViewer = document.getElementById('pdf');
-              pdfViewer?.setAttribute("src", this.pdfpath);
-            },
-            error: (err: any) => {
-              console.log(err);
-            },
-          });
-         break; 
-        case CalculationBatchTypes.YearEnd:
+      case CalculationBatchTypes.TrueUp:
+        this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
+          next: (data: any) => {
+            this.jdeAddressBookNumber = data;
+            this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
+            this.checkForExistance(this.pdfpath)
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+        });
+        break;
+      case CalculationBatchTypes.YearEnd:
         this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.accountnumber + '.pdf';
-        var pdfViewer = document.getElementById('pdf');
-        pdfViewer?.setAttribute("src", this.pdfpath);
+        this.checkForExistance(this.pdfpath)
         break;
       case CalculationBatchTypes.Deferral:
         debugger;
@@ -224,13 +222,30 @@ export class PaymentCalculationReportComponent implements OnInit {
 
         ;
         this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + monthNames[parseInt(month)] + year + "/" + this.accountnumber + '.pdf';
-        var pdfViewer = document.getElementById('pdf');
-        pdfViewer?.setAttribute("src", this.pdfpath);
+        this.checkForExistance(this.pdfpath)
         break;
     }
 
   }
-
+  private checkForExistance(path: any) {
+    this.reportService.RemoteFileExists(path).subscribe({
+      next: (data: any) => {
+        var pdfViewer = document.getElementById('pdf');
+        pdfViewer?.setAttribute("src", this.pdfpath);
+      },
+      error: (err: any) => {
+        Swal.fire({
+          html: 'Report data is not available, Please contact DiamondFoods.',
+          icon: 'error',
+          buttonsStyling: false,
+          confirmButtonText: 'Ok, got it!',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+        });
+      },
+    });
+  }
 
   GetBatches() {
     if (this.accountnumber.trim() != '' && this.calculationBatchType != CalculationBatchTypes.Deferral && this.calculationBatchType != CalculationBatchTypes.YearEnd)

@@ -144,4 +144,17 @@ export class ReportsService {
         })
       );
   }
+
+  public RemoteFileExists(url: any): Observable<any> {
+    return this.http
+      .get<any>(
+        this.baseURL +
+        'RemoteFileExists?url=' + url
+      )
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
 }

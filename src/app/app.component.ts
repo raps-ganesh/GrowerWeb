@@ -11,6 +11,8 @@ import { ThemeModeService } from './_metronic/partials/layout/theme-mode-switche
 import { Router } from '@angular/router';
 import { AuthService } from './modules/auth';
 import { Subject } from 'rxjs';
+import Swal from 'sweetalert2';
+import { Console } from 'console';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -40,11 +42,50 @@ export class AppComponent implements OnInit {
     );
     this.checkTimeOut();
     this.userInactive.subscribe((message: any) => {
-      alert(message);
-      this.auth.logout();
-      window.location.reload();
-    }
-    );
+      Swal.fire({
+        html: message,
+        icon: 'warning',
+        buttonsStyling: false,
+        confirmButtonText: 'Log Out',
+        customClass: {
+          confirmButton: 'btn btn-danger',
+          cancelButton: 'btn btn-success'
+        },
+        showCancelButton: true,
+        cancelButtonText: 'Am here'
+      }).then(function (result) {
+        if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire("Activated!", "Session Reactivated", "success");
+        } else {
+          localStorage.removeItem('loggedinUser');
+          localStorage.removeItem('UserId');
+          localStorage.removeItem('JDENumber');
+          localStorage.removeItem('loggedinUserRoles');
+          localStorage.removeItem('loggedinData');
+          localStorage.removeItem('apitkn');
+          localStorage.removeItem('AuthenticationType');
+          localStorage.removeItem('SelectedAccount');
+        }
+      });
+      var closeInSeconds = 10;
+      (document.getElementById("timer") as HTMLInputElement).value = closeInSeconds.toString();
+      setInterval(function () {
+        (document.getElementById("timer") as HTMLInputElement).value = closeInSeconds.toString();
+        closeInSeconds--;
+        console.log(closeInSeconds);
+        if (closeInSeconds < 0) {
+          localStorage.removeItem('loggedinUser');
+          localStorage.removeItem('UserId');
+          localStorage.removeItem('JDENumber');
+          localStorage.removeItem('loggedinUserRoles');
+          localStorage.removeItem('loggedinData');
+          localStorage.removeItem('apitkn');
+          localStorage.removeItem('AuthenticationType');
+          localStorage.removeItem('SelectedAccount');
+        }
+      }, 1000);
+    });
+
   }
 
   ngOnInit() {
@@ -53,15 +94,7 @@ export class AppComponent implements OnInit {
   checkTimeOut() {
     this.timeoutId = setTimeout(
       () => {
-        this.router.url != "/auth/login" ? this.userInactive.next("User has been inactive for 20 minutes") : null;
-        localStorage.removeItem('loggedinUser');
-        localStorage.removeItem('UserId');
-        localStorage.removeItem('JDENumber');
-        localStorage.removeItem('loggedinUserRoles');
-        localStorage.removeItem('loggedinData');
-        localStorage.removeItem('apitkn');
-        localStorage.removeItem('AuthenticationType');
-        localStorage.removeItem('SelectedAccount');
+        this.router.url != "/auth/login" ? this.userInactive.next("<div class='alert alert-danger'>You\'re being timed out due to inactivity. Please choose to stay signed in or to logoff. <br><br>You will logged off automatically in <input type='text' readonly id='timer' class='alert-danger fw-bold' style='border: none!important;width: 20px;text-align:right;'/> seconds.<div>") : null;
       }, 1200000);
   }
   @HostListener('window:keydown')
