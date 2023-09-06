@@ -42,7 +42,7 @@ export class DehydratorDeliveryByGrowerAccountComponent {
   ngOnInit(): void {
     this.adminService.GetDehydratorsForUser({ userid: localStorage.getItem('UserId') }).subscribe({
       next: (data: any) => {
-        var isadmin = data == undefined;
+        var isadmin = data == undefined || data.account == '';
         this.dehydratortypeaheadUrl = environment.reportsBaseUrl + 'DehydratorTypeAhead/' + isadmin + '/' + (data.account == '' ? 0 : data.account);
       },
       error: (err: any) => {

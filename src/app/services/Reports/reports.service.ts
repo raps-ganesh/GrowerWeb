@@ -157,4 +157,17 @@ export class ReportsService {
         })
       );
   }
+
+  public GetTruupBatches(accountNumber: any, cropYear: any): Observable<any> {
+    return this.http
+      .get<any>(
+        this.baseURL +
+        'TruupBatches/' + accountNumber + '/' + cropYear
+      )
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
 }

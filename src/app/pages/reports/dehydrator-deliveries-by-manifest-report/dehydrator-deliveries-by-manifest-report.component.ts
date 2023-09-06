@@ -48,7 +48,7 @@ export class DehydratorDeliveriesByManifestReportComponent {
     this.adminService.GetDehydratorsForUser({ userid: localStorage.getItem('UserId') }).subscribe({
       next: (data: any) => {
         debugger;
-        var isadmin = data == undefined;
+        var isadmin = data == undefined || data.account == '';
         this.dehydratortypeaheadUrl = environment.reportsBaseUrl + 'DehydratorTypeAhead/' + isadmin + '/' + (data.account == '' ? 0 : data.account);
       },
       error: (err: any) => {

@@ -43,6 +43,7 @@ export class PaymentCalculationReportComponent implements OnInit {
   hideCalculationBatches: any = false;
   deferralDate: any;
   showDeferralDate: any = false;
+  truUpBatches: any;
   constructor(
 
     private reportService: ReportsService,
@@ -182,7 +183,6 @@ export class PaymentCalculationReportComponent implements OnInit {
       case CalculationBatchTypes.Delivery:
       case CalculationBatchTypes.FebProgress:
       case CalculationBatchTypes.MayProgress:
-      case CalculationBatchTypes.FinalPayment:
       case CalculationBatchTypes.SpotEMF:
         this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
           next: (data: any) => {
@@ -195,18 +195,35 @@ export class PaymentCalculationReportComponent implements OnInit {
           },
         });
         break;
-      case CalculationBatchTypes.TrueUp:
-        this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
-          next: (data: any) => {
-            this.jdeAddressBookNumber = data;
-            this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
-            this.checkForExistance(this.pdfpath)
-          },
-          error: (err: any) => {
-            console.log(err);
-          },
-        });
+
+      case CalculationBatchTypes.FinalPayment:
+        debugger;
+        if (this.truUpBatches.find((obj: { Id: any; }) => { return obj.Id == this.calculationbatchid })) {
+          this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
+            next: (data: any) => {
+              this.jdeAddressBookNumber = data;
+              this.pdfpath = environment.statementPath + 'TrueUpStatements' + "/" + this.cropyear + "/TrueUp_Statement_" + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
+              this.checkForExistance(this.pdfpath)
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+          });
+        }
+        else
+          this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
+            next: (data: any) => {
+              this.jdeAddressBookNumber = data;
+              this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.calculationbatchid + '_' + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
+              this.checkForExistance(this.pdfpath)
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+          });
         break;
+
+
       case CalculationBatchTypes.YearEnd:
         this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.accountnumber + '.pdf';
         this.checkForExistance(this.pdfpath)
@@ -264,7 +281,34 @@ export class PaymentCalculationReportComponent implements OnInit {
                 Title: obj.Title,
               };
             });
-            this.calculationbatches = new_list;
+            if (this.calculationBatchType == CalculationBatchTypes.FinalPayment) {
+              this.reportService.GetTruupBatches(this.accountnumber, this.cropyear).subscribe({
+                next: (data: any) => {
+                  debugger;
+                  this.truUpBatches = [];
+                  let new_list1 = data.map((obj: any) => {
+                    return {
+                      Id: obj.Id,
+                      Title: obj.Title,
+                    };
+                  });
+                  new_list1.forEach(function (value: any) {
+                    new_list.push(value);
+                  });
+                  this.truUpBatches = new_list1;
+                  this.calculationbatches = new_list;
+                },
+                error: (err: any) => {
+
+                },
+              });
+
+            }
+
+
+
+
+
           },
           error: (err: any) => {
             console.log(err);
