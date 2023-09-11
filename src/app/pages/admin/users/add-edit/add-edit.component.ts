@@ -169,7 +169,7 @@ export class AddEditComponent implements OnInit {
         var itm = this.dropdownList;
         var dataToSend: any = [];
         var batches = this.usermodel.userGroups != null ? this.usermodel.userGroups.split(',') : [];
-        batches.forEach(function (element: any) {
+        batches?.forEach(function (element: any) {
           var it = itm.filter((x: any) => x.id == element);
           //alert(it.itemName);
           dataToSend.push({ "id": Number(element), "itemName": it[0].itemName });
@@ -277,7 +277,7 @@ export class AddEditComponent implements OnInit {
     debugger;
     var gropupIds = "";
 
-    this.selectedItems.forEach((element: any) => {
+    this.selectedItems?.forEach((element: any) => {
       if (gropupIds == "")
         gropupIds = "" + element.id
       else
@@ -286,7 +286,7 @@ export class AddEditComponent implements OnInit {
     });
     this.usermodel.userGroups = gropupIds;
     var accountIds = '', userTypeIds = '';
-    this.listAccounts.forEach((element: any) => {
+    this.listAccounts?.forEach((element: any) => {
       accountIds = accountIds + element.key + ',';
       userTypeIds = userTypeIds + element.value + ','
     });
