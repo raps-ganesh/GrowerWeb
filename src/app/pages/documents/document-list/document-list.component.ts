@@ -12,8 +12,8 @@ import { AppSettingsService } from 'src/app/shared/app-settings.service';
 export class DocumentListComponent {
 
 
-  
-  
+
+
   pagenumber: number = 1;
   pagesize: number = 10;
   searchstring: string = '';
@@ -24,38 +24,37 @@ export class DocumentListComponent {
   datacount: number = 0;
   pagingArray: any = [];
 
-  DocType:string='';
-  DocTypeId:number=0;
-  DocTitle:string='';
+  DocType: string = '';
+  DocTypeId: number = 0;
+  DocTitle: string = '';
   documentInfo: any;
 
   constructor(
-     
+
     private documentService: DocumentService,
     public appSettingService: AppSettingsService,
     private excelService: ExcelService,
     private router: Router,
-  ) { 
+  ) {
 
     this.DocType =
-    this.router.url.split('/')[2] != null
-      ? this.router.url.split('/')[2]
-      : '';
+      this.router.url.split('/')[2] != null
+        ? this.router.url.split('/')[2]
+        : '';
 
-      if(this.DocType=='growers'){
-        this.DocTitle='Food Safety';
-        this.DocTypeId=2;
-      }
-      else if(this.DocType=='dehydrators'){
-        this.DocTitle='News Letters';
-        this.DocTypeId=3;
-      }
-      else
-      {
-        this.DocTitle='';
-        this.DocTypeId=0;
-      }
-      
+    if (this.DocType == 'growers') {
+      this.DocTitle = 'Food Safety';
+      this.DocTypeId = 2;
+    }
+    else if (this.DocType == 'dehydrators') {
+      this.DocTitle = 'News Letters';
+      this.DocTypeId = 3;
+    }
+    else {
+      this.DocTitle = '';
+      this.DocTypeId = 0;
+    }
+
 
   }
 
@@ -109,7 +108,7 @@ export class DocumentListComponent {
   }
 
 
- 
+
   GetDocuments(
     sortcolumn: string,
     sortdirection: string,
@@ -124,7 +123,7 @@ export class DocumentListComponent {
         pagenumber: pagenumber,
         searchstring: searchstring,
         pagesize: pagesize,
-        DocTypeId:this.DocTypeId
+        DocTypeId: this.DocTypeId
       })
       .subscribe({
         next: (data: any) => {
@@ -164,13 +163,13 @@ export class DocumentListComponent {
   filterYear(): any[] {
 
     debugger;
-    var a = this.documentInfo.map((x:any) => x.modifiedYear);
-    a = Array.from(new Set(this.documentInfo.map((x:any) => x.modifiedYear).sort((a:any,b:any) => b - a)));
+    var a = this.documentInfo?.map((x: any) => x.modifiedYear);
+    a = Array.from(new Set(this.documentInfo?.map((x: any) => x.modifiedYear).sort((a: any, b: any) => b - a)));
     return a;
   }
 
   filterFunction(filter: any): any[] {
-    return this.documentInfo.filter(
+    return this.documentInfo?.filter(
       (x: { modifiedYear: any }) => x.modifiedYear === filter
     );
   }
