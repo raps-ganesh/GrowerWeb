@@ -265,6 +265,7 @@ export class PaymentCalculationReportComponent implements OnInit {
   }
 
   GetBatches() {
+    debugger;
     if (this.accountnumber.trim() != '' && this.calculationBatchType != CalculationBatchTypes.Deferral && this.calculationBatchType != CalculationBatchTypes.YearEnd)
       this.reportService
         .GetBatches({
@@ -281,6 +282,7 @@ export class PaymentCalculationReportComponent implements OnInit {
                 Title: obj.Title,
               };
             });
+            this.calculationbatches = new_list;
             if (this.calculationBatchType == CalculationBatchTypes.FinalPayment) {
               this.reportService.GetTruupBatches(this.accountnumber, this.cropyear).subscribe({
                 next: (data: any) => {
