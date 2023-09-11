@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DocumentService } from 'src/app/services/Document/document.service';
 import { ExcelService } from 'src/app/services/Excel/excel.service';
@@ -25,7 +25,7 @@ export class UploadDocumentComponent implements OnInit {
     public appSettingService: AppSettingsService,
     private excelService: ExcelService,
     private route: ActivatedRoute,
-    private http : HttpClient
+    private http : HttpClient, private router: Router
   ) {
     const loadingSubscr = this.isLoading$
       .asObservable()
@@ -66,7 +66,7 @@ export class UploadDocumentComponent implements OnInit {
   SelectThumbnail:any;
   Title:any;
   DocumentTypeId : any;
-  UpdatedOn :any;
+  modifiedOn :any;
   Description:any
 
 
@@ -79,7 +79,7 @@ export class UploadDocumentComponent implements OnInit {
         this.Title=data.title;
         this.DocumentTypeId=data.type;
         this.Description=data.description;
-        this.UpdatedOn=data.modifiedOn;
+        this.modifiedOn=data.modifiedOn;
         this.DocumentTypeId=data.documentTypeId;
 
       },
@@ -152,7 +152,8 @@ export class UploadDocumentComponent implements OnInit {
               documentTypeId:this.DocumentTypeId,
               thumbnailUrl :this.response.thumbnailUrl,
               thumbnailName : this.response.thumbnailName,
-              isActive:true
+              isActive:true,
+              modifiedOn:this.modifiedOn
             })
             .subscribe({
               error: (e: any) => {
@@ -176,6 +177,7 @@ export class UploadDocumentComponent implements OnInit {
                     confirmButton: 'btn btn-primary',
                   },
                 });
+                this.router.navigateByUrl('/documents');
               },
             });
 
@@ -192,7 +194,8 @@ export class UploadDocumentComponent implements OnInit {
         title:this.Title,
         description:this.Description,
         documentTypeId:this.DocumentTypeId,
-        isActive:true
+        isActive:true,
+        modifiedOn:this.modifiedOn
       })
       .subscribe({
         error: (e: any) => {
@@ -216,6 +219,7 @@ export class UploadDocumentComponent implements OnInit {
               confirmButton: 'btn btn-primary',
             },
           });
+          this.router.navigateByUrl('/documents');
         },
       });
 
