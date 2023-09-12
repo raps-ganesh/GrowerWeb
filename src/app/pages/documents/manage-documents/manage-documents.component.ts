@@ -20,7 +20,7 @@ export class ManageDocumentsComponent implements OnInit {
   searchstring: string = '';
   pagecount: number = 0;
   sortcolumn: string = 'Id';
-  sortdirection: string = 'ASC';
+  sortdirection: string = 'DESC';
   totalrecords: number = 0;
   datacount: number = 0;
   pagingArray: any = [];
