@@ -64,7 +64,7 @@
         <tbody>
           <tr *ngFor="let info of documentInfo">
             <td style="text-align: center;"> 
-              <a [href]="createImgPath(info.pdfUrl.replace('~/',''))" class=" fw-bold d-block fs-7 text-gray-700" target="_blank"><img [src]="createImgPath(info.thumbnailUrl.replace('~/',''))" height="40" width="40"></a>
+              <a [href]="createImgPath(info.pdfUrl==null? '' : info.pdfUrl.replace('~/',''))" class=" fw-bold d-block fs-7 text-gray-700" target="_blank"><img [src]="createImgPath(info.thumbnailUrl.replace('~/',''))" height="40" width="40"></a>
             </td>
             <!-- <td style="text-align: center;"><img [src]="createImgPath('Resources\\pdfs\\pdf.png')" alt="profile picture" style="width:60px; height:60px;"></td> -->
       

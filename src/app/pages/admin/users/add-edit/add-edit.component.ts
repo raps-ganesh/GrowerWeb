@@ -216,8 +216,8 @@ export class AddEditComponent implements OnInit {
     this.EnableDisableAccount();
   }
   EnableDisableAccount() {
-    this.showDehydratorAccountDetails = this.selectedItems.filter((x: any) => x.id === 4).length > 0;
-    this.showGrowerAccountDetails = this.selectedItems.filter((x: any) => x.id === 3).length > 0;
+    this.showDehydratorAccountDetails = this.selectedItems?.filter((x: any) => x.id === 4).length > 0;
+    this.showGrowerAccountDetails = this.selectedItems?.filter((x: any) => x.id === 3).length > 0;
   }
 
   UserValidation() {
