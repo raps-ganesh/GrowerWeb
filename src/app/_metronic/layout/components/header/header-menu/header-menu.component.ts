@@ -34,9 +34,9 @@ export class HeaderMenuComponent implements OnInit {
       }
     }
     if (!isAdmin)
-      if (this.eventEmitterService.subsVar == undefined) {
-        this.eventEmitterService.subsVar = this.eventEmitterService.
-          invokeFirstComponentFunction.subscribe((name: string) => {
+      if (this.eventEmitterService.subsVar1 == undefined) {
+        this.eventEmitterService.subsVar1 = this.eventEmitterService.
+          invokeSecondComponentFunction.subscribe((name: string) => {
             this.adminService.IsAccountHasSpotPayment({ accountNumber: localStorage.getItem('SelectedAccount'), cropYear: environment.cropyear }).subscribe({
               next: (data: any) => {
                 this.IsAccountHasSpotPayment = data;

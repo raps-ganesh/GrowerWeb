@@ -32,6 +32,7 @@ export class JdeListComponent {
     localStorage.setItem('SelectedAccount', accNo);
     // setTimeout(() => { }, 200);
     this.eventEmitterService.onFirstComponentButtonClick(accNo);
+    this.eventEmitterService.onSecondComponentButtonClick(accNo);
 
   }
   GetUserAccountbyJDE() {
