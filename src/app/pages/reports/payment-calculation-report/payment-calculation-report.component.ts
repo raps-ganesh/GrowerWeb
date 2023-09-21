@@ -124,6 +124,11 @@ export class PaymentCalculationReportComponent implements OnInit {
           this.loadDataFromMasterMenu(name);
         });
     }
+    else {
+      if (localStorage.getItem('SelectedAccount') != undefined) {
+        this.accountnumber = localStorage.getItem('SelectedAccount');
+      }
+    }
 
     this.showDeferralDate = true;
     switch (this.calculationBatchType) {
