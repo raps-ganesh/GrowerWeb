@@ -128,7 +128,7 @@
         <span class="menu-title">Tru Up Payment</span>
       </a>
     </div> -->
-    <div class="menu-item me-lg-1">
+    <div class="menu-item me-lg-1" [hidden]="!IsAccountHasSpotPayment">
       <a class="menu-link py-3" href="/reports/spot">
         <span class="menu-icon"><i class="bi fs-3 bi-box-arrow-up"></i></span>
         <span class="menu-title">Spot Payment</span>

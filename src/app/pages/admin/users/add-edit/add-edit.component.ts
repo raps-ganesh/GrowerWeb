@@ -381,8 +381,8 @@ export class AddEditComponent implements OnInit {
         this.jdeAccountList = data;
         if (data.length > 0) {
           data.forEach((itm: any) => {
-            console.log(this.listAccounts.find((data: { key: any; }) => data.key === itm));
-            if (this.listAccounts.length == 0 || this.listAccounts.find((data: { key: any; }) => data.key === itm) == undefined || this.listAccounts.find((data: { key: any; }) => data.key === itm).length == 0) {
+            if (this.listAccounts == null || this.listAccounts.length == 0 || this.listAccounts.find((data: { key: any; }) => data.key === itm) == undefined || this.listAccounts.find((data: { key: any; }) => data.key === itm).length == 0) {
+              this.listAccounts = this.listAccounts == null ? [] : this.listAccounts;
               this.listAccounts.push({ key: itm, value: 11, type: "Grower" });
               Swal.fire({
                 text: "Account(s) Added",
@@ -431,8 +431,9 @@ export class AddEditComponent implements OnInit {
     this.accountNumber = (
       document.getElementById('AccountNumber') as HTMLInputElement
     ).value
-    if (this.listAccounts.length == 0 || this.listAccounts.find((data: { key: any; }) => data.key === this.accountNumber) == undefined || this.listAccounts.find((data: { key: any; }) => data.key === this.accountNumber).length == 0) {
-      this.listAccounts.push({ key: this.accountNumber, value: 11, type: "Grower" });
+    if (this.listAccounts == null || this.listAccounts?.length == 0 || this.listAccounts?.find((data: { key: any; }) => data.key === this.accountNumber) == undefined || this.listAccounts.find((data: { key: any; }) => data.key === this.accountNumber).length == 0) {
+      this.listAccounts = this.listAccounts == null ? [] : this.listAccounts;
+      this.listAccounts?.push({ key: this.accountNumber, value: 11, type: "Grower" });
       Swal.fire({
         text: "Account Added : " + this.accountNumber,
         icon: 'success',

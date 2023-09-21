@@ -148,5 +148,14 @@ export class AdminService {
         })
       );
   }
+  public IsAccountHasSpotPayment(data: any): Observable<any> {
+    return this.http
+      .get<any>(this.baseAdminURL + 'IsAccountHasSpotPayment/' + data.accountNumber + '/' + data.cropYear)
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
 
 }
