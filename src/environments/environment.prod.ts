@@ -162,7 +162,7 @@ export const environment = {
   growerPortalApiBaseUrl: 'https://gpauthentication.diamondfoods.com:4201/api/authenticate/',
   adminApiBaseUrl: 'https://gpadmin.diamondfoods.com:4101/api/admin/',
   documentApiBaseUrl: 'https://gpdocument.diamondfoods.com:4301/api/Document/',
-  imagePathUrl: 'https://gpdocument.diamondfoods.com:4301/',
+  imagePathUrl: 'https://testgo.diamondfoods.com/assets/contents/Analyzer_Images/',
   reportsBaseUrl: 'https://reporting.diamondfoods.com:3301/reporting/',
   cropyear: new Date().getMonth() > 8 ? new Date().getFullYear() : new Date().getFullYear() - 1,
   growerAccountingApiBaseUrl: 'https://groweraccounting.diamondfoods.com:3201/api/groweraccounting/',
