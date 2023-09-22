@@ -61,7 +61,9 @@ export class AuthService implements OnDestroy {
   preLogin(email: string, password: string): Observable<any> {
     return this.authHttpService.prelogin(email, password).pipe(
       map((user: any) => {
-        debugger;
+        if (user.isAdmin == undefined) {
+          return null;
+        }
         if (user != null) {
           return user
         }

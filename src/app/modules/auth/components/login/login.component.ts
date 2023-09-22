@@ -95,22 +95,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
         debugger;
         this.user = result;
-        if (result.isAdmin) {
-          const loginSubscr = this.authService
-            .login(this.f.email.value, this.f.password.value)
-            .pipe(first())
-            .subscribe((user: UserModel | undefined) => {
-              if (user) {
-
-                this.router.navigate([this.returnUrl]);
-
-              } else {
-                this.hasError = true;
-              }
-            });
-          this.unsubscribe.push(loginSubscr);
+        if (result == undefined || result == null) {
+          this.hasError = true;
+          return;
         }
-        else if (result.authenticationType > 0 && result.isMFAConfigured) {
+        if (result.authenticationType > 0 && result.isMFAConfigured) {
           this.showOTP = true;
         }
         else {
