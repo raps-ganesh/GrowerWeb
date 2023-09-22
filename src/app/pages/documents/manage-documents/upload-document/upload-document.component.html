@@ -58,6 +58,7 @@
                   placeholder="Title"
                   name="Title"
                   value=""
+                  required
                 />
               </div>
             </div>
@@ -71,6 +72,7 @@
                   [(ngModel)]="DocumentTypeId"
                   class="form-select form-select-solid form-select-lg fw-bold"
                   name="AccountTypeId"
+                  required
                 >
                   <option
                     *ngFor="let objlst of documentTypes"
@@ -118,6 +120,7 @@
                   placeholder="Description"
                   name="Description"
                   value=""
+                  required
                 />
               </div>
             </div>
