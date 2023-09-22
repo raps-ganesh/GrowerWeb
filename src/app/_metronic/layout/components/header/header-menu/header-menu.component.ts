@@ -33,7 +33,7 @@ export class HeaderMenuComponent implements OnInit {
         }
       }
     }
-    if (!isAdmin)
+    if (!isAdmin) {
       if (this.eventEmitterService.subsVar1 == undefined) {
         this.eventEmitterService.subsVar1 = this.eventEmitterService.
           invokeSecondComponentFunction.subscribe((name: string) => {
@@ -47,6 +47,10 @@ export class HeaderMenuComponent implements OnInit {
             });
           });
       }
+    }
+    else {
+      this.IsAccountHasSpotPayment = true;
+    }
   }
 
   calculateMenuItemCssClass(url: string): string {

@@ -71,6 +71,9 @@ export class AuthHTTPService {
           auth.expiresIn = new Date(Date.now() + 2 * 60 * 60 * 1000);
           auth.authenticationType = result.authenticationType;
           auth.phoneNumber = result.phoneNo;
+          auth.isAdmin = result.userData.isAdmin;
+          auth.isMFAConfigured = result.userData.isMFAConfigured;
+          auth.userName = result.userData.userName;
           localStorage.setItem('loggedinUser', result.username);
           localStorage.setItem('UserId', result.userId);
           localStorage.setItem('JDENumber', result.oldVendor_Id);
@@ -106,6 +109,7 @@ export class AuthHTTPService {
           if (result == null) {
             return notFoundError;
           }
+          debugger;
           const auth = new AuthModel();
           auth.authAPIToken = result.authToken;
           auth.authToken = 'auth-token-8f3ae836da744329a6f93bf20594b5cc';
@@ -113,6 +117,9 @@ export class AuthHTTPService {
           auth.expiresIn = new Date(Date.now() + 2 * 60 * 60 * 1000);
           auth.authenticationType = result.authenticationType;
           auth.phoneNumber = result.phoneNo;
+          auth.isAdmin = result.userData.isAdmin;
+          auth.isMFAConfigured = result.userData.isMFAConfigured;
+          auth.userName = result.userData.userName;
           return auth;
         })
       );

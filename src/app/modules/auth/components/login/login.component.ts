@@ -25,9 +25,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   returnUrl: string;
   isLoading$: Observable<boolean>;
   showOTP: boolean = false;
+  isMFAConfigured: boolean = true;
   OTPError: any = "";
   user: any;
   otp: any;
+  authType: any = 1;
+  phone: any;
+  userName: any;
 
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
@@ -89,16 +93,15 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.hasError = true;
           return;
         }
+        debugger;
         this.user = result;
-        if (result.authenticationType > 0) {
-          this.showOTP = true;
-        }
-        else {
+        if (result.isAdmin) {
           const loginSubscr = this.authService
             .login(this.f.email.value, this.f.password.value)
             .pipe(first())
             .subscribe((user: UserModel | undefined) => {
               if (user) {
+
                 this.router.navigate([this.returnUrl]);
 
               } else {
@@ -106,6 +109,12 @@ export class LoginComponent implements OnInit, OnDestroy {
               }
             });
           this.unsubscribe.push(loginSubscr);
+        }
+        else if (result.authenticationType > 0 && result.isMFAConfigured) {
+          this.showOTP = true;
+        }
+        else {
+          this.isMFAConfigured = false;
         }
       }
     });
@@ -116,6 +125,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.showOTP = false;
   }
 
+  cancelMFA() {
+    this.isMFAConfigured = true;
+  }
   VerifyOTP() {
     debugger;
     var otp: any = document.getElementById('otp');
@@ -167,6 +179,70 @@ export class LoginComponent implements OnInit, OnDestroy {
       },
       error: (err: any) => {
         debugger;
+        Swal.fire({
+          text: err.error.text,
+          icon: 'error',
+          buttonsStyling: false,
+          confirmButtonText: 'Ok, got it!',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+        });
+
+      },
+      complete: () => {
+
+      }
+    });
+  }
+
+  setAuthType(type: any) {
+    this.authType = type;
+    if (type == 2) {
+      (document.getElementById('phone') as HTMLInputElement).value = '';
+    }
+
+  }
+  SetMFA() {
+    this.phone = (document.getElementById('phone') as HTMLInputElement).value;
+    if (this.authType == 2)
+      if (this.phone == '' || this.phone.length > 10 || this.phone.length < 10 || isNaN(this.phone)) {
+        Swal.fire({
+          text: 'Please enter valid Phone number',
+          icon: 'error',
+          buttonsStyling: false,
+          confirmButtonText: 'Ok, got it!',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+        });
+        return;
+      }
+    this.authService.MarkAsMFAConfigured({ Email: this.f.email.value, PhoneNumber: this.phone, AuthenticationType: this.authType }).subscribe({
+      next: (data: any) => {
+        this.authService.SendOTP({ Email: this.f.email.value, Phone: this.phone, AuthenticationType: this.authType, UserName: this.user.userName }).subscribe({
+          next: (data: any) => {
+            this.showOTP = true;
+            this.isMFAConfigured = true;
+          },
+          error: (err: any) => {
+            Swal.fire({
+              text: err.error.text,
+              icon: 'error',
+              buttonsStyling: false,
+              confirmButtonText: 'Ok, got it!',
+              customClass: {
+                confirmButton: 'btn btn-primary',
+              },
+            });
+
+          },
+          complete: () => {
+
+          }
+        });
+      },
+      error: (err: any) => {
         Swal.fire({
           text: err.error.text,
           icon: 'error',

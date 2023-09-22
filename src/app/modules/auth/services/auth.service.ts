@@ -6,6 +6,7 @@ import { AuthModel } from '../models/auth.model';
 import { AuthHTTPService } from './auth-http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 export type UserType = UserModel | undefined;
 
@@ -33,7 +34,8 @@ export class AuthService implements OnDestroy {
 
   constructor(
     private authHttpService: AuthHTTPService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
     this.currentUserSubject = new BehaviorSubject<UserType>(undefined);
@@ -170,5 +172,27 @@ export class AuthService implements OnDestroy {
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
+  }
+
+  MarkAsMFAConfigured(data: any): Observable<any> {
+    return this.http
+      .post(
+        environment.growerPortalApiBaseUrl + 'MarkAsMFAConfigured', data
+      ).pipe(
+        map((result: any) => {
+
+        })
+      );
+  }
+
+  SendOTP(data: any): Observable<any> {
+    return this.http
+      .post(
+        environment.growerPortalApiBaseUrl + 'SendOTP', data
+      ).pipe(
+        map((result: any) => {
+
+        })
+      );
   }
 }

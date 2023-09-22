@@ -17,7 +17,7 @@
   </div>
   <!--end::Heading-->
 
-  <div *ngIf="!showOTP">
+  <div *ngIf="isMFAConfigured && !showOTP">
     <!-- begin::Alert error-->
     <ng-container *ngIf="hasError">
       <div class="mb-lg-15 alert alert-danger">
@@ -215,6 +215,106 @@
     </div>
   </div>
   <!--end::Action-->
+
+  <div [hidden]="isMFAConfigured">
+    <!--begin::Form group-->
+    <div class="fv-row mb-10">
+      <div class="">
+        <div class="text-center">
+          <label class="form-label fw-bolder text-dark fs-6 mb-0"
+            >Set Multi factor Authentication</label
+          >
+        </div>
+      </div>
+    </div>
+    <!--end::Form group-->
+    <div class="fv-row mb-10">
+      <div class="d-flex justify-content-between mt-n5">
+        <div class="d-flex flex-stack mb-2 form-check" style="margin-left: 25%">
+          <div class="form-check form-check-custom me-5">
+            <input
+              class="form-check-input"
+              type="radio"
+              value="1"
+              id="input-email"
+              name="authType"
+              checked
+              (click)="setAuthType(1)"
+            />
+            <label class="form-check-label" for="input-email"> Email </label>
+          </div>
+
+          <div class="form-check form-check-custom">
+            <input
+              class="form-check-input"
+              type="radio"
+              value="2"
+              id="input-phone"
+              name="authType"
+              (click)="setAuthType(2)"
+            />
+            <label class="form-check-label" for="input-phone"> Phone </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fv-row mb-10" [hidden]="authType == 1">
+      <div class="d-flex justify-content-between mt-n5">
+        <div class="col-12">
+          <input
+            class="form form-control"
+            type="text"
+            name="phone"
+            id="phone"
+            maxlength="10"
+            minlength="10"
+            placeholder="Phone Number"
+          />
+        </div>
+      </div>
+    </div>
+    <!--begin::Action-->
+    <div class="text-center">
+      <button
+        style="margin-right: 5px"
+        (click)="SetMFA()"
+        type="button"
+        id="kt_sign_in_submit_otp"
+        class="btn btn-lg btn-primary w-10 mb-5"
+      >
+        <ng-container *ngIf="isLoading$ | async">
+          <span class="indicator-progress" [style.display]="'block'">
+            Please wait...
+            <span
+              class="spinner-border spinner-border-sm align-middle ms-2"
+            ></span>
+          </span>
+        </ng-container>
+        <ng-container *ngIf="(isLoading$ | async) === false">
+          <span class="indicator-label">Set</span>
+        </ng-container>
+      </button>
+      <button
+        (click)="cancelMFA()"
+        type="button"
+        id="kt_sign_in_submit_otp"
+        class="btn btn-lg btn-primary w-10 mb-5"
+      >
+        <ng-container *ngIf="isLoading$ | async">
+          <span class="indicator-progress" [style.display]="'block'">
+            Please wait...
+            <span
+              class="spinner-border spinner-border-sm align-middle ms-2"
+            ></span>
+          </span>
+        </ng-container>
+        <ng-container *ngIf="(isLoading$ | async) === false">
+          <span class="indicator-label">Cancel</span>
+        </ng-container>
+      </button>
+    </div>
+  </div>
 </form>
 
 <!--end::Form-->
