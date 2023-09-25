@@ -11,7 +11,7 @@ export class AppSettingsService {
   {
     var yearsArray: number[]=[];
     let cropyear1 :number = environment.cropyear != undefined ? environment.cropyear : 2022;
-    for (let index = cropyear1; index > cropyear1-5; index--) {
+    for (let index = cropyear1; index > 2019; index--) {
         yearsArray.push(index);
     }
 

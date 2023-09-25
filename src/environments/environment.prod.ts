@@ -156,18 +156,31 @@ export const environment = {
       'thumbnail': './assets/media/demos/demo20.png'
     },
   },
-  authenticationApiUrl: 'https://gpauthentication.diamondfoods.com:4201/api/authenticate/authenticate?username={0}&password={1}',
-  receivingApiBaseUrl: 'https://receiving.diamondfoods.com:3101/api/receiving/',
-  gradingApiBaseUrl: 'https://grading.diamondfoods.com:3001/api/grading/',
-  growerPortalApiBaseUrl: 'https://gpauthentication.diamondfoods.com:4201/api/authenticate/',
-  adminApiBaseUrl: 'https://gpadmin.diamondfoods.com:4101/api/admin/',
-  documentApiBaseUrl: 'https://gpdocument.diamondfoods.com:4301/api/Document/',
-  imagePathUrl: 'https://testgo.diamondfoods.com/assets/contents/Analyzer_Images/',
-  reportsBaseUrl: 'https://reporting.diamondfoods.com:3301/reporting/',
-  cropyear: new Date().getMonth() > 8 ? new Date().getFullYear() : new Date().getFullYear() - 1,
-  growerAccountingApiBaseUrl: 'https://groweraccounting.diamondfoods.com:3201/api/groweraccounting/',
-  statementPath: 'https://testgo.diamondfoods.com/assets/contents/GrowerPortalStatements/',
-  masterDataBaseUrl: 'https://master.diamondfoods.com:340/api/master/',
+
+  
+  // authenticationApiUrl: 'https://testgoauthentication.diamondfoods.com:4201/api/authenticate/authenticate?username={0}&password={1}',
+  // growerPortalApiBaseUrl: 'https://testgoauthentication.diamondfoods.com:4201/api/authenticate/',
+  // adminApiBaseUrl: 'https://testgoadmin.diamondfoods.com:4101/api/admin/',
+  // documentApiBaseUrl: 'https://testgodocument.diamondfoods.com:4301/api/Document/',
+  // imagePathUrl: 'https://testgo.diamondfoods.com/assets/contents/Analyzer_Images/',
+  // statementPath: 'https://testgo.diamondfoods.com/assets/contents/GrowerPortalStatements/',
+  // reportsBaseUrl: 'https://npsnonprodreporting.diamondfoods.com:3301/reporting/',
+  // receivingApiBaseUrl: 'https://npsnonprodreceiving.diamondfoods.com:3101/api/receiving/',
+  // gradingApiBaseUrl: 'https://npsnonprodgrading.diamondfoods.com:3001/api/grading/',
+  // growerAccountingApiBaseUrl: 'https://npsnonprodgroweraccounting.diamondfoods.com:3201/api/groweraccounting/',
+  // cropyear: new Date().getMonth() > 7 ? new Date().getFullYear() : new Date().getFullYear() - 1,
+
+  authenticationApiUrl: 'https://goauthentication.diamondfoods.com:4201/api/authenticate/authenticate?username={0}&password={1}',
+  growerPortalApiBaseUrl: 'https://goauthentication.diamondfoods.com:4201/api/authenticate/',
+  adminApiBaseUrl: 'https://goadmin.diamondfoods.com:4101/api/admin/',
+  documentApiBaseUrl: 'https://godocument.diamondfoods.com:4301/api/Document/',
+  imagePathUrl: 'https://groweronline.diamondfoods.com/assets/contents/Analyzer_Images/',
+  statementPath: 'https://groweronline.diamondfoods.com/assets/contents/GrowerPortalStatements/',
+  reportsBaseUrl: 'https://npsreporting.diamondfoods.com:3301/reporting/',
+  receivingApiBaseUrl: 'https://npsreceiving.diamondfoods.com:3101/api/receiving/',
+  gradingApiBaseUrl: 'https://npsgrading.diamondfoods.com:3001/api/grading/',
+  growerAccountingApiBaseUrl: 'https://npsgroweraccounting.diamondfoods.com:3201/api/groweraccounting/',
+  cropyear: new Date().getMonth() > 7 ? new Date().getFullYear() : new Date().getFullYear() - 1,
 };
 
 /*

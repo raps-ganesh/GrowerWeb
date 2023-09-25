@@ -1124,17 +1124,15 @@
             <!--begin::Search-->
             <div class="d-flex align-items-center position-relative me-3">
               <select
-                [(ngModel)]="cropyear"
-                name="cropyear"
-                class="form-select form-select-solid select2-selection select2-selection--single form-select"
-              >
-                <option selected value="0">Select Crop Year</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
-                <option value="2020">2020</option>
-                <option value="2019">2019</option>
-                <option value="2018">2018</option>
-              </select>
+              [(ngModel)]="cropyear"
+              name="cropyear"
+              class="form-select form-select-solid select2-selection select2-selection--single form-select"
+            >
+              <option selected value="">Select Crop Year</option>
+              <option *ngFor="let year of cropYears" [ngValue]="year">
+                {{ year }}
+              </option>
+            </select>
             </div>
 
             <div class="d-flex align-items-center position-relative me-3">
