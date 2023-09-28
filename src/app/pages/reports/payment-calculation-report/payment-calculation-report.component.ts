@@ -183,7 +183,7 @@ export class PaymentCalculationReportComponent implements OnInit {
         return;
       }
     }
-
+    debugger;
     switch (this.calculationBatchType) {
       case CalculationBatchTypes.Delivery:
       case CalculationBatchTypes.FebProgress:
@@ -193,6 +193,7 @@ export class PaymentCalculationReportComponent implements OnInit {
           next: (data: any) => {
             this.jdeAddressBookNumber = data;
             this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.calculationbatchid + '_' + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
+            (document.getElementById('objectPDF') as HTMLElement).setAttribute('data', this.pdfpath);
             this.checkForExistance(this.pdfpath)
           },
           error: (err: any) => {
@@ -208,6 +209,7 @@ export class PaymentCalculationReportComponent implements OnInit {
             next: (data: any) => {
               this.jdeAddressBookNumber = data;
               this.pdfpath = environment.statementPath + 'TrueUpStatements' + "/" + this.cropyear + "/TrueUp_Statement_" + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
+              (document.getElementById('objectPDF') as HTMLElement).setAttribute('data', this.pdfpath);
               this.checkForExistance(this.pdfpath)
             },
             error: (err: any) => {
@@ -220,6 +222,7 @@ export class PaymentCalculationReportComponent implements OnInit {
             next: (data: any) => {
               this.jdeAddressBookNumber = data;
               this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.calculationbatchid + '_' + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
+              (document.getElementById('objectPDF') as HTMLElement).setAttribute('data', this.pdfpath);
               this.checkForExistance(this.pdfpath)
             },
             error: (err: any) => {
@@ -231,6 +234,7 @@ export class PaymentCalculationReportComponent implements OnInit {
 
       case CalculationBatchTypes.YearEnd:
         this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.accountnumber + '.pdf';
+        (document.getElementById('objectPDF') as HTMLElement).setAttribute('data', this.pdfpath);
         this.checkForExistance(this.pdfpath)
         break;
       case CalculationBatchTypes.Deferral:
@@ -244,6 +248,7 @@ export class PaymentCalculationReportComponent implements OnInit {
 
         ;
         this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + monthNames[parseInt(month)] + year + "/" + this.accountnumber + '.pdf';
+        (document.getElementById('objectPDF') as HTMLElement).setAttribute('data', this.pdfpath);
         this.checkForExistance(this.pdfpath)
         break;
     }
