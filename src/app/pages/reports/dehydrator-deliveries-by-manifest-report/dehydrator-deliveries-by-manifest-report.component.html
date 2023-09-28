@@ -20,27 +20,23 @@
 <div id="kt_app_content" class="flex-column-fluid">
   <div class="app-container" id="kt_app_content_container">
     <div class="card">
-      <div class="card-header border-0 pt-6">
+      <div class="row border-0 pt-6">
         <!--begin::Card title-->
-        <div class="card-title">
+        <div class="card-title col-md-3">
           <!--begin::Search-->
 
           <!--end::Search-->
         </div>
         <!--begin::Card title-->
         <!--begin::Card toolbar-->
-        <div class="card-toolbar">
+        <div class="row col-md-9 my-5">
           <!--begin::Toolbar-->
-          <div
-            class="d-flex justify-content-end"
-            data-kt-user-table-toolbar="base"
-          >
+          <div class="position-relative col-md-3 my-5">
             <!--begin::Export-->
             <button
               type="button"
-              class="btn btn-light-primary me-3"
-              data-bs-toggle="modal"
-              data-bs-target="#kt_modal_export_users"
+              class="btn btn-light-primary me-3 pull-right"
+              title="Export To Excel"
               (click)="exportToExcel()"
             >
               <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
@@ -917,7 +913,8 @@
             <!--begin::Export-->
             <button
               type="button"
-              class="btn btn-light-primary me-3"
+              class="btn btn-light-primary me-3 pull-right"
+              title="Export To PDF"
               (click)="exportToPDF()"
             >
               <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
@@ -1120,10 +1117,10 @@
               <!--end::Svg Icon-->
             </button>
             <!--end::Export-->
-
-            <!--begin::Search-->
-            <div class="d-flex align-items-center position-relative me-3">
-              <select
+          </div>
+          <!--begin::Search-->
+          <div class="position-relative col-md-3 my-5">
+            <select
               [(ngModel)]="cropyear"
               name="cropyear"
               class="form-select form-select-solid select2-selection select2-selection--single form-select"
@@ -1133,10 +1130,10 @@
                 {{ year }}
               </option>
             </select>
-            </div>
+          </div>
 
-            <div class="d-flex align-items-center position-relative me-3">
-              <!-- <input
+          <div class="position-relative col-md-3 my-5">
+            <!-- <input
                 required
                 ngModel
                 id="accountnumber"
@@ -1145,59 +1142,30 @@
                 [(ngModel)]="dehydratorAccountNo"
                 class="form-control form-control-solid me-3"
               /> -->
-              <app-report-type-ahead
-                [urlToSearch]="dehydratortypeaheadUrl"
-                [inputClass]="'form-control form-control-solid min-w-200px'"
-                [placeholder]="'Dehydrator'"
-                [inputid]="'dehyderatoraccount'"
-                (onSelect)="populateDehyderatorInfo($event)"
-                [maxResultCount]="5"
-              >
-              </app-report-type-ahead>
-            </div>
+            <app-report-type-ahead
+              [urlToSearch]="dehydratortypeaheadUrl"
+              [inputClass]="'form-control form-control-solid min-w-200px'"
+              [placeholder]="'Dehydrator'"
+              [inputid]="'dehyderatoraccount'"
+              (onSelect)="populateDehyderatorInfo($event)"
+              [maxResultCount]="5"
+            >
+            </app-report-type-ahead>
+          </div>
 
-            <!--begin::Add user-->
+          <!--begin::Add user-->
+          <div class="position-relative col-md-3 my-5">
             <button
               type="button"
-              class="btn btn-primary me-3"
-              data-bs-toggle="modal"
-              data-bs-target="#kt_modal_add_user"
-              style="height: 43px; cursor: pointer"
+              class="btn btn-primary me-3 report-btn"
+              title="Generate Report"
               (click)="GenerateReport()"
             >
-              <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-              <span class="svg-icon svg-icon-2">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    opacity="0.5"
-                    x="11.364"
-                    y="20.364"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    transform="rotate(-90 11.364 20.364)"
-                    fill="currentColor"
-                  ></rect>
-                  <rect
-                    x="4.36396"
-                    y="11.364"
-                    width="16"
-                    height="2"
-                    rx="1"
-                    fill="currentColor"
-                  ></rect>
-                </svg>
-              </span>
-              <!--end::Svg Icon-->Generate Report
+              Generate Report
             </button>
-            <!--end::Add user-->
           </div>
+          <!--end::Add user-->
+
           <!--end::Toolbar-->
         </div>
         <!--end::Card toolbar-->
