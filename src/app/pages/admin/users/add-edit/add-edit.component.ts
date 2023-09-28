@@ -381,7 +381,7 @@ export class AddEditComponent implements OnInit {
         this.jdeAccountList = data;
         if (data.length > 0) {
           data.forEach((itm: any) => {
-            if (this.listAccounts == null || this.listAccounts.length == 0 || this.listAccounts.find((data: { key: any; }) => data.key === itm) == undefined || this.listAccounts.find((data: { key: any; }) => data.key === itm).length == 0) {
+            if (this.listAccounts == null || this.listAccounts?.length == 0 || this.listAccounts?.find((data: { key: any; }) => data.key === itm) == null || this.listAccounts?.find((data: { key: any; }) => data.key === itm) == undefined || this.listAccounts?.find((data: { key: any; }) => data.key === itm)?.length == 0) {
               this.listAccounts = this.listAccounts == null ? [] : this.listAccounts;
               this.listAccounts.push({ key: itm, value: 11, type: "Grower" });
               Swal.fire({
@@ -464,8 +464,11 @@ export class AddEditComponent implements OnInit {
     var accountNumber = (
       document.getElementById('dehyderatoraccount') as HTMLInputElement
     ).value
-    if (this.listAccounts.length == 0 || this.listAccounts.find((data: { key: any; }) => data.key === accountNumber) == undefined || this.listAccounts.find((data: { key: any; }) => data.key === this.accountNumber).length == 0) {
-      this.listAccounts.push({ key: accountNumber, value: 10, type: "Dehyderator" });
+    if (this.listAccounts == null || this.listAccounts.length == 0 || this.listAccounts.find((data: { key: any; }) => data.key === accountNumber) == undefined || this.listAccounts.find((data: { key: any; }) => data.key === this.accountNumber).length == 0) {
+
+      if (this.listAccounts == null)
+        this.listAccounts = [];
+      this.listAccounts.push({ key: accountNumber.split('-')[0], value: 10, type: "Dehydrator" });
       Swal.fire({
         text: "Account Added : " + accountNumber,
         icon: 'success',

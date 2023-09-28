@@ -204,7 +204,7 @@ export class PaymentCalculationReportComponent implements OnInit {
 
       case CalculationBatchTypes.FinalPayment:
         debugger;
-        if (this.truUpBatches.find((obj: { Id: any; }) => { return obj.Id == this.calculationbatchid })) {
+        if (this.truUpBatches != null && this.truUpBatches != undefined && this.truUpBatches.find((obj: { Id: any; }) => { return obj.Id == this.calculationbatchid })) {
           this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
             next: (data: any) => {
               this.jdeAddressBookNumber = data;
