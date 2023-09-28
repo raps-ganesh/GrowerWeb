@@ -125,14 +125,27 @@
         <object
           data=""
           id="objectPDF"
-          type="application/pdf"
+          type="text/html"
           width="100%"
           height="500px"
         >
-          <p>Oops! Your browser doesn't support PDFs!</p>
-          <p><a href="{{ pdfpath }}" target="_blank">Download Instead</a></p>
+          <p [hidden]="pdfpath == undefined || pdfpath == ''">
+            Oops! Your browser doesn't support PDFs!
+          </p>
+          <p [hidden]="pdfpath == undefined || pdfpath == ''">
+            <a href="{{ pdfpath }}" target="_blank">Download Instead</a>
+          </p>
         </object>
 
+        <p [hidden]="pdfpath == undefined || pdfpath == ''" class="d-md-none">
+          <a
+            href="{{ pdfpath }}"
+            class="btn btn-primary"
+            target="_blank"
+            style="width: 100%"
+            >Download Statement</a
+          >
+        </p>
         <!-- end::Table container -->
       </div>
     </div>

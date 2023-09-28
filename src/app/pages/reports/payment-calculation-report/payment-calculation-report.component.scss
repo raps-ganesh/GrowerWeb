@@ -233,7 +233,7 @@
     flex-grow: 1;
     max-width: 100%;
 }
-
+.d-md-none{ display: none;}
 .col-md-auto {
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
@@ -438,6 +438,9 @@
 }
 
 @media (min-width: 992px) {
+    .d-md-none {
+            display: none;
+        }
 .col-lg {
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
@@ -650,6 +653,9 @@
 }
 
 @media (min-width: 1200px) {
+    .d-md-none {
+            display: none;
+        }
 .col-xl {
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
