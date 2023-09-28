@@ -1,11 +1,14 @@
-
 <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
   <!--begin::Toolbar container-->
-  <div id="kt_app_toolbar_container" class=" d-flex flex-stack">
+  <div id="kt_app_toolbar_container" class="d-flex flex-stack">
     <!--begin::Page title-->
-    <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+    <div
+      class="page-title d-flex flex-column justify-content-center flex-wrap me-3"
+    >
       <!--begin::Title-->
-      <h1 class="page-heading d-flex text-white fw-bold fs-3 flex-column justify-content-center my-0">
+      <h1
+        class="page-heading d-flex text-white fw-bold fs-3 flex-column justify-content-center my-0"
+      >
         Documents
       </h1>
       <!--end::Title-->
@@ -14,25 +17,31 @@
   </div>
   <!--end::Toolbar container-->
 </div>
-<div  class="card mb-5 mb-xl-8">
+<div class="card mb-5 mb-xl-8">
   <!-- begin::Header -->
   <div class="card-header border-0 pt-5">
     <h3 class="card-title align-items-start flex-column">
       <!-- <span class="card-label fw-bolder fs-3 mb-1">Documents</span> -->
-      
     </h3>
     <div class="card-toolbar">
       <div class="d-flex align-items-right position-relative my-1 me-3">
-        <i class="fa fa-magnifying-glass fs-3 position-absolute ms-4" style="margin-top: 11px;">
-          <span class="path1"></span><span class="path2"></span></i>                
-            <input type="text" data-kt-ecommerce-order-filter="search" style="height: 36px;border: 0px !important;"
-            class="form-control form-control-solid w-250px ps-12" 
-            placeholder="Search"
-            (keyup)="onKey($event)"
-            (search)="onKey($event)"
-            >
+        <i
+          class="fa fa-magnifying-glass fs-3 position-absolute ms-4"
+          style="margin-top: 11px"
+        >
+          <span class="path1"></span><span class="path2"></span
+        ></i>
+        <input
+          type="text"
+          data-kt-ecommerce-order-filter="search"
+          style="height: 36px; border: 0px !important"
+          class="form-control form-control-solid w-250px ps-12"
+          placeholder="Search"
+          (keyup)="onKey($event)"
+          (search)="onKey($event)"
+        />
       </div>
-  
+
       <a href="documents/Upload" class="btn btn-sm btn-primary">
         <span
           [inlineSVG]="'./assets/media/icons/duotune/arrows/arr075.svg'"
@@ -52,10 +61,17 @@
         <!-- begin::Table head -->
         <thead>
           <tr class="fw-bolder text-muted bg-light">
-            <th class="ps-4 min-w-100px rounded-start" (click)="sort('fileName')">File Name</th>
+            <th
+              class="ps-4 min-w-100px rounded-start"
+              (click)="sort('fileName')"
+            >
+              File Name
+            </th>
             <th class="min-w-200px" (click)="sort('type')">Type</th>
-            <th class="min-w-200px"  (click)="sort('title')">Title</th>
-            <th class="min-w-125px" (click)="sort('accountType')">Description</th>
+            <th class="min-w-200px" (click)="sort('title')">Title</th>
+            <th class="min-w-125px" (click)="sort('accountType')">
+              Description
+            </th>
             <th class="min-w-125px text-center rounded-end">Actions</th>
           </tr>
         </thead>
@@ -63,38 +79,45 @@
         <!-- begin::Table body -->
         <tbody>
           <tr *ngFor="let info of documentInfo">
-            <td style="text-align: center;"> 
-              <a [href]="createImgPath(info.pdfUrl==null? '' : info.pdfUrl.replace('~/',''))" class=" fw-bold d-block fs-7 text-gray-700" target="_blank"><img [src]="createImgPath(info.thumbnailUrl.replace('~/',''))" height="40" width="40"></a>
+            <td style="text-align: center">
+              <a
+                [href]="
+                  createImgPath(
+                    info.pdfUrl == null ? '' : info.pdfUrl.replace('~/', '')
+                  )
+                "
+                class="fw-bold d-block fs-7 text-gray-700"
+                target="_blank"
+              >
+                <!-- <img
+                  [src]="createImgPath(info.thumbnailUrl.replace('~/', ''))"
+                  height="40"
+                  width="40"
+              /> -->
+                <i class="fa-sharp fa-solid fa-file fs-2x text-primary"></i>
+              </a>
             </td>
             <!-- <td style="text-align: center;"><img [src]="createImgPath('Resources\\pdfs\\pdf.png')" alt="profile picture" style="width:60px; height:60px;"></td> -->
-      
+
             <td>
-              <label class=" fw-bold d-block fs-7 text-gray-700">
-              {{ info.accountType }}
+              <label class="fw-bold d-block fs-7 text-gray-700">
+                {{ info.accountType }}
               </label>
-               
             </td>
             <td>
               <label class="text-dark fw-bolder text-gray-700">
                 {{ info.title }}
               </label>
-               
             </td>
             <td>
-              
               <div [innerHtml]="info.description"></div>
-               
             </td>
             <td class="text-center">
-              
               <a
-              [routerLink]="['Upload', info.id]"
-              tooltip="Upload"
+                [routerLink]="['Upload', info.id]"
+                tooltip="Upload"
                 title="Upload"
-                class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                  me-1
-                "
+                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
               >
                 <span
                   [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
@@ -102,21 +125,21 @@
                 ></span>
               </a>
               <a
-              tooltip="Delete Info"
-              title="Delete Info"
-              (click)="deleteDocument(info.id)"
-              [hidden]="!canDelete()"
+                tooltip="Delete Info"
+                title="Delete Info"
+                (click)="deleteDocument(info.id)"
+                [hidden]="!canDelete()"
                 class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
               >
                 <span
-                  [inlineSVG]="'./assets/media/icons/duotune/general/gen027.svg'"
+                  [inlineSVG]="
+                    './assets/media/icons/duotune/general/gen027.svg'
+                  "
                   class="svg-icon svg-icon-3"
                 ></span>
               </a>
-              
             </td>
           </tr>
-        
         </tbody>
         <tfoot [hidden]="totalrecords == 0">
           <tr>
@@ -128,7 +151,6 @@
                       <tr>
                         <td>
                           <select
-                            
                             name="pagesize"
                             ngModel
                             [(ngModel)]="pagesize"
@@ -143,7 +165,8 @@
                         </td>
                         <td>
                           <span
-                            class="nav-link text-active-primary active" style="    margin-left: 20px;"
+                            class="nav-link text-active-primary active"
+                            style="margin-left: 20px"
                           >
                             {{
                               appSettingService.pagingMessage(
@@ -158,7 +181,7 @@
                       </tr>
                     </table>
                   </td>
-  
+
                   <td>
                     <div class="row" [hidden]="totalrecords <= 10">
                       <div
@@ -187,14 +210,11 @@
                                 ><i class="previous"></i
                               ></a>
                             </li>
-  
+
                             <li
                               class="paginate_button page-item"
                               [class.active]="page == pagenumber"
-                              *ngFor="
-                                let page of pagingArray;
-                                let i = index
-                              "
+                              *ngFor="let page of pagingArray; let i = index"
                             >
                               <a
                                 class="page-link"
@@ -204,7 +224,7 @@
                                 >{{ page }}</a
                               >
                             </li>
-  
+
                             <li
                               class="paginate_button page-item next"
                               id="kt_table_users_next"
@@ -236,8 +256,8 @@
     <!-- end::Table container -->
   </div>
   <!-- begin::Body -->
-  </div>
-  
+</div>
+
 <!-- ================================================ -->
 <!-- 
 <div  class="card mb-5 mb-xl-8">

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DocumentService } from 'src/app/services/Document/document.service';
 import { ExcelService } from 'src/app/services/Excel/excel.service';
 import { AppSettingsService } from 'src/app/shared/app-settings.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-document-list',
@@ -174,8 +175,7 @@ export class DocumentListComponent {
     );
   }
 
-
-
-
-
+  public createImgPath = (serverPath: string) => {
+    return environment.documentPath + `${serverPath}`;
+  }
 }

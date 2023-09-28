@@ -1,89 +1,108 @@
-
 <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-    <!--begin::Toolbar container-->
-    <div id="kt_app_toolbar_container" class=" d-flex flex-stack">
-      <!--begin::Page title-->
-      <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-        <!--begin::Title-->
-        <h1 class="page-heading d-flex text-white fw-bold fs-3 flex-column justify-content-center my-0">
-          {{DocTitle}}
-        </h1>
-        <!--end::Title-->
-      </div>
-      <!--end::Page title-->
+  <!--begin::Toolbar container-->
+  <div id="kt_app_toolbar_container" class="d-flex flex-stack">
+    <!--begin::Page title-->
+    <div
+      class="page-title d-flex flex-column justify-content-center flex-wrap me-3"
+    >
+      <!--begin::Title-->
+      <h1
+        class="page-heading d-flex text-white fw-bold fs-3 flex-column justify-content-center my-0"
+      >
+        {{ DocTitle }}
+      </h1>
+      <!--end::Title-->
     </div>
-    <!--end::Toolbar container-->
+    <!--end::Page title-->
   </div>
-  <div  class="card mb-5 mb-xl-8">
-    <!-- begin::Header -->
-    <div class="card-header border-0 pt-5">
-      <h3 class="card-title align-items-start flex-column">
-        <!-- <span class="card-label fw-bolder fs-3 mb-1">Documents</span> -->
-        
-      </h3>
-      <div class="card-toolbar">
-        <div class="d-flex align-items-right position-relative my-1 me-3">
-          <i class="fa fa-magnifying-glass fs-3 position-absolute ms-4" style="margin-top: 11px;">
-            <span class="path1"></span><span class="path2"></span></i>                
-              <input type="text" data-kt-ecommerce-order-filter="search" style="height: 36px;border: 0px !important;"
-              class="form-control form-control-solid w-250px ps-12" 
-              placeholder="Search"
-              (keyup)="onKey($event)"
-              (search)="onKey($event)"
-              >
-        </div>
-    
-        
+  <!--end::Toolbar container-->
+</div>
+<div class="card mb-5 mb-xl-8">
+  <!-- begin::Header -->
+  <div class="card-header border-0 pt-5">
+    <h3 class="card-title align-items-start flex-column">
+      <!-- <span class="card-label fw-bolder fs-3 mb-1">Documents</span> -->
+    </h3>
+    <div class="card-toolbar">
+      <div class="d-flex align-items-right position-relative my-1 me-3">
+        <i
+          class="fa fa-magnifying-glass fs-3 position-absolute ms-4"
+          style="margin-top: 11px"
+        >
+          <span class="path1"></span><span class="path2"></span
+        ></i>
+        <input
+          type="text"
+          data-kt-ecommerce-order-filter="search"
+          style="height: 36px; border: 0px !important"
+          class="form-control form-control-solid w-250px ps-12"
+          placeholder="Search"
+          (keyup)="onKey($event)"
+          (search)="onKey($event)"
+        />
       </div>
     </div>
-    <!-- end::Header -->
-    <!-- begin::Body -->
-    <div class="card-body py-3">
-      <!-- begin::Table container -->
-      <div class="table-responsive">
-        <!-- begin::Table -->
-        <table style="width: 100%;" class="table align-middle gs-0 gy-4">
-             
-            <tr *ngFor="let year of filterYear()">
-                <td>
-                    <div class=" bg-light" style="text-align: center; font-size: 35px; font-weight: bold;">
-                        {{year}}
-                    </div>
-                    
-                    <table class="table align-middle gs-0 gy-4" style="width:100%" >
-                        <tr *ngFor="let info of filterFunction(year)">
-                            <td style="text-align: center;"> 
-                                <a href="./assets/{{info.pdfUrl==null? '' : info.pdfUrl.replace('~/','')}}" class=" fw-bold d-block fs-7 text-gray-700" target="_blank"><img src="./assets/{{info.thumbnailUrl==null? '' : info.thumbnailUrl.replace('~/','')}}" height="60" width="60"></a>
-                            </td>
-                            
-                            <td style="width: 80%;">
-                                <p>
-                                    <label class="text-dark fw-bolder text-gray-700">
-                                        {{ info.title }}
-                                        </label>
-                                </p>
-                                <div [innerHtml]="info.description"></div>
-                                
-                                
-                            </td>
-                            <td style="width: 10%;">
-                                
-                                <label>Updated:</label><br /> {{info.docDate}}
-                                
-                            </td>
-                            
-                            </tr>
-                    </table>
+  </div>
+  <!-- end::Header -->
+  <!-- begin::Body -->
+  <div class="card-body py-3">
+    <!-- begin::Table container -->
+    <div class="table-responsive">
+      <!-- begin::Table -->
+      <table style="width: 100%" class="table align-middle gs-0 gy-4">
+        <tr *ngFor="let year of filterYear()">
+          <td>
+            <div
+              class="bg-light"
+              style="text-align: center; font-size: 35px; font-weight: bold"
+            >
+              {{ year }}
+            </div>
+
+            <table class="table align-middle gs-0 gy-4" style="width: 100%">
+              <tr *ngFor="let info of filterFunction(year)">
+                <td style="text-align: center">
+                  <a
+                    [href]="
+                      createImgPath(
+                        info.pdfUrl == null ? '' : info.pdfUrl.replace('~/', '')
+                      )
+                    "
+                    class="fw-bold d-block fs-7 text-gray-700"
+                    target="_blank"
+                    ><img
+                      alt=""
+                      [src]="
+                        info.thumbnailUrl == null
+                          ? ''
+                          : createImgPath(info.thumbnailUrl.replace('~/', ''))
+                      "
+                      height="60"
+                      width="60"
+                  /></a>
                 </td>
-                
-            </tr>
-          <!-- end::Table body -->
-        </table>
-        <!-- end::Table -->
-      </div>
-      <!-- end::Table container -->
+
+                <td style="width: 80%">
+                  <p>
+                    <label class="text-dark fw-bolder text-gray-700">
+                      {{ info.title }}
+                    </label>
+                  </p>
+                  <div [innerHtml]="info.description"></div>
+                </td>
+                <td style="width: 10%">
+                  <label>Updated:</label><br />
+                  {{ info.docDate }}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <!-- end::Table body -->
+      </table>
+      <!-- end::Table -->
     </div>
-    <!-- begin::Body -->
-    </div>
-    
-  
+    <!-- end::Table container -->
+  </div>
+  <!-- begin::Body -->
+</div>

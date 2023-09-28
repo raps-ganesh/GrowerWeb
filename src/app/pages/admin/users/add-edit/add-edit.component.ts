@@ -463,8 +463,8 @@ export class AddEditComponent implements OnInit {
   AddDehyderator() {
     var accountNumber = (
       document.getElementById('dehyderatoraccount') as HTMLInputElement
-    ).value
-    if (this.listAccounts == null || this.listAccounts.length == 0 || this.listAccounts.find((data: { key: any; }) => data.key === accountNumber) == undefined || this.listAccounts.find((data: { key: any; }) => data.key === this.accountNumber).length == 0) {
+    ).value;
+    if (this.listAccounts == null || this.listAccounts.length == 0 || this.listAccounts.find((data: { key: any; }) => data.key === accountNumber.split('-')[0]) == undefined || this.listAccounts.find((data: { key: any; }) => data.key === accountNumber.split('-')[0]).length == 0) {
 
       if (this.listAccounts == null)
         this.listAccounts = [];

@@ -3,7 +3,7 @@ import { DocumentService } from 'src/app/services/Document/document.service';
 import { ExcelService } from 'src/app/services/Excel/excel.service';
 import { AppSettingsService } from 'src/app/shared/app-settings.service';
 import Swal from 'sweetalert2';
-import {Safe} from 'src/app/models/Safe '
+import { Safe } from 'src/app/models/Safe '
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -12,9 +12,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./manage-documents.component.scss']
 })
 export class ManageDocumentsComponent implements OnInit {
- 
 
-  
+
+
   pagenumber: number = 1;
   pagesize: number = 10;
   searchstring: string = '';
@@ -29,7 +29,7 @@ export class ManageDocumentsComponent implements OnInit {
   documentInfo: any;
 
   constructor(
-     
+
     private documentService: DocumentService,
     public appSettingService: AppSettingsService,
     private excelService: ExcelService
@@ -85,7 +85,7 @@ export class ManageDocumentsComponent implements OnInit {
   }
 
 
- 
+
   GetDocuments(
     sortcolumn: string,
     sortdirection: string,
@@ -135,7 +135,7 @@ export class ManageDocumentsComponent implements OnInit {
   }
 
   deleteDocument(id: any) {
-    
+
     Swal.fire({
       text: 'Are you sure, do you want to delete this document?',
       icon: 'warning',
@@ -147,8 +147,8 @@ export class ManageDocumentsComponent implements OnInit {
         this.documentService.DeleteDocument(id).subscribe({
           next: (data: any) => {
             //
-            var insertId= data;
-           
+            var insertId = data;
+
           },
           error: (err: any) => {
             console.log(err);
@@ -161,9 +161,9 @@ export class ManageDocumentsComponent implements OnInit {
                 confirmButton: 'btn btn-primary',
               },
             });
-    
+
           },
-          complete:()=>{
+          complete: () => {
             Swal.fire({
               text: 'Document deleted successfully.',
               icon: 'success',
@@ -188,9 +188,9 @@ export class ManageDocumentsComponent implements OnInit {
     return true;
   }
 
-  public createImgPath = (serverPath: string) => { 
-    return environment.imagePathUrl+`${serverPath}`; 
+  public createImgPath = (serverPath: string) => {
+    return environment.documentPath + `${serverPath}`;
   }
-  
+
 
 }
