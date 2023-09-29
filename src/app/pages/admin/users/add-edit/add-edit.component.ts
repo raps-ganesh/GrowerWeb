@@ -175,21 +175,12 @@ export class AddEditComponent implements OnInit {
             var it = itm.filter((x: any) => x.id == element);
             //alert(it.itemName);
             dataToSend.push({ "id": Number(element), "itemName": it[0].itemName });
+
           });
+          this.selectedItems = dataToSend;
+          this.EnableDisableAccount();
+          this.listAccounts = data.userAccounts;
         }, 1000);
-
-
-        this.selectedItems = dataToSend;
-        //this.selectedItems = [{"id":1,"itemName":"Administrators"}];
-
-        this.EnableDisableAccount();
-        debugger;
-        this.listAccounts = data.userAccounts;
-        // data.userDetails.forEach((element: any) => {
-        //   let index = this.listAccounts.indexOf(element.oldVendor_Id);
-        //   if (index == -1)
-        //     this.listAccounts.push(element.oldVendor_Id);
-        // });
       },
       error: (err: any) => {
         console.log(err);
