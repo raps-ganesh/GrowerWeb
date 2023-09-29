@@ -11,6 +11,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
+  , changeDetection: ChangeDetectionStrategy.Default,
 })
 export class UsersComponent {
 
@@ -30,8 +31,8 @@ export class UsersComponent {
   userInfo: any;
 
 
-  userid :any;
-  userName:any;
+  userid: any;
+  userName: any;
   modalConfig: ModalConfig = {
     modalTitle: 'Reset Password',
     size: 'xl',
@@ -57,15 +58,15 @@ export class UsersComponent {
     );
   }
 
-  passwordResend(userId: any,userName: any) {
-  
+  passwordResend(userId: any, userName: any) {
+
     this.cleanPopup();
     this.userid = userId;
-    this.userName=userName
-    this.modalConfig.modalTitle = 'Reset User Password - '+userName;
+    this.userName = userName
+    this.modalConfig.modalTitle = 'Reset User Password - ' + userName;
     this.modalConfig.size = 'lg';
     this.modalConfig.dismissButtonLabel = '';
-    
+
     setTimeout(() => {
       this.resetPasswordComponent.ngOnInit();
       this.modalComponent.open();
@@ -78,7 +79,7 @@ export class UsersComponent {
 
 
   constructor(
-     
+
     private adminService: AdminService,
     public appSettingService: AppSettingsService,
     private excelService: ExcelService
@@ -194,7 +195,7 @@ export class UsersComponent {
   }
 
   deleteUser(id: any) {
-    
+
     Swal.fire({
       text: 'Are you sure, do you want to deactivate this user?',
       icon: 'warning',
@@ -206,8 +207,8 @@ export class UsersComponent {
         this.adminService.DeleteUser(id).subscribe({
           next: (data: any) => {
             //
-            var insertId= data;
-           
+            var insertId = data;
+
           },
           error: (err: any) => {
             console.log(err);
@@ -220,9 +221,9 @@ export class UsersComponent {
                 confirmButton: 'btn btn-primary',
               },
             });
-    
+
           },
-          complete:()=>{
+          complete: () => {
             Swal.fire({
               text: 'User deleted successfully.',
               icon: 'success',

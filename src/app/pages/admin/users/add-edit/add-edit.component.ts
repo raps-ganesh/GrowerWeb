@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -14,7 +14,8 @@ import { debug } from 'console';
 @Component({
   selector: 'app-add-edit',
   templateUrl: './add-edit.component.html',
-  styleUrls: ['./add-edit.component.scss']
+  styleUrls: ['./add-edit.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class AddEditComponent implements OnInit {
 
@@ -169,11 +170,14 @@ export class AddEditComponent implements OnInit {
         var itm = this.dropdownList;
         var dataToSend: any = [];
         var batches = this.usermodel.userGroups != null ? this.usermodel.userGroups.split(',') : [];
-        batches?.forEach(function (element: any) {
-          var it = itm.filter((x: any) => x.id == element);
-          //alert(it.itemName);
-          dataToSend.push({ "id": Number(element), "itemName": it[0].itemName });
-        });
+        setTimeout(() => {
+          batches?.forEach(function (element: any) {
+            var it = itm.filter((x: any) => x.id == element);
+            //alert(it.itemName);
+            dataToSend.push({ "id": Number(element), "itemName": it[0].itemName });
+          });
+        }, 1000);
+
 
         this.selectedItems = dataToSend;
         //this.selectedItems = [{"id":1,"itemName":"Administrators"}];

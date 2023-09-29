@@ -97,7 +97,7 @@ export class AppComponent implements OnInit {
     this.timeoutId = setTimeout(
       () => {
         this.router.url != "/auth/login" ? this.userInactive.next("<div class='alert alert-warning' style='border: 0px !important;'>You\'re being timed out due to inactivity. Please choose to stay signed in or to logoff. </div> <div class='alert alert-danger' style='border: 0px !important;'>You will logged off automatically in<input type='text' readonly id='timer' class='alert-danger fw-bold' style='border: none!important;width: 20px;text-align:right;'/>seconds.<div>") : null;
-      }, 1200000);
+      }, 1800000);
   }
   @HostListener('window:keydown')
   @HostListener('window:mousedown')
