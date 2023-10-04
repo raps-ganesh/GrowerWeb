@@ -1175,7 +1175,7 @@
                   Grower Name : {{ growerName }}
                 </th>
                 <th colspan="3" class="text-left">
-                  Account No : {{ accountnumber }}
+                  Account Number : {{ accountnumber }}
                 </th>
               </tr>
               <tr class="text-start fw-bold fs-7 gs-00">
@@ -1217,14 +1217,14 @@
                 <td colspan="2" class="text-left px-8">
                   Total For Variety: {{ varietyName }}
                 </td>
-                <td colspan="6"></td>
+                <td colspan="7"></td>
                 <td class="text-right">
                   {{ varietyTotal | number }}
                 </td>
               </tr>
             </tbody>
             <tr [hidden]="varieties == null || varieties.length == 0">
-              <td colspan="9">
+              <td colspan="10">
                 <hr style="border-top: 2px solid black" />
               </td>
             </tr>
@@ -1236,7 +1236,7 @@
               <td colspan="2" class="text-left px-8">
                 Total For Account: {{ accountnumber }}
               </td>
-              <td colspan="6"></td>
+              <td colspan="7"></td>
               <td class="text-right">
                 {{ finalTotal | number }}
               </td>
