@@ -105,7 +105,7 @@ export class ReceivingTicketsReportComponent {
   exportToPDF() {
     debugger;
     let head = this.reportHeaders;
-    head = ['Account Number', 'Account Description', 'Weigh Certificate	', 'PD9 #', 'Receiving Date', 'Variety', 'Gross Weight', 'Tare Weight', 'Net Weight'];
+    head = ['Account Number','Status', 'Account Description', 'Weigh Certificate	', 'PD9 #', 'Receiving Date', 'Variety', 'Gross Weight', 'Tare Weight', 'Net Weight'];
     let SearchColumns: any[][] = [];
     SearchColumns.push(['Grower Name - ' + this.growerName]);
     SearchColumns.push(['Account Number - ' + this.accountnumber]);
@@ -114,21 +114,32 @@ export class ReceivingTicketsReportComponent {
     for (var i: number = 0; i < this.reportData.length; i++) {
       debugger;
       arr[i] = [];
-      arr[i][0] = this.reportData[i].accountNumber == 'Total For Variety:' || this.reportData[i].accountNumber == 'Total For Account:' ? this.reportData[i].accountNumber : this.reportData[i].accountNumber + ' Paid';
-      arr[i][1] = this.reportData[i].accountDescription;
-      arr[i][2] = this.reportData[i].weightCertificate;
-      arr[i][3] = this.reportData[i].shippingManifest;
-      arr[i][4] = this.reportData[i].receivingDate;
-      arr[i][5] = this.reportData[i].variety;
-      arr[i][6] = this.reportData[i].grossWeight == 0 ? '' : this.reportData[i].grossWeight;
-      arr[i][7] = this.reportData[i].tareWeight == 0 ? '' : this.reportData[i].tareWeight;
-      arr[i][8] = this.reportData[i].netWeight == 0 ? '' : this.reportData[i].netWeight;
+      // arr[i][0] = this.reportData[i].accountNumber == 'Total For Variety:' || this.reportData[i].accountNumber == 'Total For Account:' ? this.reportData[i].accountNumber : this.reportData[i].accountNumber + ' '+this.reportData[i].currentStatus;
+      // arr[i][1] = this.reportData[i].accountDescription;
+      // arr[i][2] = this.reportData[i].weightCertificate;
+      // arr[i][3] = this.reportData[i].shippingManifest;
+      // arr[i][4] = this.reportData[i].receivingDate;
+      // arr[i][5] = this.reportData[i].variety;
+      // arr[i][6] = this.reportData[i].grossWeight == 0 ? '' : this.reportData[i].grossWeight;
+      // arr[i][7] = this.reportData[i].tareWeight == 0 ? '' : this.reportData[i].tareWeight;
+      // arr[i][8] = this.reportData[i].netWeight == 0 ? '' : this.reportData[i].netWeight;
+      arr[i][0] = this.reportData[i].accountNumber == 'Total For Variety:' || this.reportData[i].accountNumber == 'Total For Account:' ? this.reportData[i].accountNumber : this.reportData[i].accountNumber;
+      arr[i][1] = this.reportData[i].currentStatus;
+      arr[i][2] = this.reportData[i].accountDescription;
+      arr[i][3] = this.reportData[i].weightCertificate;
+      arr[i][4] = this.reportData[i].shippingManifest;
+      arr[i][5] = this.reportData[i].receivingDate;
+      arr[i][6] = this.reportData[i].variety;
+      arr[i][7] = this.reportData[i].grossWeight == 0 ? '' : this.reportData[i].grossWeight;
+      arr[i][8] = this.reportData[i].tareWeight == 0 ? '' : this.reportData[i].tareWeight;
+      arr[i][9] = this.reportData[i].netWeight == 0 ? '' : this.reportData[i].netWeight; 
     }
     var columnStyle: any = {
-      1: { halign: 'center' },
-      6: { halign: 'right' },
+      1: { halign: 'left' },
+      2: { halign: 'left' },
       7: { halign: 'right' },
       8: { halign: 'right' },
+      9: { halign: 'right' },
     };
     this.exportService.expoertToPdf(
       arr,
@@ -146,7 +157,7 @@ export class ReceivingTicketsReportComponent {
   exportToExcel() {
     debugger;
     let head = this.reportHeaders;
-    head = ['Account Number', 'Account Description', 'Weigh Certificate	', 'PD9 #', 'Receiving Date', 'Variety', 'Gross Weight', 'Tare Weight', 'Net Weight'];
+    head = ['Account Number','Status', 'Account Description', 'Weigh Certificate	', 'PD9 #', 'Receiving Date', 'Variety', 'Gross Weight', 'Tare Weight', 'Net Weight'];
     let SearchColumns: any[][] = [];
     SearchColumns.push(['Grower Name - ' + this.growerName]);
     SearchColumns.push(['Account Number - ' + this.accountnumber]);
@@ -155,15 +166,16 @@ export class ReceivingTicketsReportComponent {
     for (var i: number = 0; i < this.reportData.length; i++) {
       debugger;
       arr[i] = [];
-      arr[i][0] = this.reportData[i].accountNumber == 'Total For Variety:' || this.reportData[i].accountNumber == 'Total For Account:' ? this.reportData[i].accountNumber : this.reportData[i].accountNumber + ' Paid';
-      arr[i][1] = this.reportData[i].accountDescription;
-      arr[i][2] = this.reportData[i].weightCertificate;
-      arr[i][3] = this.reportData[i].shippingManifest;
-      arr[i][4] = this.reportData[i].receivingDate;
-      arr[i][5] = this.reportData[i].variety;
-      arr[i][6] = this.reportData[i].grossWeight == 0 ? '' : this.reportData[i].grossWeight;
-      arr[i][7] = this.reportData[i].tareWeight == 0 ? '' : this.reportData[i].tareWeight;
-      arr[i][8] = this.reportData[i].netWeight == 0 ? '' : this.reportData[i].netWeight;
+      arr[i][0] = this.reportData[i].accountNumber == 'Total For Variety:' || this.reportData[i].accountNumber == 'Total For Account:' ? this.reportData[i].accountNumber : this.reportData[i].accountNumber;
+      arr[i][1] = this.reportData[i].currentStatus;
+      arr[i][2] = this.reportData[i].accountDescription;
+      arr[i][3] = this.reportData[i].weightCertificate;
+      arr[i][4] = this.reportData[i].shippingManifest;
+      arr[i][5] = this.reportData[i].receivingDate;
+      arr[i][6] = this.reportData[i].variety;
+      arr[i][7] = this.reportData[i].grossWeight == 0 ? '' : this.reportData[i].grossWeight;
+      arr[i][8] = this.reportData[i].tareWeight == 0 ? '' : this.reportData[i].tareWeight;
+      arr[i][9] = this.reportData[i].netWeight == 0 ? '' : this.reportData[i].netWeight;    
     }
 
     this.excelService.exportAsExcelFile('Receiving Tickets', '',

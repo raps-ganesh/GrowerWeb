@@ -1180,6 +1180,7 @@
               </tr>
               <tr class="text-start fw-bold fs-7 gs-00">
                 <th class="text-center">Account Number</th>
+                <th class="text-center">Status</th>
                 <th class="text-center">Account Description</th>
                 <th class="text-center">Weight Certificate</th>
                 <th class="text-center">PD9 #</th>
@@ -1195,10 +1196,14 @@
               <tr *ngFor="let info of filterByVariety(variety)">
                 <td class="text-center">
                   {{ accountnumber }}
+                 
+                </td>
+                <td>
                   <span class="badge py-2 px-3 mx-2 fs-7 badge-light-success">
-                    Paid
+                    {{info.currentStatus}}
                   </span>
                 </td>
+                
                 <td class="text-center">{{ info.accountDescription }}</td>
                 <td class="text-center">{{ info.weightCertificate }}</td>
                 <td class="text-center">{{ info.shippingManifest }}</td>
