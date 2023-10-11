@@ -95,10 +95,10 @@ export class AdminService {
       );
   }
 
-  ResetPassword(UserId: any, password: any): Observable<any> {
+  ResetPassword(encUser: any): Observable<any> {
     return this.http
       .post<any>(
-        this.baseAdminURL + 'UpdatePassword/' + UserId + '?password=' + password, password
+        environment.growerPortalApiBaseUrl + 'UpdatePassword', encUser
       )
       .pipe(
         map((response: any) => {

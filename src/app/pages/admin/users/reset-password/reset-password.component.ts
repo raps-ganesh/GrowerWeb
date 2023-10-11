@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { AESHelper } from 'src/app/pages/SecurityHelpers/AESHelper';
+import { RSAHelper } from 'src/app/pages/SecurityHelpers/RSAHelper';
 import { AdminService } from 'src/app/services/Admin/admin.service';
 import Swal from 'sweetalert2';
 
@@ -28,7 +30,7 @@ export class ResetPasswordComponent implements OnInit{
     //   });
   }
 
-  constructor(private cdr: ChangeDetectorRef,private adminService: AdminService) {
+  constructor(private cdr: ChangeDetectorRef,private adminService: AdminService,private aesHelper: AESHelper, private rsaHelper: RSAHelper) {
     const loadingSubscr = this.isLoading$
       .asObservable()
       .subscribe((res) => (this.isLoading = res));
@@ -70,7 +72,16 @@ export class ResetPasswordComponent implements OnInit{
   }
 
   SetPassword(){
-    this.adminService.ResetPassword(this.UserId,this.password).subscribe({
+    const aesKeyValue = this.aesHelper.aesKey();
+    const rsaKey = this.rsaHelper.encryptWithPublicKey(aesKeyValue);
+    const encUser: any = {
+      userId: this.UserId,
+      UserName :'',
+      password: this.aesHelper.encrypt(this.password),
+      aesKey: rsaKey,
+    };
+
+    this.adminService.ResetPassword(encUser).subscribe({
       next: (data: any) => {
         //
         var insertId= data;
