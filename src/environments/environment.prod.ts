@@ -176,10 +176,11 @@ export const environment = {
   documentApiBaseUrl: 'https://godocument.diamondfoods.com:4301/api/Document/',
   imagePathUrl: 'https://groweronline.diamondfoods.com/assets/contents/Analyzer_Images/',
   statementPath: 'https://groweronline.diamondfoods.com/assets/contents/GrowerPortalStatements/',
-  reportsBaseUrl: 'https://npsreporting.diamondfoods.com:3301/reporting/',
-  receivingApiBaseUrl: 'https://npsreceiving.diamondfoods.com:3101/api/receiving/',
-  gradingApiBaseUrl: 'https://npsgrading.diamondfoods.com:3001/api/grading/',
-  growerAccountingApiBaseUrl: 'https://npsgroweraccounting.diamondfoods.com:3201/api/groweraccounting/',
+  reportsBaseUrl: 'https://goreporting.diamondfoods.com:3301/reporting/',
+  receivingApiBaseUrl: 'https://goreceiving.diamondfoods.com:3101/api/receiving/',
+  gradingApiBaseUrl: 'https://gograding.diamondfoods.com:3001/api/grading/',
+  growerAccountingApiBaseUrl: 'https://gogroweraccounting.diamondfoods.com:3201/api/groweraccounting/',
+  documentPath: 'https://godocument.diamondfoods.com:4301/',
   cropyear: new Date().getMonth() > 7 ? new Date().getFullYear() : new Date().getFullYear() - 1,
 };
 

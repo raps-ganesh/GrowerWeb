@@ -15,16 +15,16 @@ import { DehydratorDeliveryByGrowerAccountComponent } from './reports/dehydrator
 const Routing: Routes = [
   {
     path: 'documents/growers',
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', 'Internal Users']
+       expectedRole: ['', '']
     }, component: DocumentListComponent
   },
   {
     path: 'documents/dehydrators',
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', 'Internal Users']
+       expectedRole: ['', '']
     }, component: DocumentListComponent
   },
   {
@@ -162,11 +162,6 @@ const Routing: Routes = [
     },
     component: DehydratorDeliveryByGrowerAccountComponent,
   },
-
-
-
-
-
   {
     path: 'reports/gradingdatareport/weighmastercertificate/:id',
     component: WeighMasterCertificateComponent,

@@ -124,7 +124,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       next: (data: any) => {
         debugger;
         var insertId = data;
-        if (data == 'Invalid One Time Password') {
+        if (data.value == 'Invalid OTP') {
           this.OTPError = 'Invalid One Time Password';
           Swal.fire({
             text: this.OTPError,

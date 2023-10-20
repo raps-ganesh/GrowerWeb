@@ -106,15 +106,15 @@ export class AppComponent implements OnInit {
     localStorage.setItem("LastActive", new Date().toString());
     this.checkTimeOut();
   }
-  @HostListener('window:beforeunload')
-  async ngOnDestroy() {
-    localStorage.removeItem('loggedinUser');
-    localStorage.removeItem('UserId');
-    localStorage.removeItem('JDENumber');
-    localStorage.removeItem('loggedinUserRoles');
-    localStorage.removeItem('loggedinData');
-    localStorage.removeItem('apitkn');
-    localStorage.removeItem('AuthenticationType');
-    localStorage.removeItem('SelectedAccount');
-  }
+  // @HostListener('window:beforeunload')
+  // async ngOnDestroy() {
+  //   localStorage.removeItem('loggedinUser');
+  //   localStorage.removeItem('UserId');
+  //   localStorage.removeItem('JDENumber');
+  //   localStorage.removeItem('loggedinUserRoles');
+  //   localStorage.removeItem('loggedinData');
+  //   localStorage.removeItem('apitkn');
+  //   localStorage.removeItem('AuthenticationType');
+  //   localStorage.removeItem('SelectedAccount');
+  // }
 }

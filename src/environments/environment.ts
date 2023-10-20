@@ -168,6 +168,7 @@ export const environment = {
   cropyear: new Date().getMonth() > 8 ? new Date().getFullYear() : new Date().getFullYear() - 1,
   growerAccountingApiBaseUrl: 'https://localhost:7020/api/groweraccounting/',
   statementPath: 'http://ussacgptsapp:5000/assets/contents/GrowerPortalStatements/',
+  documentPath: 'http://ussacgptsapp:5000/assets/contents/GrowerPortalStatements/',  
   masterDataBaseUrl: 'https://localhost:7179/api/master/',
 };
 
