@@ -17,14 +17,14 @@ const Routing: Routes = [
     path: 'documents/growers',
     //canActivate: [RoleGuard],
     data: {
-       expectedRole: ['', '']
+      expectedRole: ['', '']
     }, component: DocumentListComponent
   },
   {
     path: 'documents/dehydrators',
     //canActivate: [RoleGuard],
     data: {
-       expectedRole: ['', '']
+      expectedRole: ['', '']
     }, component: DocumentListComponent
   },
   {
@@ -123,6 +123,14 @@ const Routing: Routes = [
   },
   {
     path: 'reports/yearend',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['', '']
+    },
+    component: PaymentCalculationReportComponent,
+  },
+  {
+    path: 'reports/deliveryprogression',
     //canActivate: [RoleGuard],
     data: {
       expectedRole: ['', '']

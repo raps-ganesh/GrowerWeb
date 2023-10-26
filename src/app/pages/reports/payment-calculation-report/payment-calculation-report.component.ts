@@ -103,6 +103,10 @@ export class PaymentCalculationReportComponent implements OnInit {
         this.hideCalculationBatches = true;
         this.title = 'YearEnd';
         break;
+      case 'DeliveryProgression'.toLowerCase():
+        this.calculationBatchType = CalculationBatchTypes.DeliveryProgression;
+        this.hideCalculationBatches = true;
+        this.title = 'DeliveryProgression';
     }
 
   }
@@ -169,7 +173,10 @@ export class PaymentCalculationReportComponent implements OnInit {
         return;
       }
     }
-    if (this.calculationBatchType != CalculationBatchTypes.Deferral && this.calculationBatchType != CalculationBatchTypes.YearEnd && this.calculationBatchType != CalculationBatchTypes.TrueUp) {
+    if (this.calculationBatchType != CalculationBatchTypes.Deferral
+      && this.calculationBatchType != CalculationBatchTypes.YearEnd
+      && this.calculationBatchType != CalculationBatchTypes.TrueUp
+      && this.calculationBatchType != CalculationBatchTypes.DeliveryProgression) {
       if (this.calculationbatchid == '') {
         Swal.fire({
           html: 'Please enter valid calculation batch',
@@ -250,6 +257,19 @@ export class PaymentCalculationReportComponent implements OnInit {
         this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + monthNames[parseInt(month)] + year + "/" + this.accountnumber + '.pdf';
         (document.getElementById('objectPDF') as HTMLElement).setAttribute('data', this.pdfpath);
         this.checkForExistance(this.pdfpath)
+        break;
+      case CalculationBatchTypes.DeliveryProgression:
+        this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
+          next: (data: any) => {
+            this.jdeAddressBookNumber = data;
+            this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
+            (document.getElementById('objectPDF') as HTMLElement).setAttribute('data', this.pdfpath);
+            this.checkForExistance(this.pdfpath)
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+        });
         break;
     }
 
