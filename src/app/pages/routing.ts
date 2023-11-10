@@ -11,8 +11,16 @@ import { PaymentCalculationReportComponent } from './reports/payment-calculation
 import { ReceivingTicketsReportComponent } from './reports/receiving-tickets-report/receiving-tickets-report.component';
 import { DehydratorDeliveriesByManifestReportComponent } from './reports/dehydrator-deliveries-by-manifest-report/dehydrator-deliveries-by-manifest-report.component';
 import { DehydratorDeliveryByGrowerAccountComponent } from './reports/dehydrator-delivery-by-grower-account/dehydrator-delivery-by-grower-account.component';
+import { ResetPasswordComponent } from './admin/users/reset-password/reset-password.component';
 
 const Routing: Routes = [
+  {
+    path: 'reset-password',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['', '']
+    }, component: ResetPasswordComponent
+  },
   {
     path: 'documents/growers',
     //canActivate: [RoleGuard],

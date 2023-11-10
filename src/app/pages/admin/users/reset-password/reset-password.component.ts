@@ -11,15 +11,15 @@ import Swal from 'sweetalert2';
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
-export class ResetPasswordComponent implements OnInit{
+export class ResetPasswordComponent implements OnInit {
 
   @Input() UserId: any;
   @Input() UserName: any;
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLoading: boolean;
   private unsubscribe: Subscription[] = [];
-  password:any;
-  confirmPassword:any;
+  password: any;
+  confirmPassword: any;
 
   ngOnInit(): void {
     // if (this.tractorOwners == undefined)
@@ -30,21 +30,20 @@ export class ResetPasswordComponent implements OnInit{
     //   });
   }
 
-  constructor(private cdr: ChangeDetectorRef,private adminService: AdminService,private aesHelper: AESHelper, private rsaHelper: RSAHelper) {
+  constructor(private cdr: ChangeDetectorRef, private adminService: AdminService, private aesHelper: AESHelper, private rsaHelper: RSAHelper) {
     const loadingSubscr = this.isLoading$
       .asObservable()
       .subscribe((res) => (this.isLoading = res));
     this.unsubscribe.push(loadingSubscr);
-    
+
   }
 
   @ViewChild('resetForm') resetForm: NgForm;
 
-  SendPassword()
-  {
+  SendPassword() {
 
     if (this.resetForm.invalid) {
-      Swal.fire('Invalide', 'Please fill in all the required fields.', 'error');
+      Swal.fire('Invalid', 'Please fill in all the required fields.', 'error');
     } else {
       Swal.fire({
         title: 'Confirm Reset',
@@ -71,21 +70,19 @@ export class ResetPasswordComponent implements OnInit{
     }, 1500);
   }
 
-  SetPassword(){
+  SetPassword() {
     const aesKeyValue = this.aesHelper.aesKey();
     const rsaKey = this.rsaHelper.encryptWithPublicKey(aesKeyValue);
     const encUser: any = {
-      userId: this.UserId,
-      UserName :'',
+      userId: this.UserId == null ? localStorage.getItem('UserId') : this.UserId,
+      UserName: '',
       password: this.aesHelper.encrypt(this.password),
       aesKey: rsaKey,
     };
 
     this.adminService.ResetPassword(encUser).subscribe({
       next: (data: any) => {
-        //
-        var insertId= data;
-       
+        var insertId = data;
       },
       error: (err: any) => {
         console.log(err);
@@ -100,9 +97,9 @@ export class ResetPasswordComponent implements OnInit{
         });
 
       },
-      complete:()=>{
+      complete: () => {
         Swal.fire({
-          text: 'Password reset successfully.',
+          text: 'Password Updated successfully.',
           icon: 'success',
           buttonsStyling: false,
           confirmButtonText: 'Ok, got it!',
