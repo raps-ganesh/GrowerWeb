@@ -15,7 +15,7 @@ import { ResetPasswordComponent } from './admin/users/reset-password/reset-passw
 
 const Routing: Routes = [
   {
-    path: 'reset-password',
+    path: 'change-password',
     //canActivate: [RoleGuard],
     data: {
       expectedRole: ['', '']
