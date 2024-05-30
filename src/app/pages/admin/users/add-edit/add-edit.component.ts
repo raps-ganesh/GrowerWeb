@@ -78,6 +78,7 @@ export class AddEditComponent implements OnInit {
   }
 
   populateDehyderatorInfo(event: any) {
+    debugger;
     this.dehyderatoraccount = event;
   }
 
@@ -240,7 +241,7 @@ export class AddEditComponent implements OnInit {
       return;
     ////
     if (this.userForm.invalid) {
-      Swal.fire('Invalide', 'Please fill in all the required fields.', 'error');
+      Swal.fire('Invalid', 'Please fill in all the required fields.', 'error');
     } else {
       Swal.fire({
         title: 'Confirm User',
@@ -378,7 +379,8 @@ export class AddEditComponent implements OnInit {
           data.forEach((itm: any) => {
             if (this.listAccounts == null || this.listAccounts?.length == 0 || this.listAccounts?.find((data: { key: any; }) => data.key === itm) == null || this.listAccounts?.find((data: { key: any; }) => data.key === itm) == undefined || this.listAccounts?.find((data: { key: any; }) => data.key === itm)?.length == 0) {
               this.listAccounts = this.listAccounts == null ? [] : this.listAccounts;
-              this.listAccounts.push({ key: itm, value: 11, type: "Grower" });
+              debugger;
+              this.listAccounts.push({ key: itm.AccountNumber, value: 11, type: "Grower", name: itm.Name, description: '' });
               Swal.fire({
                 text: "Account(s) Added",
                 icon: 'success',
@@ -426,21 +428,32 @@ export class AddEditComponent implements OnInit {
     this.accountNumber = (
       document.getElementById('AccountNumber') as HTMLInputElement
     ).value
+
+
     if (this.listAccounts == null || this.listAccounts?.length == 0 || this.listAccounts?.find((data: { key: any; }) => data.key === this.accountNumber) == undefined || this.listAccounts.find((data: { key: any; }) => data.key === this.accountNumber).length == 0) {
       this.listAccounts = this.listAccounts == null ? [] : this.listAccounts;
-      this.listAccounts?.push({ key: this.accountNumber, value: 11, type: "Grower" });
-      Swal.fire({
-        text: "Account Added : " + this.accountNumber,
-        icon: 'success',
-        buttonsStyling: false,
-        confirmButtonText: 'Ok, got it!',
-        customClass: {
-          confirmButton: 'btn btn-primary',
+      this.growerPortalService.GetAccountsDetails(this.accountNumber).subscribe({
+        next: (data: any) => {
+          debugger;
+          this.listAccounts?.push({ key: this.accountNumber, value: 11, type: "Grower", name: data[0].Name, description: data[0].Description });
+          Swal.fire({
+            text: "Account Added : " + this.accountNumber,
+            icon: 'success',
+            buttonsStyling: false,
+            confirmButtonText: 'Ok, got it!',
+            customClass: {
+              confirmButton: 'btn btn-primary',
+            },
+          });
+          (
+            document.getElementById('AccountNumber') as HTMLInputElement
+          ).value = '';
+        },
+        error: (err: any) => {
+          console.log(err);
         },
       });
-      (
-        document.getElementById('AccountNumber') as HTMLInputElement
-      ).value = '';
+
     }
     else {
       Swal.fire({
@@ -463,7 +476,7 @@ export class AddEditComponent implements OnInit {
 
       if (this.listAccounts == null)
         this.listAccounts = [];
-      this.listAccounts.push({ key: accountNumber.split('-')[0], value: 10, type: "Dehydrator" });
+      this.listAccounts.push({ key: accountNumber.split('-')[0], value: 10, type: "Dehydrator", name: accountNumber.split('-')[1], description: accountNumber.split('-')[2] });
       Swal.fire({
         text: "Account Added : " + accountNumber,
         icon: 'success',

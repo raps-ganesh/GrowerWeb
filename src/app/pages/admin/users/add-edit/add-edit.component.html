@@ -396,6 +396,8 @@
               <thead>
                 <tr class="fw-bolder text-muted bg-light">
                   <td class="ps-4 min-w-200px rounded-start">Account #</td>
+                  <td class="ps-4 min-w-200px rounded-start">Name</td>
+                  <td class="ps-4 min-w-200px rounded-start">Desc</td>
                   <td class="ps-4 min-w-200px rounded-start">Type</td>
                   <td class="min-w-125px text-center rounded-end">Action</td>
                 </tr>
@@ -404,6 +406,13 @@
                 <tr *ngFor="let item of listAccounts">
                   <td>
                     {{ item.key }}
+                  </td>
+
+                  <td>
+                    {{ item.name }}
+                  </td>
+                  <td>
+                    {{ item.description }}
                   </td>
                   <td>
                     {{ item.type }}
@@ -432,7 +441,7 @@
               </tbody>
             </table>
           </div>
-        </div>       
+        </div>
       </div>
       <div class="card-footer d-flex justify-content-end py-6 px-9">
         <button

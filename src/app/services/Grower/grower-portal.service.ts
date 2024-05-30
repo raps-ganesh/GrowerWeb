@@ -27,7 +27,7 @@ export class GrowerPortalService {
   public GetUserAccounts(userId: any): Observable<any> {
     return this.http
       .get<any>(
-        this.baseUrl + 'GetUserAccounts/'+ userId
+        this.baseUrl + 'GetUserAccounts/' + userId
       )
       .pipe(
         map((response: any) => {
@@ -47,5 +47,18 @@ export class GrowerPortalService {
         })
       );
   }
+
+  public GetAccountsDetails(accountNumber: any): Observable<any> {
+    return this.http
+      .get<any>(
+        this.baseUrl + 'AccountsDetails/' + accountNumber
+      )
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
+  }
+
 
 }
