@@ -1245,7 +1245,22 @@
               "
             >
               <td class="text-center">{{ info.shippingManifest }}</td>
-              <td class="text-center">{{ info.weightCertificate }}</td>
+              <td class="text-center">
+                <a
+                  [hidden]="info.receivingTicketId == 0"
+                  href="#"
+                  target="_blank"
+                  [routerLink]="[
+                    '/receivingticket/weighmastercertificate/Dehyderator',
+                    info.receivingTicketId
+                  ]"
+                >
+                  {{ info.weightCertificate }}</a
+                >
+                <span [hidden]="info.receivingTicketId != 0">
+                  {{ info.weightCertificate }}</span
+                >
+              </td>
               <td class="text-center">{{ info.receivingDate }}</td>
               <!-- <td class="text-center">{{ info.growerAccountNumber }}</td>
               <td class="text-center">{{ info.growerName }}</td>

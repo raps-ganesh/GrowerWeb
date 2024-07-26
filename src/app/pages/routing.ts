@@ -12,104 +12,122 @@ import { ReceivingTicketsReportComponent } from './reports/receiving-tickets-rep
 import { DehydratorDeliveriesByManifestReportComponent } from './reports/dehydrator-deliveries-by-manifest-report/dehydrator-deliveries-by-manifest-report.component';
 import { DehydratorDeliveryByGrowerAccountComponent } from './reports/dehydrator-delivery-by-grower-account/dehydrator-delivery-by-grower-account.component';
 import { ResetPasswordComponent } from './admin/users/reset-password/reset-password.component';
+import { ReceivingWeighMasterCertificateComponent } from './reports/receiving-tickets-report/receiving-weigh-master-certificate/receiving-weigh-master-certificate.component';
 
 const Routing: Routes = [
+  {
+    path: 'receivingticket/weighmastercertificate/:copy/:receivingTicketId',
+    component: ReceivingWeighMasterCertificateComponent,
+  },
   {
     path: 'change-password',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
-    }, component: ResetPasswordComponent
+      expectedRole: ['', ''],
+    },
+    component: ResetPasswordComponent,
   },
   {
     path: 'documents/growers',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
-    }, component: DocumentListComponent
+      expectedRole: ['', ''],
+    },
+    component: DocumentListComponent,
   },
   {
     path: 'documents/dehydrators',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
-    }, component: DocumentListComponent
+      expectedRole: ['', ''],
+    },
+    component: DocumentListComponent,
   },
   {
     path: 'documents/Upload/:id1',
     canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', 'Internal Users']
-    }, component: UploadDocumentComponent
+      expectedRole: ['Administrators', 'Internal Users'],
+    },
+    component: UploadDocumentComponent,
   },
   {
     path: 'documents/Upload',
     canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', 'Internal Users']
-    }, component: UploadDocumentComponent
+      expectedRole: ['Administrators', 'Internal Users'],
+    },
+    component: UploadDocumentComponent,
   },
   {
     path: 'documents',
     canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', 'Internal Users']
-    }, component: ManageDocumentsComponent
+      expectedRole: ['Administrators', 'Internal Users'],
+    },
+    component: ManageDocumentsComponent,
   },
   {
     path: 'users',
     canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', 'Internal Users']
-    }, component: UsersComponent
+      expectedRole: ['Administrators', 'Internal Users'],
+    },
+    component: UsersComponent,
   },
   {
     path: 'users/add',
     canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', 'Internal Users']
-    }, component: AddEditComponent
+      expectedRole: ['Administrators', 'Internal Users'],
+    },
+    component: AddEditComponent,
   },
   {
     path: 'users/edit/:id1',
     canActivate: [RoleGuard],
     data: {
-      expectedRole: ['Administrators', 'Internal Users']
-    }, component: AddEditComponent
+      expectedRole: ['Administrators', 'Internal Users'],
+    },
+    component: AddEditComponent,
   },
   {
     path: 'reports/delivery',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
-    }, component: PaymentCalculationReportComponent
+      expectedRole: ['', ''],
+    },
+    component: PaymentCalculationReportComponent,
   },
   {
     path: 'reports/february',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
-    }, component: PaymentCalculationReportComponent
+      expectedRole: ['', ''],
+    },
+    component: PaymentCalculationReportComponent,
   },
   {
     path: 'reports/may',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
-    }, component: PaymentCalculationReportComponent
+      expectedRole: ['', ''],
+    },
+    component: PaymentCalculationReportComponent,
   },
   {
     path: 'reports/final',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
-    }, component: PaymentCalculationReportComponent
+      expectedRole: ['', ''],
+    },
+    component: PaymentCalculationReportComponent,
   },
   {
     path: 'reports/trueup',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
+      expectedRole: ['', ''],
     },
     component: PaymentCalculationReportComponent,
   },
@@ -117,7 +135,7 @@ const Routing: Routes = [
     path: 'reports/spot',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
+      expectedRole: ['', ''],
     },
     component: PaymentCalculationReportComponent,
   },
@@ -125,7 +143,7 @@ const Routing: Routes = [
     path: 'reports/deferred',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
+      expectedRole: ['', ''],
     },
     component: PaymentCalculationReportComponent,
   },
@@ -133,7 +151,7 @@ const Routing: Routes = [
     path: 'reports/yearend',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
+      expectedRole: ['', ''],
     },
     component: PaymentCalculationReportComponent,
   },
@@ -141,7 +159,7 @@ const Routing: Routes = [
     path: 'reports/deliveryprogression',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
+      expectedRole: ['', ''],
     },
     component: PaymentCalculationReportComponent,
   },
@@ -149,7 +167,7 @@ const Routing: Routes = [
     path: 'reports/receivingticket',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
+      expectedRole: ['', ''],
     },
     component: ReceivingTicketsReportComponent,
   },
@@ -157,7 +175,7 @@ const Routing: Routes = [
     path: 'reports/gradingdatareport',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
+      expectedRole: ['', ''],
     },
     component: GrowerQualitySummaryDetailedComponent,
   },
@@ -165,16 +183,15 @@ const Routing: Routes = [
     path: 'reports/dehehydratordeliverybymanifest',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
+      expectedRole: ['', ''],
     },
     component: DehydratorDeliveriesByManifestReportComponent,
-  }
-  ,
+  },
   {
     path: 'reports/dehydratordeliverybygroweraccount',
     //canActivate: [RoleGuard],
     data: {
-      expectedRole: ['', '']
+      expectedRole: ['', ''],
     },
     component: DehydratorDeliveryByGrowerAccountComponent,
   },
