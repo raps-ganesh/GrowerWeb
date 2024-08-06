@@ -1346,7 +1346,7 @@
         [height]="250"
         [width]="250"
         id="colorImage"
-        (error)="imageErrordispaly()"
+        (error)="imageErrordisplay()"
         alt="This image is not available."
         loading="lazy"
         [src]="colorImagePath"
@@ -1362,9 +1362,46 @@
         [src]="classImagePath"
       />
     </div>
+    <div
+      style="width: 49%; float: left"
+      class="text-center"
+      [hidden]="cropyear < dualScanCropYear"
+    >
+      <img
+        [height]="250"
+        [width]="250"
+        id="colorImage2"
+        (error)="imageErrordisplay()"
+        alt="This image is not available."
+        loading="lazy"
+        [src]="colorImagePath2"
+      />
+    </div>
+    <div
+      style="width: 49%; float: right"
+      class="text-center"
+      [hidden]="cropyear < dualScanCropYear"
+    >
+      <img
+        [height]="250"
+        [width]="250"
+        id="classImage2"
+        alt="This image is not available ."
+        loading="lazy"
+        [src]="classImagePath2"
+      />
+    </div>
     <div class="text-center my-3">
       Legend :
       <img alt="legend" src="./assets/media/colorLegend.png" class="my-8" />
+      <br />
+      <br />
+      <a
+        href="{{ pdfPath }}"
+        target="_blank"
+        [hidden]="cropyear < dualScanCropYear"
+        >View Report</a
+      >
     </div>
   </div>
 </app-modal>
