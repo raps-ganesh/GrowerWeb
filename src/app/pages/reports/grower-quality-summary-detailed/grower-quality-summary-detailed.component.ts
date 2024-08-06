@@ -167,13 +167,13 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
         imagepath.replace('_color.png', '_color1.jpg');
       this.classImagePath =
         environment.imagePathUrl +
-        classpath.replace('_class.png', '_class1.pdf');
+        classpath.replace('_class.png', '_class1.jpg');
       this.colorImagePath2 =
         environment.imagePathUrl +
         imagepath.replace('_color.png', '_color2.jpg');
       this.classImagePath2 =
         environment.imagePathUrl +
-        classpath.replace('_class.png', '_class2.pdf');
+        classpath.replace('_class.png', '_class2.jpg');
     }
     this.modalConfig.modalTitle = 'Color Analyzer Report: ' + weighCertificate;
     this.modalConfig.size = 'lg';
