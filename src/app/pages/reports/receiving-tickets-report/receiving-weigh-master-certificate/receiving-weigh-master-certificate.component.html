@@ -160,7 +160,7 @@
                 </td>
                 <td style="width: 19%; border-top: 1px solid !important">
                   <div
-                    class="scalecopytext text-uppercase"
+                    class="scalecopytext"
                     style="
                       font-weight: 600;
                       font-size: 14px;
@@ -168,7 +168,7 @@
                       margin-right: 23px;
                     "
                   >
-                    {{ copy }} COPY
+                    SCALE COPY
                   </div>
                   <div class="table-responsive">
                     <table class="table table-bordered table-no-border">
@@ -216,24 +216,19 @@
                     "
                   >
                     <div class="trailer1text" style="font-weight: 600">
-                      IPT # : {{ weighMasterCertificateDetails?.iPTNumber }}
+                      IPT # : {{ weighMasterCertificateDetails?.iptNumber }}
                     </div>
                     <div class="" style="font-weight: 600">
-                      Inbound Carrier # :
+                      Inbound Carrier :
                       {{ weighMasterCertificateDetails?.haulerName }}
                     </div>
                     <div class="" style="font-weight: 600">
-                      Truck # : {{ weighMasterCertificateDetails?.vehicleId }}
+                      Inbound Truck # :
+                      {{ weighMasterCertificateDetails?.vehicleId }}
                     </div>
                     <div class="" style="font-weight: 600">
-                      Lic : {{ weighMasterCertificateDetails?.vehicleLicense }}
-                    </div>
-                    <div class="trailer1text" style="font-weight: 600">
-                      Trailer1 :
-                      {{ weighMasterCertificateDetails?.trailer1Id }}
-                    </div>
-                    <div class="" style="font-weight: 600">
-                      Trailer2 :{{ weighMasterCertificateDetails?.trailer2Id }}
+                      Inbound Lic :
+                      {{ weighMasterCertificateDetails?.vehicleLicense }}
                     </div>
                   </td>
                   <td
@@ -281,7 +276,7 @@
                         <input
                           type="text"
                           class="form-control"
-                          id="Variety"
+                          id=""
                           value="{{
                             weighMasterCertificateDetails?.dehydratorCode
                           }}"
@@ -383,12 +378,12 @@
                                   font-weight: 600;
                                   justify-content: flex-start;
                                 "
-                                >Carrier(yard):</label
+                                >Yard Carrier:</label
                               >
                               <input
                                 type="text"
                                 class="form-control"
-                                id="Carrier"
+                                id=""
                                 value="{{
                                   weighMasterCertificateDetails?.yardCarrier
                                 }}"
@@ -403,12 +398,12 @@
                                   font-weight: 600;
                                   justify-content: flex-start;
                                 "
-                                >Truck #:</label
+                                >Yard Truck #:</label
                               >
                               <input
                                 type="text"
                                 class="form-control"
-                                id="Carrier"
+                                id=""
                                 value="{{
                                   weighMasterCertificateDetails?.yardCarrierNumber
                                 }}"
@@ -423,12 +418,12 @@
                                   font-weight: 600;
                                   justify-content: flex-start;
                                 "
-                                >License #:</label
+                                >Yard License #:</label
                               >
                               <input
                                 type="text"
                                 class="form-control"
-                                id="Carrier"
+                                id=""
                                 value="{{
                                   weighMasterCertificateDetails?.yardTruckLicense
                                 }}"
@@ -436,7 +431,30 @@
                                 style="text-align: left; font-size: 13px"
                               />
                             </div>
-
+                            <div class="trailer1text" style="font-weight: 600">
+                              <label
+                                for="Trailer1"
+                                style="
+                                  font-weight: 600;
+                                  justify-content: flex-start;
+                                "
+                                >Trailer1 :</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                style="
+                                  margin-top: 10px;
+                                  text-align: left;
+                                  font-size: 13px;
+                                "
+                                id="Trailer11"
+                                value="{{
+                                  weighMasterCertificateDetails?.trailer1Id
+                                }} "
+                                disabled
+                              />
+                            </div>
                             <div class="form-group col-sm-12">
                               <label
                                 for="TrailerLicense"
@@ -454,14 +472,37 @@
                                   text-align: left;
                                   font-size: 13px;
                                 "
-                                id="TrailerLicense"
+                                id="TrailerLicense11"
                                 value="{{
                                   weighMasterCertificateDetails?.trailer1License
                                 }} "
                                 disabled
                               />
                             </div>
-
+                            <div class="trailer1text" style="font-weight: 600">
+                              <label
+                                for="Trailer2"
+                                style="
+                                  font-weight: 600;
+                                  justify-content: flex-start;
+                                "
+                                >Trailer2 :</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                style="
+                                  margin-top: 10px;
+                                  text-align: left;
+                                  font-size: 13px;
+                                "
+                                id="Trailer6"
+                                value="{{
+                                  weighMasterCertificateDetails?.trailer2Id
+                                }} "
+                                disabled
+                              />
+                            </div>
                             <div class="form-group col-sm-12">
                               <label
                                 for="TrailerLicense1"
@@ -479,7 +520,7 @@
                                   text-align: left;
                                   font-size: 13px;
                                 "
-                                id="TrailerLicense1"
+                                id="TrailerLicense2"
                                 value="{{
                                   weighMasterCertificateDetails?.trailer2License
                                 }}"
@@ -844,7 +885,12 @@
       overflow-y: visible !important;
     }
   }
-
+  input[type="text"] {
+    border-bottom: 1px solid #000 !important;
+    border-top: 0px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+  }
   *,
   ::after,
   ::before {
