@@ -169,7 +169,8 @@ export const environment = {
   // gradingApiBaseUrl: 'https://npsnonprodgrading.diamondfoods.com:3001/api/grading/',
   // growerAccountingApiBaseUrl: 'https://npsnonprodgroweraccounting.diamondfoods.com:3201/api/groweraccounting/',
   // cropyear: new Date().getMonth() > 7 ? new Date().getFullYear() : new Date().getFullYear() - 1,
-
+  // documentPath: 'https://testgodocument.diamondfoods.com:4301/',
+  // dualScanCropYear: 2023
   authenticationApiUrl: 'https://goauthentication.diamondfoods.com:4201/api/authenticate/authenticate?username={0}&password={1}',
   growerPortalApiBaseUrl: 'https://goauthentication.diamondfoods.com:4201/api/authenticate/',
   adminApiBaseUrl: 'https://goadmin.diamondfoods.com:4101/api/admin/',
@@ -182,6 +183,7 @@ export const environment = {
   growerAccountingApiBaseUrl: 'https://gogroweraccounting.diamondfoods.com:3201/api/groweraccounting/',
   documentPath: 'https://godocument.diamondfoods.com:4301/',
   cropyear: new Date().getMonth() > 7 ? new Date().getFullYear() : new Date().getFullYear() - 1,
+  dualScanCropYear: 2024
 };
 
 /*
