@@ -66,7 +66,7 @@ export class GrowerQualitySummaryDetailedComponent implements OnInit {
   dualScanCropYear: number =
     environment.dualScanCropYear != undefined
       ? environment.dualScanCropYear
-      : 2022;
+      : 2023;
   @ViewChild('modalImage') public modalImageComponent: ModalComponent;
 
   modalConfig: ModalConfig = {

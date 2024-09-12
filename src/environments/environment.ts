@@ -170,6 +170,7 @@ export const environment = {
   statementPath: 'http://ussacgptsapp:5000/assets/contents/GrowerPortalStatements/',
   documentPath: 'http://ussacgptsapp:5000/assets/contents/GrowerPortalStatements/',  
   masterDataBaseUrl: 'https://localhost:7179/api/master/',
+  dualScanCropYear: 2023
 };
 
 /*
