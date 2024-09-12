@@ -1,5 +1,12 @@
 import { formatNumber, formatDate, formatCurrency } from '@angular/common';
-import { Component, ElementRef, Inject, Input, LOCALE_ID, OnInit, } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  LOCALE_ID,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -18,7 +25,7 @@ import { debug } from 'console';
 @Component({
   selector: 'app-payment-calculation-report',
   templateUrl: './payment-calculation-report.component.html',
-  styleUrls: ['./payment-calculation-report.component.scss']
+  styleUrls: ['./payment-calculation-report.component.scss'],
 })
 export class PaymentCalculationReportComponent implements OnInit {
   growerInfo: any;
@@ -45,7 +52,6 @@ export class PaymentCalculationReportComponent implements OnInit {
   showDeferralDate: any = false;
   truUpBatches: any;
   constructor(
-
     private reportService: ReportsService,
     public appSettingService: AppSettingsService,
     public excelService: ExcelService,
@@ -66,7 +72,6 @@ export class PaymentCalculationReportComponent implements OnInit {
     this.hideCalculationBatches = false;
     this.showDeferralDate = false;
     switch (calcBatchType.toLowerCase()) {
-
       case 'Delivery'.toLowerCase():
         this.calculationBatchType = CalculationBatchTypes.Delivery;
         this.title = 'Delivery';
@@ -108,7 +113,6 @@ export class PaymentCalculationReportComponent implements OnInit {
         this.hideCalculationBatches = true;
         this.title = 'DeliveryProgression';
     }
-
   }
 
   public getSanitizeUrl(url: string): SafeUrl {
@@ -123,12 +127,13 @@ export class PaymentCalculationReportComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.eventEmitterService.subsVar == undefined) {
-      this.eventEmitterService.subsVar = this.eventEmitterService.
-        invokeFirstComponentFunction.subscribe((name: string) => {
-          this.loadDataFromMasterMenu(name);
-        });
-    }
-    else {
+      this.eventEmitterService.subsVar =
+        this.eventEmitterService.invokeFirstComponentFunction.subscribe(
+          (name: string) => {
+            this.loadDataFromMasterMenu(name);
+          }
+        );
+    } else {
       if (localStorage.getItem('SelectedAccount') != undefined) {
         this.accountnumber = localStorage.getItem('SelectedAccount');
       }
@@ -143,7 +148,6 @@ export class PaymentCalculationReportComponent implements OnInit {
         this.showDeferralDate = false;
         break;
     }
-
   }
   GenerateReport() {
     if (this.accountnumber == '') {
@@ -159,7 +163,6 @@ export class PaymentCalculationReportComponent implements OnInit {
       return;
     }
     if (this.calculationBatchType != CalculationBatchTypes.Deferral) {
-
       if (this.deferralDate == '') {
         Swal.fire({
           html: 'Please enter valid Deferral Date',
@@ -173,10 +176,12 @@ export class PaymentCalculationReportComponent implements OnInit {
         return;
       }
     }
-    if (this.calculationBatchType != CalculationBatchTypes.Deferral
-      && this.calculationBatchType != CalculationBatchTypes.YearEnd
-      && this.calculationBatchType != CalculationBatchTypes.TrueUp
-      && this.calculationBatchType != CalculationBatchTypes.DeliveryProgression) {
+    if (
+      this.calculationBatchType != CalculationBatchTypes.Deferral &&
+      this.calculationBatchType != CalculationBatchTypes.YearEnd &&
+      this.calculationBatchType != CalculationBatchTypes.TrueUp &&
+      this.calculationBatchType != CalculationBatchTypes.DeliveryProgression
+    ) {
       if (this.calculationbatchid == '') {
         Swal.fire({
           html: 'Please enter valid calculation batch',
@@ -196,89 +201,195 @@ export class PaymentCalculationReportComponent implements OnInit {
       case CalculationBatchTypes.FebProgress:
       case CalculationBatchTypes.MayProgress:
       case CalculationBatchTypes.SpotEMF:
-        this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
-          next: (data: any) => {
-            this.jdeAddressBookNumber = data;
-            this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.calculationbatchid + '_' + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
-            (document.getElementById('objectPDF') as HTMLElement).setAttribute('data', this.pdfpath);
-            this.checkForExistance(this.pdfpath)
-          },
-          error: (err: any) => {
-            console.log(err);
-          },
-        });
+        this.growerPortalService
+          .GetJdeAddressBookNumber(this.accountnumber)
+          .subscribe({
+            next: (data: any) => {
+              this.jdeAddressBookNumber = data;
+              this.pdfpath =
+                environment.statementPath +
+                this.title +
+                'Statements' +
+                '/' +
+                this.cropyear +
+                '/' +
+                this.title +
+                '_Statement_' +
+                this.calculationbatchid +
+                '_' +
+                this.jdeAddressBookNumber +
+                '_' +
+                this.accountnumber +
+                '.pdf';
+              (
+                document.getElementById('objectPDF') as HTMLElement
+              ).setAttribute('data', this.pdfpath);
+              this.checkForExistance(this.pdfpath);
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+          });
         break;
 
       case CalculationBatchTypes.FinalPayment:
         debugger;
-        if (this.truUpBatches != null && this.truUpBatches != undefined && this.truUpBatches.find((obj: { Id: any; }) => { return obj.Id == this.calculationbatchid })) {
-          this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
-            next: (data: any) => {
-              this.jdeAddressBookNumber = data;
-              this.pdfpath = environment.statementPath + 'TrueUpStatements' + "/" + this.cropyear + "/TrueUp_Statement_" + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
-              (document.getElementById('objectPDF') as HTMLElement).setAttribute('data', this.pdfpath);
-              this.checkForExistance(this.pdfpath)
-            },
-            error: (err: any) => {
-              console.log(err);
-            },
-          });
-        }
-        else
-          this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
-            next: (data: any) => {
-              this.jdeAddressBookNumber = data;
-              this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.calculationbatchid + '_' + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
-              (document.getElementById('objectPDF') as HTMLElement).setAttribute('data', this.pdfpath);
-              this.checkForExistance(this.pdfpath)
-            },
-            error: (err: any) => {
-              console.log(err);
-            },
-          });
+        if (
+          this.truUpBatches != null &&
+          this.truUpBatches != undefined &&
+          this.truUpBatches.find((obj: { Id: any }) => {
+            return obj.Id == this.calculationbatchid;
+          })
+        ) {
+          this.growerPortalService
+            .GetJdeAddressBookNumber(this.accountnumber)
+            .subscribe({
+              next: (data: any) => {
+                this.jdeAddressBookNumber = data;
+                this.pdfpath =
+                  environment.statementPath +
+                  'TrueUpStatements' +
+                  '/' +
+                  this.cropyear +
+                  '/TrueUp_Statement_' +
+                  this.calculationbatchid +
+                  '_' +
+                  this.jdeAddressBookNumber +
+                  '_' +
+                  this.accountnumber +
+                  '.pdf';
+                (
+                  document.getElementById('objectPDF') as HTMLElement
+                ).setAttribute('data', this.pdfpath);
+                this.checkForExistance(this.pdfpath);
+              },
+              error: (err: any) => {
+                console.log(err);
+              },
+            });
+        } else
+          this.growerPortalService
+            .GetJdeAddressBookNumber(this.accountnumber)
+            .subscribe({
+              next: (data: any) => {
+                this.jdeAddressBookNumber = data;
+                this.pdfpath =
+                  environment.statementPath +
+                  this.title +
+                  'Statements' +
+                  '/' +
+                  this.cropyear +
+                  '/' +
+                  this.title +
+                  '_Statement_' +
+                  this.calculationbatchid +
+                  '_' +
+                  this.jdeAddressBookNumber +
+                  '_' +
+                  this.accountnumber +
+                  '.pdf';
+                (
+                  document.getElementById('objectPDF') as HTMLElement
+                ).setAttribute('data', this.pdfpath);
+                this.checkForExistance(this.pdfpath);
+              },
+              error: (err: any) => {
+                console.log(err);
+              },
+            });
         break;
 
-
       case CalculationBatchTypes.YearEnd:
-        this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.accountnumber + '.pdf';
-        (document.getElementById('objectPDF') as HTMLElement).setAttribute('data', this.pdfpath);
-        this.checkForExistance(this.pdfpath)
+        this.pdfpath =
+          environment.statementPath +
+          this.title +
+          'Statements' +
+          '/' +
+          this.cropyear +
+          '/' +
+          this.title +
+          '_Statement_' +
+          this.accountnumber +
+          '.pdf';
+        (document.getElementById('objectPDF') as HTMLElement).setAttribute(
+          'data',
+          this.pdfpath
+        );
+        this.checkForExistance(this.pdfpath);
         break;
       case CalculationBatchTypes.Deferral:
         debugger;
         var month = new Date(this.deferralDate).getMonth().toString();
         var year = new Date(this.deferralDate).getFullYear().toString();
-        var monthNames = ["January", "February", "March", "April", "May", "June",
-          "July", "August", "September", "October", "November", "December"
+        var monthNames = [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
         ];
 
-
-        ;
-        this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + monthNames[parseInt(month)] + year + "/" + this.accountnumber + '.pdf';
-        (document.getElementById('objectPDF') as HTMLElement).setAttribute('data', this.pdfpath);
-        this.checkForExistance(this.pdfpath)
+        this.pdfpath =
+          environment.statementPath +
+          this.title +
+          'Statements' +
+          '/' +
+          this.cropyear +
+          '/' +
+          monthNames[parseInt(month)] +
+          year +
+          '/' +
+          this.accountnumber +
+          '.pdf';
+        (document.getElementById('objectPDF') as HTMLElement).setAttribute(
+          'data',
+          this.pdfpath
+        );
+        this.checkForExistance(this.pdfpath);
         break;
       case CalculationBatchTypes.DeliveryProgression:
-        this.growerPortalService.GetJdeAddressBookNumber(this.accountnumber).subscribe({
-          next: (data: any) => {
-            this.jdeAddressBookNumber = data;
-            this.pdfpath = environment.statementPath + this.title + 'Statements' + "/" + this.cropyear + "/" + this.title + "_Statement_" + this.jdeAddressBookNumber + '_' + this.accountnumber + '.pdf';
-            (document.getElementById('objectPDF') as HTMLElement).setAttribute('data', this.pdfpath);
-            this.checkForExistance(this.pdfpath)
-          },
-          error: (err: any) => {
-            console.log(err);
-          },
-        });
+        this.growerPortalService
+          .GetJdeAddressBookNumber(this.accountnumber)
+          .subscribe({
+            next: (data: any) => {
+              this.jdeAddressBookNumber = data;
+              this.pdfpath =
+                environment.statementPath +
+                this.title +
+                'Statements' +
+                '/' +
+                this.cropyear +
+                '/' +
+                this.title +
+                '_Statement_' +
+                this.jdeAddressBookNumber +
+                '_' +
+                this.accountnumber +
+                '.pdf';
+              (
+                document.getElementById('objectPDF') as HTMLElement
+              ).setAttribute('data', this.pdfpath);
+              this.checkForExistance(this.pdfpath);
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+          });
         break;
     }
-
   }
   private checkForExistance(path: any) {
     this.reportService.RemoteFileExists(path).subscribe({
       next: (data: any) => {
         var pdfViewer = document.getElementById('pdf');
-        pdfViewer?.setAttribute("src", this.pdfpath);
+        pdfViewer?.setAttribute('src', this.pdfpath);
       },
       error: (err: any) => {
         Swal.fire({
@@ -296,7 +407,11 @@ export class PaymentCalculationReportComponent implements OnInit {
 
   GetBatches() {
     debugger;
-    if (this.accountnumber.trim() != '' && this.calculationBatchType != CalculationBatchTypes.Deferral && this.calculationBatchType != CalculationBatchTypes.YearEnd)
+    if (
+      this.accountnumber.trim() != '' &&
+      this.calculationBatchType != CalculationBatchTypes.Deferral &&
+      this.calculationBatchType != CalculationBatchTypes.YearEnd
+    )
       this.reportService
         .GetBatches({
           cropyear: this.cropyear,
@@ -313,34 +428,30 @@ export class PaymentCalculationReportComponent implements OnInit {
               };
             });
             this.calculationbatches = new_list;
-            if (this.calculationBatchType == CalculationBatchTypes.FinalPayment) {
-              this.reportService.GetTruupBatches(this.accountnumber, this.cropyear).subscribe({
-                next: (data: any) => {
-                  debugger;
-                  this.truUpBatches = [];
-                  let new_list1 = data.map((obj: any) => {
-                    return {
-                      Id: obj.Id,
-                      Title: obj.Title,
-                    };
-                  });
-                  new_list1.forEach(function (value: any) {
-                    new_list.push(value);
-                  });
-                  this.truUpBatches = new_list1;
-                  this.calculationbatches = new_list;
-                },
-                error: (err: any) => {
-
-                },
-              });
-
+            if (
+              this.calculationBatchType == CalculationBatchTypes.FinalPayment
+            ) {
+              this.reportService
+                .GetTruupBatches(this.accountnumber, this.cropyear)
+                .subscribe({
+                  next: (data: any) => {
+                    debugger;
+                    this.truUpBatches = [];
+                    let new_list1 = data.map((obj: any) => {
+                      return {
+                        Id: obj.Id,
+                        Title: obj.Title,
+                      };
+                    });
+                    new_list1.forEach(function (value: any) {
+                      new_list.push(value);
+                    });
+                    this.truUpBatches = new_list1;
+                    this.calculationbatches = new_list;
+                  },
+                  error: (err: any) => {},
+                });
             }
-
-
-
-
-
           },
           error: (err: any) => {
             console.log(err);
@@ -403,10 +514,7 @@ export class PaymentCalculationReportComponent implements OnInit {
       'Description',
       'Payee $',
       'Account Total',
-
-
     ];
-
 
     let paymentInfoData = this.paymentInfo.map((obj: any) => {
       return {
@@ -422,7 +530,6 @@ export class PaymentCalculationReportComponent implements OnInit {
         Empty10: '',
         Empty11: '',
 
-
         Date: obj.Date,
 
         Check: obj.Check,
@@ -430,9 +537,7 @@ export class PaymentCalculationReportComponent implements OnInit {
         allocationpercent: obj.allocationpercent,
         Description: obj.Description,
         payeeshare: obj.payeeshare,
-        totalAmount: obj.totalAmount
-
-
+        totalAmount: obj.totalAmount,
       };
     });
 
@@ -452,17 +557,35 @@ export class PaymentCalculationReportComponent implements OnInit {
     growerInfoColumns.push([
       '',
       this.growerInfo.City.trim() +
-      ', ' +
-      this.growerInfo.StateAbbreviation +
-      ' ' +
-      this.growerInfo.PostalCode,
+        ', ' +
+        this.growerInfo.StateAbbreviation +
+        ' ' +
+        this.growerInfo.PostalCode,
     ]);
-
 
     let ticketInfoColumns: any[];
     let ticketInfoTopColumn: any = [];
 
-    ticketInfoTopColumn = ['', '', '', '', '', '', '', '', '', 'Serious Damage', '', '', '', '', '', '', '', '']
+    ticketInfoTopColumn = [
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      'Serious Damage',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+    ];
 
     ticketInfoColumns = this.reportHeaders;
     ticketInfoColumns = [
@@ -486,7 +609,6 @@ export class PaymentCalculationReportComponent implements OnInit {
       'Total Value',
     ];
 
-
     this.excelService.exportAsExcelFileDeliveryReport(
       this.title,
       '',
@@ -494,14 +616,14 @@ export class PaymentCalculationReportComponent implements OnInit {
       ticketInfoData,
       [],
       this.title +
-      '_' +
-      formatDate(new Date(), 'dd-MM-yyyy hh:mm:ss a', 'en-US', '-0800'),
+        '_' +
+        formatDate(new Date(), 'dd-MM-yyyy hh:mm:ss a', 'en-US', '-0800'),
       this.title,
       growerInfoColumns,
       ticketInfoTopColumn,
-      [],//2nd sheet data
-      '',// 2nd sheet Name
-      [],// 2nd sheet header array
+      [], //2nd sheet data
+      '', // 2nd sheet Name
+      [], // 2nd sheet header array
       paymentInfoData,
       paymentInfoColumns,
       //new_list2,
@@ -550,41 +672,89 @@ export class PaymentCalculationReportComponent implements OnInit {
       var fileName: string =
         'Bulk Print ' +
         formatDate(new Date(), 'dd-MM-yyyy hh:mm:ss a', 'en-US', '-0800');
-      var progressPaymentHeader = this.cropyear + ' Crop Feb ' + new Date().getFullYear() % 100 + ' Progress Payment';
+      var progressPaymentHeader =
+        this.cropyear +
+        ' Crop Feb ' +
+        (new Date().getFullYear() % 100) +
+        ' Progress Payment';
 
       switch (this.calculationBatchType) {
         case 3:
           fileName =
-            'Delivery_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
-          progressPaymentHeader = this.cropyear + ' Crop Delivery \'' + new Date().getFullYear() % 100 + ' Progress Payment';
+            'Delivery_statement_' +
+            this.calculationbatchid +
+            '_' +
+            this.growerInfo.JDEAddressBookNumber +
+            '_' +
+            this.accountnumber;
+          progressPaymentHeader =
+            this.cropyear +
+            " Crop Delivery '" +
+            (new Date().getFullYear() % 100) +
+            ' Progress Payment';
 
           break;
         case 4:
           fileName =
-            'February_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
-          progressPaymentHeader = this.cropyear + ' Crop Feb \'' + new Date().getFullYear() % 100 + ' Progress Payment';
+            'February_statement_' +
+            this.calculationbatchid +
+            '_' +
+            this.growerInfo.JDEAddressBookNumber +
+            '_' +
+            this.accountnumber;
+          progressPaymentHeader =
+            this.cropyear +
+            " Crop Feb '" +
+            (new Date().getFullYear() % 100) +
+            ' Progress Payment';
 
           break;
         case 5:
           fileName =
-            'May_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
-          progressPaymentHeader = this.cropyear + ' Crop May \'' + new Date().getFullYear() % 100 + ' Progress Payment';
+            'May_statement_' +
+            this.calculationbatchid +
+            '_' +
+            this.growerInfo.JDEAddressBookNumber +
+            '_' +
+            this.accountnumber;
+          progressPaymentHeader =
+            this.cropyear +
+            " Crop May '" +
+            (new Date().getFullYear() % 100) +
+            ' Progress Payment';
 
           break;
         case 6:
           fileName =
-            'Final_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
-          progressPaymentHeader = this.cropyear + ' Crop Final \'' + new Date().getFullYear() % 100 + ' Progress Payment';
+            'Final_statement_' +
+            this.calculationbatchid +
+            '_' +
+            this.growerInfo.JDEAddressBookNumber +
+            '_' +
+            this.accountnumber;
+          progressPaymentHeader =
+            this.cropyear +
+            " Crop Final '" +
+            (new Date().getFullYear() % 100) +
+            ' Progress Payment';
 
           break;
         case 10:
           fileName =
-            'Spot_statement_' + this.calculationbatchid + '_' + this.growerInfo.JDEAddressBookNumber + '_' + this.accountnumber;
-          progressPaymentHeader = this.cropyear + ' Crop SPOT \'' + new Date().getFullYear() % 100 + ' Progress Payment';
+            'Spot_statement_' +
+            this.calculationbatchid +
+            '_' +
+            this.growerInfo.JDEAddressBookNumber +
+            '_' +
+            this.accountnumber;
+          progressPaymentHeader =
+            this.cropyear +
+            " Crop SPOT '" +
+            (new Date().getFullYear() % 100) +
+            ' Progress Payment';
 
           break;
       }
-
 
       // IN loop
       var prevoiousPageCount = 0;
@@ -592,8 +762,7 @@ export class PaymentCalculationReportComponent implements OnInit {
       this.accountData.forEach((currentValue: any, index1: any) => {
         ///////
         //
-        if (index1 > 0)
-          doc.addPage('l');
+        if (index1 > 0) doc.addPage('l');
         var rptGrowerInfo: any = currentValue.growerInfo[0];
         var rptTicketInfo: any = currentValue.ticketInfo;
         var rptPaymentInfo: any = currentValue.paymentInfo;
@@ -643,26 +812,32 @@ export class PaymentCalculationReportComponent implements OnInit {
           arr[i][14] = ticketInfoList[i].Incentive;
           arr[i][15] = ticketInfoList[i].InshellValue;
           arr[i][16] = ticketInfoList[i].KernelValue;
-          arr[i][17] = formatCurrency(ticketInfoList[i].Payment, this.locale, '$');
+          arr[i][17] = formatCurrency(
+            ticketInfoList[i].Payment,
+            this.locale,
+            '$'
+          );
         }
 
         var paymentInfoData: any[][] = [];
         let paymentInfoHeader: any = [
-
           { content: 'Date', styles: { halign: 'center' } },
           { content: 'Check #', styles: { halign: 'center' } },
           { content: 'Payee', styles: { halign: 'center' } },
           { content: 'Payee %', styles: { halign: 'center' } },
           { content: 'Description', styles: { halign: 'center' } },
           { content: 'Payee $', styles: { halign: 'center' } },
-          { content: 'Account Total', styles: { halign: 'center' } }
+          { content: 'Account Total', styles: { halign: 'center' } },
         ];
 
         var statementDate: any;
 
         let index;
         for (index = 0; index < rptPaymentInfo.length; index++) {
-          if (rptPaymentInfo[index].Date != null && rptPaymentInfo[index].Date != undefined) {
+          if (
+            rptPaymentInfo[index].Date != null &&
+            rptPaymentInfo[index].Date != undefined
+          ) {
             statementDate = rptPaymentInfo[index].Date;
           }
           paymentInfoData.push([
@@ -671,13 +846,22 @@ export class PaymentCalculationReportComponent implements OnInit {
             rptPaymentInfo[index].Payee,
             rptPaymentInfo[index].allocationpercent,
             rptPaymentInfo[index].Description,
-            rptPaymentInfo[index].payeeshare != null ? formatCurrency(rptPaymentInfo[index].payeeshare, this.locale, '$') : '',
-            rptPaymentInfo[index].totalAmount != null ? formatCurrency(rptPaymentInfo[index].totalAmount, this.locale, '$') : '',
+            rptPaymentInfo[index].payeeshare != null
+              ? formatCurrency(
+                  rptPaymentInfo[index].payeeshare,
+                  this.locale,
+                  '$'
+                )
+              : '',
+            rptPaymentInfo[index].totalAmount != null
+              ? formatCurrency(
+                  rptPaymentInfo[index].totalAmount,
+                  this.locale,
+                  '$'
+                )
+              : '',
           ]);
-
-
         }
-
 
         let head = reportHeaders;
         head = [
@@ -701,19 +885,30 @@ export class PaymentCalculationReportComponent implements OnInit {
           'Total Value',
         ];
         let masterHead = [
-
-          { content: '', colSpan: 8, styles: { halign: 'center', fillColor: [255, 255, 255] } },
-          { content: 'Serious Damage', colSpan: 3, styles: { halign: 'center', fillColor: [211, 211, 211] } },
-          { content: '', colSpan: 7, styles: { halign: 'center', fillColor: [255, 255, 255] } }
+          {
+            content: '',
+            colSpan: 8,
+            styles: { halign: 'center', fillColor: [255, 255, 255] },
+          },
+          {
+            content: 'Serious Damage',
+            colSpan: 3,
+            styles: { halign: 'center', fillColor: [211, 211, 211] },
+          },
+          {
+            content: '',
+            colSpan: 7,
+            styles: { halign: 'center', fillColor: [255, 255, 255] },
+          },
         ];
         let growerInfoColumns: any[][] = [];
         let addressDetails: any[][] = [];
 
-
         growerInfoColumns.push(['Statement Date : ' + statementDate]);
-        growerInfoColumns.push(['Account Number : ' + rptGrowerInfo.AccountNumber]);
+        growerInfoColumns.push([
+          'Account Number : ' + rptGrowerInfo.AccountNumber,
+        ]);
         //growerInfoColumns.push(['', this.cropyear + ' Crop Feb '+ new Date().getFullYear()+ ' Progress Payment']);
-
 
         growerInfoColumns.push([rptGrowerInfo.Name]);
 
@@ -722,10 +917,10 @@ export class PaymentCalculationReportComponent implements OnInit {
         ]);
         growerInfoColumns.push([
           rptGrowerInfo.City.trim() +
-          ', ' +
-          rptGrowerInfo.StateAbbreviation +
-          ' ' +
-          rptGrowerInfo.PostalCode,
+            ', ' +
+            rptGrowerInfo.StateAbbreviation +
+            ' ' +
+            rptGrowerInfo.PostalCode,
         ]);
         addressDetails.push([rptGrowerInfo.Name]);
         addressDetails.push([rptGrowerInfo.AddressLine1]);
@@ -733,15 +928,14 @@ export class PaymentCalculationReportComponent implements OnInit {
         addressDetails.push([rptGrowerInfo.AddressLine3]);
         addressDetails.push([
           rptGrowerInfo.City.trim() +
-          ', ' +
-          rptGrowerInfo.StateAbbreviation +
-          ' ' +
-          rptGrowerInfo.PostalCode,
+            ', ' +
+            rptGrowerInfo.StateAbbreviation +
+            ' ' +
+            rptGrowerInfo.PostalCode,
         ]);
 
         /////
         var jsonData: any = arr;
-
 
         var header: any[] = head;
         var headerText: string = '';
@@ -768,24 +962,48 @@ export class PaymentCalculationReportComponent implements OnInit {
         //doc.roundedRect(doc.internal.pageSize.height - 215, 160, 40, 100, 5, 5, 'S')
         doc.setFontSize(15);
         var addrPosition = 205;
-        doc.text(addressDetails[0] == null ? '' : addressDetails[0], doc.internal.pageSize.height - addrPosition, 275, { angle: 90 });
+        doc.text(
+          addressDetails[0] == null ? '' : addressDetails[0],
+          doc.internal.pageSize.height - addrPosition,
+          275,
+          { angle: 90 }
+        );
         if (addressDetails[1].toString() != '') {
           addrPosition = addrPosition - 7;
-          doc.text(addressDetails[1], doc.internal.pageSize.height - addrPosition, 275, { angle: 90 });
-
+          doc.text(
+            addressDetails[1],
+            doc.internal.pageSize.height - addrPosition,
+            275,
+            { angle: 90 }
+          );
         }
         if (addressDetails[2].toString() != '') {
           addrPosition = addrPosition - 7;
-          doc.text(addressDetails[2], doc.internal.pageSize.height - addrPosition, 275, { angle: 90 });
+          doc.text(
+            addressDetails[2],
+            doc.internal.pageSize.height - addrPosition,
+            275,
+            { angle: 90 }
+          );
         }
 
         if (addressDetails[3].toString() != '') {
           addrPosition = addrPosition - 7;
-          doc.text(addressDetails[3], doc.internal.pageSize.height - addrPosition, 275, { angle: 90 });
+          doc.text(
+            addressDetails[3],
+            doc.internal.pageSize.height - addrPosition,
+            275,
+            { angle: 90 }
+          );
         }
         if (addressDetails[4].toString() != '') {
           addrPosition = addrPosition - 7;
-          doc.text(addressDetails[4], doc.internal.pageSize.height - addrPosition, 275, { angle: 90 });
+          doc.text(
+            addressDetails[4],
+            doc.internal.pageSize.height - addrPosition,
+            275,
+            { angle: 90 }
+          );
         }
         autoTable(doc, {
           head: [],
@@ -804,7 +1022,7 @@ export class PaymentCalculationReportComponent implements OnInit {
               if (data.row.raw.toString().indexOf('Progress Payment') > 0) {
                 doc.setFont('Helvetica', 'bold');
               }
-            }
+            },
           });
         }
 
@@ -819,14 +1037,17 @@ export class PaymentCalculationReportComponent implements OnInit {
             textColor: [0, 0, 0],
             fontStyle: 'bold',
             lineWidth: { top: 0.1, right: 0.1, left: 0.1, bottom: 0.05 },
-            lineColor: [0, 0, 0]
+            lineColor: [0, 0, 0],
           },
           //startY: doc.getCurrentPageInfo().pageNumber == 0 ? 30 : 50,
           margin: { top: 30 },
           rowPageBreak: 'avoid',
           showHead: 'firstPage',
           willDrawCell: (data) => {
-            if (data.row.raw.toString().indexOf('Account Total') > 0 || data.row.raw.toString().indexOf('Variety Total') > 0) {
+            if (
+              data.row.raw.toString().indexOf('Account Total') > 0 ||
+              data.row.raw.toString().indexOf('Variety Total') > 0
+            ) {
               doc.setFont('Helvetica', 'bold').setTextColor('black');
             }
           },
@@ -844,7 +1065,7 @@ export class PaymentCalculationReportComponent implements OnInit {
             valign: 'middle',
             fillColor: [255, 255, 255],
             textColor: [0, 0, 0],
-            fontStyle: 'bold'
+            fontStyle: 'bold',
           },
           columnStyles: {
             0: { halign: 'center' },
@@ -853,12 +1074,15 @@ export class PaymentCalculationReportComponent implements OnInit {
             3: { halign: 'center' },
             4: { halign: 'center' },
             5: { halign: 'right' },
-            6: { halign: 'right' }
+            6: { halign: 'right' },
           },
           rowPageBreak: 'avoid',
           margin: { top: doc.getCurrentPageInfo().pageNumber == 0 ? 0 : 30 },
           willDrawCell: (data) => {
-            if (data.row.raw.toString().indexOf('NET PAYMENT') > 0 || data.row.raw.toString().indexOf('DEFERRED') > 0) {
+            if (
+              data.row.raw.toString().indexOf('NET PAYMENT') > 0 ||
+              data.row.raw.toString().indexOf('DEFERRED') > 0
+            ) {
               doc.setFont('Helvetica', 'bold').setTextColor('black');
             }
           },
@@ -882,11 +1106,10 @@ export class PaymentCalculationReportComponent implements OnInit {
           doc.setTextColor('#5A5A5A');
           doc.setFontSize(15);
 
-
           doc.setFontSize(8);
           doc.text(
             'Page ' + pageCurrent + ' of ' + (pageCountToLoop - 1),
-            (doc.internal.pageSize.width / 2) - 10,
+            doc.internal.pageSize.width / 2 - 10,
             doc.internal.pageSize.height - 10
           );
           console.log('Page ' + pageCurrent + ' of ' + (pageCountToLoop - 1));
@@ -899,23 +1122,25 @@ export class PaymentCalculationReportComponent implements OnInit {
           doc.text('Stockton, CA 95205', doc.internal.pageSize.width - 47, 28);
           // console.log(doc.internal.pageSize.width + ' %%% ' + progressPaymentHeader + ' $$$ ' + ((doc.internal.pageSize.width / 2) - (progressPaymentHeader.length / 2)))
           doc.setFontSize(10).setTextColor('black');
-          doc.text(progressPaymentHeader
-            ,
-            (doc.internal.pageSize.width / 2) - (progressPaymentHeader.length / 2) - 18,
+          doc.text(
+            progressPaymentHeader,
+            doc.internal.pageSize.width / 2 -
+              progressPaymentHeader.length / 2 -
+              18,
             10
           );
           pageCurrent = pageCurrent + 1;
         }
-        prevoiousPageCount = prevoiousPageCount + (pageCount - prevoiousPageCount);
+        prevoiousPageCount =
+          prevoiousPageCount + (pageCount - prevoiousPageCount);
 
         console.log('prevoiousPageCount: ' + prevoiousPageCount);
       });
       //doc.deletePage(doc.getNumberOfPages());
       doc.save(fileName);
+    } catch (Error) {
+      console.log('test');
     }
-    catch (Error) { console.log('test') }
     //this.loadingService.setLoading(false);
-
   }
 }
-
