@@ -80,6 +80,10 @@ export class PaymentCalculationReportComponent implements OnInit {
         this.calculationBatchType = CalculationBatchTypes.SpotEMF;
         this.title = 'Spot';
         break;
+      case 'December'.toLowerCase():
+        this.calculationBatchType = CalculationBatchTypes.December;
+        this.title = 'December';
+        break;
       case 'February'.toLowerCase():
         this.calculationBatchType = CalculationBatchTypes.FebProgress;
         this.title = 'February';
@@ -112,6 +116,7 @@ export class PaymentCalculationReportComponent implements OnInit {
         this.calculationBatchType = CalculationBatchTypes.DeliveryProgression;
         this.hideCalculationBatches = true;
         this.title = 'DeliveryProgression';
+        break;
     }
   }
 
@@ -693,6 +698,20 @@ export class PaymentCalculationReportComponent implements OnInit {
             (new Date().getFullYear() % 100) +
             ' Progress Payment';
 
+          break;
+        case 15:
+          fileName =
+            'December_statement_' +
+            this.calculationbatchid +
+            '_' +
+            this.growerInfo.JDEAddressBookNumber +
+            '_' +
+            this.accountnumber;
+          progressPaymentHeader =
+            this.cropyear +
+            " Crop Dec '" +
+            (new Date().getFullYear() % 100) +
+            ' Progress Payment';
           break;
         case 4:
           fileName =

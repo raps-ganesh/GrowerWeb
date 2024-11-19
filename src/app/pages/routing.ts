@@ -100,6 +100,14 @@ const Routing: Routes = [
     component: PaymentCalculationReportComponent,
   },
   {
+    path: 'reports/december',
+    //canActivate: [RoleGuard],
+    data: {
+      expectedRole: ['', ''],
+    },
+    component: PaymentCalculationReportComponent,
+  },
+  {
     path: 'reports/february',
     //canActivate: [RoleGuard],
     data: {
