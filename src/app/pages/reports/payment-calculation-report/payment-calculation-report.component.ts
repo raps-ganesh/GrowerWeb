@@ -203,6 +203,7 @@ export class PaymentCalculationReportComponent implements OnInit {
     debugger;
     switch (this.calculationBatchType) {
       case CalculationBatchTypes.Delivery:
+      case CalculationBatchTypes.December:
       case CalculationBatchTypes.FebProgress:
       case CalculationBatchTypes.MayProgress:
       case CalculationBatchTypes.SpotEMF:
